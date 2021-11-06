@@ -1,21 +1,24 @@
-:root {
+:root{
   --normal-color: #3E3E3E;
-  --current-color: #3a5bff;
+  --current-color: #4463fd;
   --previous-color: #758BFF;
 }
 .tab {
-    width: 100%;
-    height: 50px;
-    z-index:-2;white-space: nowrap;
+    display: block;
+    width: 80%;
+    height: 55px;
+    z-index: 10;
+    white-space: nowrap;
     overflow:hidden;
-    margin-top: 50px;
+    margin-left: 10%;
+    border-radius: 10px 10px 0px 0px;
 }
 
 .wrap div:first-child{margin-left:-2%;}
 
 .progress {
     margin:0;
-    margin-left:0.5%;
+    margin-left: 0.3%;
     height: 40px;
     width: 25%;
     position: relative;
@@ -38,39 +41,73 @@
     width: 100%;
     top: 0;
     left: 0;
-    background: var(--normal-color);
+    background-color: var(--normal-color);
     -webkit-transform: skew(45deg);
     -moz-transform: skew(45deg);
     transform: skew(45deg);
+    box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.2);  
   }
   .progress:after {
     height: 50%;
     width: 100%;
     top: 50%;
     left: 0;
-    background: var(--normal-color);
+    background-color: var(--normal-color);
+    -webkit-transform: skew(-45deg);
+    -moz-transform: skew(-45deg);
+    transform: skew(-45deg); 
+    box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.2);   
+  }
+
+  .progress:first-child:before{
+    height: 50%;
+    width: 110%;
+    top: 0;
+    left: -10%;
+    background-color: var(--normal-color);
+    -webkit-transform: skew(45deg);
+    -moz-transform: skew(45deg);
+    transform: skew(45deg);
+  }
+
+  .progress:first-child:after{
+    height: 50%;
+    width: 110%;
+    top: 50%;
+    left: -10%;
+    background-color: var(--normal-color);
     -webkit-transform: skew(-45deg);
     -moz-transform: skew(-45deg);
     transform: skew(-45deg);
   }
   .progress:hover:before,
   .progress:hover:after {
-    background: var(--current-color);
+    background-color: var(--current-color);
   }
   .progress{
-    cursor: pointer;
+    cursor: pointer; 
   }
 
-  .current:before {
-    background: var(--current-color);
+  .current:before, .current:first-child:before {
+    background-color: var(--current-color);
+    /* -webkit-transform: translateY(-20%) skew(45deg) ;
+    -moz-transform: translateY(-20%) skew(45deg) ;
+    transform: translateY(-20%) skew(45deg) ;
+    z-index: ; */
   }
-  .current:after {
-    background: var(--current-color);
+  .current:after, .current:first-child:after {
+    background-color: var(--current-color);
+    /* -webkit-transform: translateY(-20%) skew(-45deg);
+    -moz-transform: translateY(-20%) skew(-45deg);
+    transform: translateY(-20%) skew(-45deg);
+    z-index: ; */
   }
 
-  .previous:before {
-    background: var(--previous-color);
+  .previous:before, .previous:first-child:before {
+    background-color: var(--previous-color);
   }
-  .previous:after {
-    background: var(--previous-color);
+  .previous:after, .previous:first-child:after {
+    background-color: var(--previous-color);
   }
+
+  

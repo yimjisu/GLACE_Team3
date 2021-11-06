@@ -4,11 +4,9 @@ import styles from "./panel.module.css";
 const ReservationCheck = ({ 
     }) => {
     return (
-    <div className={styles.panel}>
         <div className={styles.panelWindow}>
             reservationCheck
         </div>
-    </div>
     );
 }
 
