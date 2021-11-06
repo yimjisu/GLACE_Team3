@@ -1,0 +1,14 @@
+.panel {
+    margin-top: 0px;
+    margin-left: 10%;
+    font-size: 18px;
+    font-weight: 800;
+  }
+  
+  .panelWindow {
+    width: 90%;
+    height: 700px;
+    background-color: whitesmoke;
+    border-radius: 20px;
+    padding-top: 50px;
+  }
