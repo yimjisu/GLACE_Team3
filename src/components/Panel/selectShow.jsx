@@ -4,9 +4,7 @@ import styles from "./panel.module.css";
 const SelectShow = ({ 
     }) => {
     return (
-    <div className={styles.panel}>
         <div className={styles.panelWindow}>SelectShow</div>
-    </div>
     );
 }
 

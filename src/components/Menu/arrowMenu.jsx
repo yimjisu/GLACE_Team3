@@ -11,6 +11,7 @@ const ArrowMenu = ({
     }
 
     return (<>
+    
     {
         state == index ? (
             <div className = {`${styles.progress} ${styles.current}`}
