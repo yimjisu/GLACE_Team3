@@ -1,101 +1,12 @@
-.tab {
-    width: 100%;
-    height: 50px;
-    z-index:-2;white-space: nowrap;
-    overflow:hidden;
-    margin-top: 50px;
+.header{
+    margin-top: 10px;
 }
 
-.wrap div:first-child{margin-left:-2%;}
-
-.progress {
-    margin:0;
-    margin-left:0.5%;
-    height: 40px;
-    width: 20%;
-    position: relative;
-    display: inline-block;
-    padding-top: 10px;
-    text-align: center;
-    line-height: 30px;
-    transition: all 0.8s;
-    color : white;
-  }
-  .progress:before,
-  .progress:after {
-    content: "";
-    position: absolute;
-    transition: all 0.8s;
-    z-index:-1;
-  }
-  .progress:before {
-    height: 50%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    background: #3E3E3E;
-    -webkit-transform: skew(45deg);
-    -moz-transform: skew(45deg);
-    transform: skew(45deg);
-  }
-  .progress:after {
-    height: 50%;
-    width: 100%;
-    top: 50%;
-    left: 0;
-    background: #3E3E3E;
-    -webkit-transform: skew(-45deg);
-    -moz-transform: skew(-45deg);
-    transform: skew(-45deg);
-  }
-  .progress:hover:before,
-  .progress:hover:after {
-    background: #758BFF;
-  }
-  .progress{
-    cursor: pointer;
-  }
-
-  .selectedProgress {
-    margin:0;
-    margin-left:0.5%;
-    height: 40px;
-    width: 20%;
-    position: relative;
-    display: inline-block;
-    padding-top: 10px;
-    text-align: center;
-    line-height: 30px;
-    transition: all 0.8s;
-    color : white;
-  }
-  .selectedProgress:before,
-  .selectedProgress:after {
-    content: "";
-    position: absolute;
-    transition: all 0.8s;
-    z-index:-1;
-  }
-  .selectedProgress:before {
-    height: 50%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    background: #758BFF;
-    -webkit-transform: skew(45deg);
-    -moz-transform: skew(45deg);
-    transform: skew(45deg);
-  }
-  .selectedProgress:after {
-    height: 50%;
-    width: 100%;
-    top: 50%;
-    left: 0;
-    background: #758BFF;
-    -webkit-transform: skew(-45deg);
-    -moz-transform: skew(-45deg);
-    transform: skew(-45deg);
-  }
-  .selectedProgress{
-    cursor: pointer;
-  }
+.logo{
+    margin-left: 10px;
+    margin-bottom: 10px;
+    float:left;
+    font-style: italic;
+    font-size:x-large;
+    font-weight: bolder;
+}

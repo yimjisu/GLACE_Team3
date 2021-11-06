@@ -1,23 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from './header.module.css';
-import ArrowMenu from "./arrowMenu";
+import UserInfo from "../UserInfo/userinfo";
 
 const Header = ({state, setState}) => {  
-
-    const menus = ['공연 선택', '좌석 선택', '예약 확인', '예약완료'];
-
-
     return (
-        <div className={styles.tab}>
-          { menus.map ( (value, index) =>
-              <ArrowMenu 
-                name = {value}
-                index = {index}
-                selected = {index == state}
-                setState = {setState}
-              />
-          )}
+        <div className = {styles.header}>
+            <div className={styles.logo}>
+                GLACE
+            </div>
         </div>
+        
       );
   }
 

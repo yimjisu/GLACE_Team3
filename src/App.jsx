@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "./App.module.css";
 
 import Header from './components/Header/header';
-import Panel from './components/Panel/panel';
+import Menu from './components/Menu/menu';
 import SelectShow from './components/Panel/selectShow';
 import SelectSeat from './components/Panel/selectSeat';
 import ReservationCheck from './components/Panel/reservationCheck';
@@ -18,7 +18,8 @@ function App() {
 
   return (
     <div className={styles.App}>
-      <Header 
+      <Header/>
+      <Menu 
         state={state}
         setState={setState}/>
       {
