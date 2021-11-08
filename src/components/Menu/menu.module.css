@@ -3,27 +3,43 @@
   --current-color: #4463fd;
   --previous-color: #758BFF;
 }
+
+.background {
+  top: 40px;
+  left: 5%;
+  width: 90%;
+  height: 55px;
+  position: absolute;
+  background-color: white;
+  z-index: -10;
+  border-radius: 10px;
+  
+  min-width: 600px;
+}
+
 .tab {
     display: block;
-    width: 80%;
+    width: 90%;
     height: 55px;
     z-index: 10;
     white-space: nowrap;
     overflow:hidden;
-    margin-left: 10%;
+    margin-left: 5%;
     border-radius: 10px 10px 0px 0px;
+    min-width: 600px;
+    box-shadow: 0px 5px 5px gray;
 }
 
 .wrap div:first-child{margin-left:-2%;}
 
 .progress {
     margin:0;
-    margin-left: 0.3%;
+    margin-left: 0.2%;
     height: 40px;
     width: 25%;
     position: relative;
     display: inline-block;
-    padding-top: 10px;
+    padding-top: 10px;;
     text-align: center;
     line-height: 30px;
     transition: all 0.8s;
@@ -45,7 +61,7 @@
     -webkit-transform: skew(45deg);
     -moz-transform: skew(45deg);
     transform: skew(45deg);
-    box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.2);  
+    /* box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.2);   */
   }
   .progress:after {
     height: 50%;
@@ -56,7 +72,7 @@
     -webkit-transform: skew(-45deg);
     -moz-transform: skew(-45deg);
     transform: skew(-45deg); 
-    box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.2);   
+    /* box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.2);    */
   }
 
   .progress:first-child:before{
@@ -80,22 +96,40 @@
     -moz-transform: skew(-45deg);
     transform: skew(-45deg);
   }
-  .progress:hover:before,
-  .progress:hover:after {
-    background-color: var(--current-color);
+
+  .progress:last-child:before{
+    height: 50%;
+    width: 110%;
+    top: 0;
+    left: -0%;
+    background-color: var(--normal-color);
+    -webkit-transform: skew(45deg);
+    -moz-transform: skew(45deg);
+    transform: skew(45deg);
+  }
+
+  .progress:last-child:after{
+    height: 50%;
+    width: 110%;
+    top: 50%;
+    left: 0%;
+    background-color: var(--normal-color);
+    -webkit-transform: skew(-45deg);
+    -moz-transform: skew(-45deg);
+    transform: skew(-45deg);
   }
   .progress{
     cursor: pointer; 
   }
 
-  .current:before, .current:first-child:before {
+  .current:before, .current:first-child:before, .current:last-child:before  {
     background-color: var(--current-color);
     /* -webkit-transform: translateY(-20%) skew(45deg) ;
     -moz-transform: translateY(-20%) skew(45deg) ;
     transform: translateY(-20%) skew(45deg) ;
     z-index: ; */
   }
-  .current:after, .current:first-child:after {
+  .current:after, .current:first-child:after, .current:last-child:after  {
     background-color: var(--current-color);
     /* -webkit-transform: translateY(-20%) skew(-45deg);
     -moz-transform: translateY(-20%) skew(-45deg);
@@ -103,10 +137,10 @@
     z-index: ; */
   }
 
-  .previous:before, .previous:first-child:before {
+  .previous:before, .previous:first-child:before, .previous:first-child:before  {
     background-color: var(--previous-color);
   }
-  .previous:after, .previous:first-child:after {
+  .previous:after, .previous:first-child:after, .previous:first-child:before  {
     background-color: var(--previous-color);
   }
 
