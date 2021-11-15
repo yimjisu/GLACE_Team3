@@ -5,7 +5,7 @@ const Canvas = props => {
   
   const canvasRef = useCanvas(props)
   
-  return <canvas ref={canvasRef}/>
+  return <canvas ref={canvasRef} styles={{}}/>
 }
 
 export default Canvas;

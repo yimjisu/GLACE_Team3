@@ -16,8 +16,8 @@ const useCanvas = () => {
   let allSeats = [];
   var selectedSeats = [];
   
-  let offsetX;
   let offsetY = 180;
+  var offsetX;
 
 function resize(canvas, ctx) {
     // const clientWidth = document.body.clientWidth*0.8;
@@ -45,10 +45,14 @@ function resize(canvas, ctx) {
     return false;
 }
 
+let scale = 1;
+
 function animate(ctx) {
+
   ctx.clearRect(0, 0, width, height);
   ctx.fillStyle = backgroundColor;
   ctx.fillRect(0, 0, width, height);
+  ctx.scale(scale, scale);
   for(let i=0; i<allSeats.length; i++) {
     allSeats[i].animate(ctx);
   }
@@ -93,6 +97,13 @@ function animate(ctx) {
     }
   }
 
+  function onWheel(e) {
+    const deltaPos = new Point(e.deltaX, e.deltaY);
+    for(let i=0; i<allSeats.length; i++) {
+      allSeats[i].zoom(deltaPos);
+    }
+  }
+
   useEffect(() => {
     
     const canvas = canvasRef.current
@@ -126,6 +137,7 @@ function animate(ctx) {
       canvas.addEventListener("pointermove", onMove);
       canvas.addEventListener("pointerup", onUp);
       canvas.addEventListener("click", onClick);
+      canvas.addEventListener("wheel", onWheel);
     }
     render()
     
