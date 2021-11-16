@@ -7,13 +7,13 @@ import ReservationDone from "../ReservationDone/reservationDone";
 import Menu from "../Menu/menu";
 
 const Panel = ({ 
-    state,
+    state, setState
     }) => {
+        
     return (
     <div className={styles.panel}>
-        
         {
-        state == 0 && <SelectShow />
+        state == 0 && <SelectShow/>
         }
         {
             state == 1 && <SelectSeat />
