@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import InputNumber from "./inputNumber";
-import Canvas from "./SeatLayout/canvas";
+import SeatLayout from "./SeatLayout/seatLayout";
 import styles from './selectSeat.module.css';
 
 const SelectSeat = ({ 
@@ -18,26 +18,26 @@ const SelectSeat = ({
     const name = ['성인', '청소년', '유아'];
     
     return (
-        <div className = {styles.seat}>
-            <div className = {styles.panelWindow}>
+        <div className = {styles.panelWindow}>
+            <div className = {styles.seat}>
+                <div className = {styles.peopleNum}>
+                    {
+                        num.map((value, index) => {
+                            return <InputNumber 
+                                name = {name}
+                                index = {index} 
+                                num = {num}
+                                setNum = {setNum} />;
+                        })
+                    }
+                </div>
+            <SeatLayout 
+            className = {styles.seatLayout}
+            seats = {seats}/>
+            </div>
             <div className = {styles.seatInfo}>
                 Seat Info
             </div>
-                <div className = {styles.peopleNum}>
-                    { num.map((value, index) => {
-                        return <InputNumber 
-                            name = {name}
-                            index = {index} 
-                            num = {num}
-                            setNum = {setNum} />;
-                    })}
-                </div>
-                
-            
-            </div>
-            <Canvas 
-            className = {styles.seatLayout}/>
-            
         </div>
     );
 }

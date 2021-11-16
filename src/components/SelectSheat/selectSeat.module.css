@@ -1,12 +1,12 @@
 .panelWindow{
     display:flex;
-    border-bottom: 1px solid gray;
-    height: 100px;
 }
 
 .seatInfo{
     float: right;
+    height : 730px;
     width : 100%; 
+    border-left : 1px solid gray;
 }
 
 .seat{
@@ -19,11 +19,10 @@
     line-height: 1.2;
     justify-content: center;
     align-items: center;
-    min-width: 700px;
-    height: 100px;
+    min-width: 600px;
+    height: 50px;
+    border-bottom: 1px solid gray;
     margin-bottom: 5px;
-    
-    border-left : 1px solid gray;
 }
 
 
