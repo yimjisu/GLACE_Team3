@@ -4,51 +4,38 @@ const INITIAL_SIZE = 20;
 const INITIAL_INTERVAL = 30;
 const START_X = 17;
 const START_Y = 251;
+const ZOOM_INDEX = 0.001;
 export class Seat {
 
     constructor(x, y, color) {
         this.pos = new Point(x, y);
-        this.target = new Point();
-        this.prevPos = new Point();
+        this.startPos = new Point(START_X, START_Y);
+        this.indexPos = new Point (
+            Math.round((x - START_X) / INITIAL_INTERVAL),
+            Math.round((y - START_Y) / INITIAL_INTERVAL));
+        this.interval = INITIAL_INTERVAL;
+        
+        // PANNING
+        this.movePos = this.pos.clone();
         this.downPos = new Point();
-        this.startPos = new Point();
-        this.mousePos = new Point();
-        this.origin = new Point();
+        this.downStartPos = new Point();
+        
         this.isSelected = false;
-        this.isAble = true;
         this.color = color;
         this.size = INITIAL_SIZE;
-        this.opacity = 0.5;
-        this.zooming = 1;
-        this.indexX = Math.round((x - START_X) / INITIAL_INTERVAL);
-        this.indexY = Math.round((y - START_Y) / INITIAL_INTERVAL);
-        this.interval = INITIAL_INTERVAL;
-        this.targetZoom = new Point();
+        this.opacity = 0.3;
+        this.zoomIndex = 1;        
     }
 
-    resize(){
-    // resize(row, column, stageWidth, stageHeight) {
-        // this.pos.x = 
-        //     x / row * (stageWidth - INTERVAL) + INTERVAL;
-        // this.pos.y =
-        //     y / column * (stageHeight - INTERVAL) + INTERVAL;
-        // this.width =
-        //     (stageWidth - INTERVAL) / row - INTERVAL;
-        // this.height =
-        //     (stageHeight - INTERVAL) / column - INTERVAL;
-        this.target = this.pos.clone();
-        this.prevPos = this.pos.clone();
-    }
-
-    animate(ctx) {
-        const move = this.target.clone().subtract(this.pos);//.reduce(FOLLOW_SPEED);
-        this.pos.add(move);
+    animate(ctx) {          
+        const move = this.movePos.clone().subtract(this.pos);
+        this.pos = this.pos.add(move);
 
         ctx.beginPath();
         if (this.isSelected) {
             this.opacity = 1;
         } else {
-            this.opacity = 0.5;
+            this.opacity = 0.3;
         }
 
         ctx.globalAlpha = this.opacity;
@@ -61,14 +48,14 @@ export class Seat {
     down(point) {
         this.isDown = true;
         this.downPos = point.clone();
-        this.startPos = this.pos.clone();
-        this.mousePos = point.clone().subtract(this.pos);
+        this.downStartPos = this.pos.clone();
     }
 
     move(point) {
         if (this.isDown) {
-            this.target =
-                this.startPos.clone().add(point).subtract(this.downPos);
+            this.movePos =
+                this.downStartPos.clone().add(point).subtract(this.downPos);
+            this.startPos.add(this.movePos.clone().subtract(this.pos));
         }
     }
 
@@ -77,23 +64,21 @@ export class Seat {
     }
 
     zoom(deltaPoint) {
-        let index = Math.sqrt(deltaPoint.x**2 + deltaPoint.y**2) * 0.01;
-        
+        let index = Math.sqrt(deltaPoint.x**2 + deltaPoint.y**2) * ZOOM_INDEX;
         if (deltaPoint.y > 0) {
-            this.zooming -= index;
-            if (this.zooming < 0.2){
-                this.zooming = 0.2;
-            }
+            this.zoomIndex -= index;
+            this.zoomIndex = Math.max(this.zoomIndex, 0.2);
         } else{
-            this.zooming += index;
-            if (this.zooming > 5){
-                this.zooming = 5;
-            }
+            this.zoomIndex += index;            
+            this.zoomIndex = Math.min(this.zoomIndex, 5);
         }
 
-        this.size = INITIAL_SIZE * this.zooming;
-        this.interval = INITIAL_INTERVAL * (this.zooming - 1);
-        this.targetZoom = new Point(this.indexX * this.interval, this.indexY * this.interval);
+        this.size = INITIAL_SIZE * this.zoomIndex;
+        this.interval = INITIAL_INTERVAL * this.zoomIndex;
+        
+        this.intervalPos = this.indexPos.clone().multiply(this.interval);
+        this.pos = this.startPos.clone().add(this.intervalPos);
+        this.movePos = this.pos.clone();
     }
 
     click(point) {

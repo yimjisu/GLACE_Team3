@@ -28,9 +28,6 @@ function resize(canvas, ctx) {
     // const offsetX = clientWidth - width;
 
     offsetX = canvas.offsetLeft;
-    for(let i=0; i<allSeats.length; i++) {
-      allSeats[i].resize(ctx);
-    }
 
     if (canvas.width !== width || canvas.height !== height) {
       const { devicePixelRatio:ratio=1 } = window;
@@ -127,7 +124,7 @@ function animate(ctx) {
 
     mousePos = new Point();
     const render = () => {
-      
+      offsetX = canvas.offsetLeft;
       animationFrameId = window.requestAnimationFrame(render);
       animate(context);
       
