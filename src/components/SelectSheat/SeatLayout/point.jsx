@@ -22,6 +22,13 @@ export class Point {
         return this;
     }
 
+    multiply(value) {
+        this.x *= value;
+        this.y *= value;
+        return this;
+    }
+
+
     collide(point, width, height) {
         if(this.x >= point.x &&
             this.x <= point.x + width &&
