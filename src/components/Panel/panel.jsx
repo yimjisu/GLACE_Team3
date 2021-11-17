@@ -23,7 +23,7 @@ const Panel = ({
             state == 2 && <ReservationCheck state={state} setState={setState}  showInfo={showInfo}/>
         }
         {
-            state == 3 && <ReservationDone />
+            state == 3 && <ReservationDone showInfo={showInfo}/>
         }
     </div>
     );

@@ -61,23 +61,24 @@ const ReservationCheck = ({
                 </Col>
 
                 <Col xs={5}>
-                <form className={styles.userInfo}>
-                    <div className={styles.title}>비회원 로그인</div><br/>
-                    <div className={styles.text}>
-                    <b>휴대폰&nbsp;&nbsp;&nbsp;</b>
-                    <input type='text' onChange={onChange1} value={text1}/><br/>
-                    </div>
-                    
-                    <div className={styles.text}>
-                    <b className={styles.text}>비밀번호&nbsp;&nbsp;&nbsp;</b>
-                    <input type='password' onChange={onChange2} value={text2}/><br/>
-                    </div>
+                    <form className={styles.userInfo}>
+                        <div className={styles.title}>비회원 로그인</div><br/>
+                        
+                        <div className={styles.text}>
+                        <b>휴대폰&nbsp;&nbsp;&nbsp;</b>
+                        <input type='text' onChange={onChange1} value={text1}/>
+                        </div>
+                        
+                        <div className={styles.text}>
+                        <b className={styles.text}>비밀번호&nbsp;&nbsp;&nbsp;</b>
+                        <input type='password' onChange={onChange2} value={text2}/>
+                        </div>
 
-                    <div className={styles.text}>
-                    <b className={styles.text}>비밀번호 확인&nbsp;&nbsp;&nbsp;</b>
-                    <input className={styles.box} type='password' onChange={onChange3} value={text3}/>
-                    </div>
-                </form>
+                        <div className={styles.text}>
+                        <b className={styles.text}>비밀번호 확인&nbsp;&nbsp;&nbsp;</b>
+                        <input className={styles.box} type='password' onChange={onChange3} value={text3}/>
+                        </div>
+                    </form>
                 </Col>
             </Row>
             </div>

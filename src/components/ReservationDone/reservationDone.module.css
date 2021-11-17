@@ -1,0 +1,21 @@
+.text {
+    padding-top: 50px;
+    padding-left: 100px;
+    font-size: 30px;
+    text-align: left;
+}
+
+.card {
+    margin-top: 30px;
+    margin-left: 100px;
+    width: 500px;
+}
+
+.userInfo {
+    position: absolute;
+    top: 35%;
+    left: 45%;
+    text-align: left;
+    font-weight: normal;
+    font-size: 25px;
+}
