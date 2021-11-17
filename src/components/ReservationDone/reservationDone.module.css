@@ -19,3 +19,9 @@
     font-weight: normal;
     font-size: 25px;
 }
+
+.checkBtn {
+    margin-top: 5px;
+    margin-right: 5px;
+    float: right;
+}

@@ -3,13 +3,20 @@ import styles from './reservationDone.module.css';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import Button from 'react-bootstrap/Button';
 
-
-const getRandom = (min, max) => Math.floor(Math.random() * (max-min) + min);
 
 const ReservationDone = ({ 
-    showInfo
+    state, setState, showInfo
     }) => {
+
+    
+    const getRandom = (min, max) => Math.floor(Math.random() * (max-min) + min);
+    
+    const onClickBtn = () => {
+        setState(4);
+    }
+    
     return (
         <div>
             <Row>
@@ -31,6 +38,10 @@ const ReservationDone = ({
                             <b>좌석&nbsp;&nbsp;</b>C1, C2
                         </div>
                     </form>
+                </Col>
+
+                <Col xs={1}>
+                    <Button className = {styles.checkBtn} onClick={onClickBtn}>예약 확인</Button>
                 </Col>
             </Row>
         </div>
