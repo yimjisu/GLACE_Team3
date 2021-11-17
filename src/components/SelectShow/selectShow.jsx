@@ -5,44 +5,53 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image';
 import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css"
+import Button from 'react-bootstrap/Button';
+import "react-datepicker/dist/react-datepicker.css";
+import poster1 from '../images/poster1.jpg';
+import poster2 from '../images/poster2.jpg';
+import poster3 from '../images/poster3.jpg';
 
 
 const SelectShow = ({ 
+    state, setState,setShowInfo
     }) => {
     const cards = [
         {
-            name : "연극A", place: "교양분관", period: "2021.09.01 ~ 2021.11.01", time: "100분"
+            name : "보통날의 기적", place: "교양분관", period: "2021.09.01 ~ 2021.11.01", time: "100분", img: poster1
         },
         {
-            name : "연극B", place: "B", period: "2021.09.01 ~ 2021.11.01", time: "110분"
+            name : "한여름 밤의 꿈", place: "B", period: "2021.09.01 ~ 2021.11.01", time: "110분", img: poster2
         },
         {
-            name : "연극C", place: "C", period: "2021.09.01 ~ 2021.11.01", time: "120분"
+            name : "방방콘", place: "C", period: "2021.09.01 ~ 2021.11.01", time: "120분", img: poster3
         },
         {
-            name : "연극D", place: "D", period: "2021.09.01 ~ 2021.11.01", time: "130분"
+            name : "연극D", place: "D", period: "2021.09.01 ~ 2021.11.01", time: "130분", img: poster1
         },
         {
-            name : "연극E", place: "E", period: "2021.09.01 ~ 2021.11.01", time: "140분"
+            name : "연극E", place: "E", period: "2021.09.01 ~ 2021.11.01", time: "140분", img: poster2
         },
         {
-            name : "연극F", place: "F", period: "2021.09.01 ~ 2021.11.01", time: "150분"
+            name : "연극F", place: "F", period: "2021.09.01 ~ 2021.11.01", time: "150분", img: poster3
         }
     ];
-    const footerStyle = {backgroundColor: "#3a5bff"};
-
+    const footerStyle = {backgroundColor: "#758BFF"};
+    
     const [showCard, setShowCard] = useState(-1);
     const onClickNext = (index) => {
         setShowCard(index);
     }
-    const onClickPrev = () => {
+    const onClickPrevBtn = () => {
         setShowCard(-1);
+    }
+    const onClickNextBtn = () => {
+        setState(state + 1);
+        setShowInfo(cards[showCard]);
     }
 
     const [startDate, setStartDate] = useState(new Date());
     return (
-        <div>
+        <div className = {styles.panelWindow}>
         {
             showCard == -1 ? (
                 <div>
@@ -52,9 +61,12 @@ const SelectShow = ({
                     return (
                         <Col>
                             <Card onClick={() => {onClickNext(index);}} style={{cursor:'pointer'}}>
-                                <Card.Img variant="top" src="holder.js/100px160" />
-                                <Card.Footer style={footerStyle}className={styles.show} >
-                                    {value.name}<br/>장소: {value.place}<br/>기간: {value.period}
+                                <Card.Img variant="top" height="400px" src={value.img} />
+                                <Card.Footer style={footerStyle} className={styles.show} >
+                                    <b>{value.name}</b> 
+                                    <div className={styles.info}>
+                                        <br/>장소: {value.place}<br/>기간: {value.period}
+                                    </div>
                                 </Card.Footer >
                             </Card>
                         </Col>);
@@ -63,13 +75,14 @@ const SelectShow = ({
                 </Row>
                 </div>
             ) : (
+                <div className = {styles.panel2}>
                 <div>
                 <Row xs={1} md={3}>
                 <Col>
                     <div className={styles.show2}>
                         {cards[showCard].name}
                     </div><br/>
-                    <Image variant="top" src="holder.js/500x500" />
+                    <Image variant="top" src={cards[showCard].img} width="300px" />
                     <br/><br/>
                     <div className={styles.show2}>
                         장소: {cards[showCard].place}
@@ -102,7 +115,9 @@ const SelectShow = ({
                     </Card>
                 </Col>
                 </Row>
-                <button onClick={onClickPrev}>뒤로</button>
+                </div>
+                <Button className = {styles.prevBtn} onClick={onClickPrevBtn}>이전</Button>
+                <Button className = {styles.nextBtn} onClick={onClickNextBtn}>다음</Button>
                 </div>
             )
         }

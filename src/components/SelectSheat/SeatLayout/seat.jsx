@@ -1,50 +1,92 @@
 import { Point } from "./point";
 
-const INTERVAL = 10;
+const INITIAL_SIZE = 20;
+const INITIAL_INTERVAL = 30;
+const START_X = 17;
+const START_Y = 251;
+const ZOOM_INDEX = 0.001;
 export class Seat {
 
-    constructor() {
-        this.pos = new Point();
-        this.target = new Point();
-        this.prevPos = new Point();
+    constructor(x, y, color) {
+        this.pos = new Point(x, y);
+        this.startPos = new Point(START_X, START_Y);
+        this.indexPos = new Point (
+            Math.round((x - START_X) / INITIAL_INTERVAL),
+            Math.round((y - START_Y) / INITIAL_INTERVAL));
+        this.interval = INITIAL_INTERVAL;
+        
+        // PANNING
+        this.movePos = this.pos.clone();
         this.downPos = new Point();
-        this.startPos = new Point();
-        this.mousePos = new Point();
-        this.origin = new Point();
-        this.isDown = false;
+        this.downStartPos = new Point();
+        
         this.isSelected = false;
-        this.isAble = true;
+        this.color = color;
+        this.size = INITIAL_SIZE;
+        this.opacity = 0.3;
+        this.zoomIndex = 1;        
     }
 
-    resize(x, y, row, column, stageWidth, stageHeight) {
-        this.pos.x = 
-            x / row * (stageWidth - INTERVAL) + INTERVAL;
-        this.pos.y =
-            y / column * (stageHeight - INTERVAL) + INTERVAL;
-        this.width =
-            (stageWidth - INTERVAL) / row - INTERVAL;
-        this.height =
-            (stageHeight - INTERVAL) / column - INTERVAL;
-        this.target = this.pos.clone();
-        this.prevPos = this.pos.clone();
-    }
+    animate(ctx) {          
+        const move = this.movePos.clone().subtract(this.pos);
+        this.pos = this.pos.add(move);
 
-    animate(ctx) {
         ctx.beginPath();
         if (this.isSelected) {
-            ctx.fillStyle = "#4463fd";
-        } else if(this.isAble){
-            ctx.fillStyle = "#3E3E3E";
+            this.opacity = 1;
         } else {
-            ctx.fillStyle = "#C4C4C4";
+            this.opacity = 0.3;
         }
+
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        
         ctx.fillRect(this.pos.x, this.pos.y,
-            this.width, this.height);
+            this.size, this.size);
     }
 
     down(point) {
-        if (point.collide(this.pos, this.width, this.height)) {
-            this.isDown = true;
+        this.isDown = true;
+        this.downPos = point.clone();
+        this.downStartPos = this.pos.clone();
+    }
+
+    move(point) {
+        if (this.isDown) {
+            this.movePos =
+                this.downStartPos.clone().add(point).subtract(this.downPos);
+            this.startPos.add(this.movePos.clone().subtract(this.pos));
+        }
+    }
+
+    up() {
+        this.isDown = false;
+    }
+
+    zoom(deltaPoint) {
+        let index = Math.sqrt(deltaPoint.x**2 + deltaPoint.y**2) * ZOOM_INDEX;
+        if (deltaPoint.y > 0) {
+            this.zoomIndex -= index;
+            this.zoomIndex = Math.max(this.zoomIndex, 0.2);
+        } else{
+            this.zoomIndex += index;            
+            this.zoomIndex = Math.min(this.zoomIndex, 5);
+        }
+
+        this.size = INITIAL_SIZE * this.zoomIndex;
+        this.interval = INITIAL_INTERVAL * this.zoomIndex;
+        
+        this.intervalPos = this.indexPos.clone().multiply(this.interval);
+        this.pos = this.startPos.clone().add(this.intervalPos);
+        this.movePos = this.pos.clone();
+    }
+
+    click(point) {
+        if (point.collide(this.pos, this.size, this.size)) {
+            this.isSelected = !this.isSelected;    
+            return this;
+        } else {
+            return null;
         }
     }
 }

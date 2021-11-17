@@ -7,16 +7,17 @@ import ReservationDone from "../ReservationDone/reservationDone";
 import Menu from "../Menu/menu";
 
 const Panel = ({ 
-    state,
+    state, setState
     }) => {
+        
+    const [showInfo, setShowInfo] = useState(null);
     return (
     <div className={styles.panel}>
-        
         {
-        state == 0 && <SelectShow />
+        state == 0 && <SelectShow state={state} setState={setState} setShowInfo={setShowInfo}/>
         }
         {
-            state == 1 && <SelectSeat />
+            state == 1 && <SelectSeat state={state} setState={setState}  showInfo={showInfo}/>
         }
         {
             state == 2 && <ReservationCheck />
