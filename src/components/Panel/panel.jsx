@@ -20,7 +20,7 @@ const Panel = ({
             state == 1 && <SelectSeat state={state} setState={setState}  showInfo={showInfo}/>
         }
         {
-            state == 2 && <ReservationCheck />
+            state == 2 && <ReservationCheck state={state} setState={setState}  showInfo={showInfo}/>
         }
         {
             state == 3 && <ReservationDone />
