@@ -106,7 +106,6 @@ function animate(ctx) {
     const canvas = canvasRef.current
     const context = canvas.getContext('2d')
 
-    let frameCount = 0
     let animationFrameId;
     const seats = seatData.seats;
     for (var i=0; i<seats.length; i++){

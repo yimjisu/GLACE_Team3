@@ -10,7 +10,7 @@ const ReservationCheck = ({
     state, setState, showInfo
     }) => {
     
-    const headfootStyle = {backgroundColor: "#758BFF"};
+    const headfootStyle = {backgroundColor: "#FFFFFF"};//"#758BFF"};
 
     const [text1, setText1] = useState('');
     const onChange1 = (e) => {
@@ -48,7 +48,7 @@ const ReservationCheck = ({
                             {showInfo.name}
                             </div>
                         </Card.Header>
-                        <Card.Img variant="top" height="500px" src={showInfo.img}/>
+                        <Card.Img className = {styles.cardImg} variant="top" height="500px" src={showInfo.img}/>
                         <Card.Footer style={headfootStyle}>                    
                             <div className={styles.footer}>
                                 장소: {showInfo.place}<br/>
