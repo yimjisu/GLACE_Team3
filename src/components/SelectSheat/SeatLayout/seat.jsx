@@ -3,7 +3,7 @@ import { Point } from "./point";
 const INITIAL_SIZE = 20;
 const INITIAL_INTERVAL = 30;
 const START_X = 17;
-const START_Y = 251;
+const START_Y = 11;
 const ZOOM_INDEX = 0.001;
 export class Seat {
 
@@ -43,6 +43,22 @@ export class Seat {
         
         ctx.fillRect(this.pos.x, this.pos.y,
             this.size, this.size);
+
+        ctx.fillStyle = "#3e3e3e";
+        ctx.font = "12px serif";
+        if (this.indexPos.x == 0){
+            console.log('here?')
+            ctx.fillText(
+                String.fromCharCode(this.indexPos.y+65), 
+                this.pos.x - this.interval/2, 
+                this.pos.y + this.size/2);
+        }
+        if (this.indexPos.y == 0){
+            ctx.fillText(
+                this.indexPos.x+1, 
+                this.pos.x+this.size/4, 
+                this.pos.y-this.interval/2);
+        }
     }
 
     down(point) {

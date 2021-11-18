@@ -35,7 +35,7 @@ const SelectShow = ({
             name : "연극F", place: "F", period: "2021.09.01 ~ 2021.11.01", time: "150분", img: poster3
         }
     ];
-    const footerStyle = {backgroundColor: "#758BFF"};
+    const footerStyle = {backgroundColor: "#FFFFFF"};//#3e3e3e"};
     
     const [showCard, setShowCard] = useState(-1);
     const onClickNext = (index) => {
@@ -54,13 +54,11 @@ const SelectShow = ({
         <div className = {styles.panelWindow}>
         {
             showCard == -1 ? (
-                <div>
-                <Row xs={1} md={5}>
+                <div className = {styles.cardDiv}>
                 {
                     cards.map((value, index) => {
                     return (
-                        <Col>
-                            <Card onClick={() => {onClickNext(index);}} style={{cursor:'pointer'}}>
+                            <Card className = {styles.cards}onClick={() => {onClickNext(index);}} style={{cursor:'pointer'}}>
                                 <Card.Img variant="top" height="400px" src={value.img} />
                                 <Card.Footer style={footerStyle} className={styles.show} >
                                     <b>{value.name}</b> 
@@ -68,11 +66,9 @@ const SelectShow = ({
                                         <br/>장소: {value.place}<br/>기간: {value.period}
                                     </div>
                                 </Card.Footer >
-                            </Card>
-                        </Col>);
+                            </Card>);
                     })
                 }
-                </Row>
                 </div>
             ) : (
                 <div className = {styles.panel2}>
