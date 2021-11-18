@@ -5,6 +5,7 @@ import SelectSeat from "../SelectSheat/selectSeat";
 import ReservationCheck from "../ReservationCheck/reservationCheck";
 import ReservationDone from "../ReservationDone/reservationDone";
 import Menu from "../Menu/menu";
+import UserInfo from "../UserInfo/userinfo"
 
 const Panel = ({ 
     state, setState
@@ -20,10 +21,13 @@ const Panel = ({
             state == 1 && <SelectSeat state={state} setState={setState}  showInfo={showInfo}/>
         }
         {
-            state == 2 && <ReservationCheck />
+            state == 2 && <ReservationCheck state={state} setState={setState}  showInfo={showInfo}/>
         }
         {
-            state == 3 && <ReservationDone />
+            state == 3 && <ReservationDone state={state} setState={setState} showInfo={showInfo}/>
+        }
+        {
+            state == 4 && <UserInfo />
         }
     </div>
     );
