@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./selectShow.module.css";
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row'
@@ -10,11 +10,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import poster1 from '../images/poster1.jpg';
 import poster2 from '../images/poster2.jpg';
 import poster3 from '../images/poster3.jpg';
+import db from "../../service/firebase";
 
 
 const SelectShow = ({ 
     state, setState,setShowInfo
     }) => {
+
     const cards = [
         {
             name : "보통날의 기적", place: "교양분관", period: "2021.09.01 ~ 2021.11.01", time: "100분", img: poster1
