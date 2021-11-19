@@ -5,19 +5,26 @@ const INITIAL_INTERVAL = 30;
 const ZOOM_INDEX = 0.001;
 export class Seat {
 
-    constructor(lefttop, size, color) {
+    constructor(lefttop, size, color, seatName) {
         this.pos = new Point(lefttop.x, lefttop.y);
+        this.width = size.width;
+        this.height = size.height;
+        this.fontSize = 7;
+        
         this.startPos = new Point();
+        this.finalPos = new Point(lefttop.x, lefttop.y);
+        this.finalWidth = size.width;
+        this.finalHeight = size.height;
+        this.finalFontSize = 7;
         
         // PANNING
         this.movePos = this.startPos.clone();
         this.downStartPos = new Point();
         this.downSeatPos = new Point();
         
+        this.seatName = seatName;
         this.isSelected = false;
         this.color = color;
-        this.width = size.width;
-        this.height = size.height;
         this.opacity = 0.3;
         this.zoomIndex = 1;     
 
@@ -37,29 +44,26 @@ export class Seat {
 
         ctx.globalAlpha = this.opacity;
         ctx.fillStyle = this.color;
-        
-        ctx.fillRect(
-            this.startPos.x + this.pos.x * this.zoomIndex, 
-            this.startPos.y + this.pos.y * this.zoomIndex,
-            this.width * this.zoomIndex,
-            this.height * this.zoomIndex);
+
+        this.finalPos = this.startPos.clone().add(this.pos.clone().multiply(this.zoomIndex));
+        this.finalWidth = this.width * this.zoomIndex;
+        this.finalHeight = this.height * this.zoomIndex;
+        this.finalFontSize = this.fontSize * this.zoomIndex;
+        ctx.fillRect(this.finalPos.x, this.finalPos.y,
+            this.finalWidth, this.finalHeight);
 
         ctx.globalAlpha = 1;   
-        ctx.fillStyle = "#3e3e3e";
-        ctx.font = "12px";
-        // if (this.indexPos.x == 0){
-        //     console.log('here?')
-        //     ctx.fillText(
-        //         String.fromCharCode(this.indexPos.y+65), 
-        //         this.pos.x - this.interval/2, 
-        //         this.pos.y + this.size/2);
-        // }
-        // if (this.indexPos.y == 0){
-        //     ctx.fillText(
-        //         this.indexPos.x+1, 
-        //         this.pos.x+this.size/4, 
-        //         this.pos.y-this.interval/2);
-        // }
+        if (!this.isSelected){
+            ctx.fillStyle = "#3e3e3e";
+        } else {
+            ctx.fillStyle = "#FFFFFF";
+        }
+        ctx.font = this.finalFontSize+"px sans-serif";
+        let fontWidth = ctx.measureText(this.seatName).width;
+        ctx.fillText(
+            this.seatName, 
+            this.finalPos.x + (this.finalWidth - fontWidth) /2, 
+            this.finalPos.y + this.finalHeight / 1.5);
     }
 
     down(point) {
@@ -79,10 +83,8 @@ export class Seat {
     up(point) {
         this.isDown = false;
         if (!this.isMove &&
-            point.collide(this.startPos.x + this.pos.x * this.zoomIndex, 
-                this.startPos.y + this.pos.y * this.zoomIndex,
-                this.width * this.zoomIndex,
-                this.height * this.zoomIndex)) {
+            point.collide(this.finalPos,
+                this.finalWidth, this.finalHeight)) {
             this.isSelected = !this.isSelected;    
             return this;
         } else {
@@ -100,11 +102,5 @@ export class Seat {
             this.zoomIndex += index;            
             this.zoomIndex = Math.min(this.zoomIndex, 5);
         }
-        // this.size = INITIAL_SIZE * this.zoomIndex;
-        // this.interval = INITIAL_INTERVAL * this.zoomIndex;
-        
-        // this.intervalPos = this.indexPos.clone().multiply(this.interval);
-        // this.pos = this.startPos.clone().add(this.intervalPos);
-        // this.movePos = this.pos.clone();
     }
 }
