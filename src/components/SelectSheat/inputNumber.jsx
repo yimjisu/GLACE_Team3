@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styles from './selectSeat.module.css';
 
 const InputNumber = ({index, num, setNum, name}) => {
@@ -8,18 +8,22 @@ const InputNumber = ({index, num, setNum, name}) => {
     
     const increment = () => {
       if (value >= max) return;
-      num[index] = value + 1;
+      let tempNum = num;
+      tempNum[index] = value + 1;
+      
+      setNum(tempNum);
       setValue(value + 1);
-      setNum(num);
     }
   
     const decrement = () => {
       if (value <= min) return;
-      num[index] = value - 1;
+      let tempNum = num;
+      tempNum[index] = value - 1;
+      
+      setNum(tempNum);
       setValue(value - 1);
-      setNum(num);
     }
-    
+
     return (
         <>
         <p className = {styles.name}>{name[index]}</p>

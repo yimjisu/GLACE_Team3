@@ -7,25 +7,26 @@ import Button from 'react-bootstrap/Button';
 const SelectSeat = ({ 
     state, setState, showInfo
     }) => {
-    const seats = [
-        [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-        [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    ];
-
     const [num, setNum] = useState([0, 0, 0]);
     const name = ['성인', '청소년', '유아'];
 
-    
     const onClickPrevBtn = () => {
         setState(state - 1);
     }
     const onClickNextBtn = () => {
         setState(state + 1);
     }
+
+    const [totalNum, setTotalNum] = useState(0);
+    useEffect(() => {
+        console.log(num, 'change');
+        let totalNum = 0;
+        for (let i=0; i<num.length; i++) {
+            totalNum += num[i];
+        }
+        setTotalNum(totalNum);
+    }, [num]);
+
     
     return (
         <div>
@@ -46,11 +47,10 @@ const SelectSeat = ({
                             setNum = {setNum} />;
                     })}
                 </div>
-                
-            
             </div>
             <Canvas 
-            className = {styles.seatLayout}/>
+                className = {styles.seatLayout}
+                totalNum = {totalNum}/>
         </div>
          <Button className = {styles.prevBtn} onClick={onClickPrevBtn}>이전</Button>
          <Button className = {styles.nextBtn} onClick={onClickNextBtn}>다음</Button>
