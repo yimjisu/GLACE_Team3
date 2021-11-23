@@ -11,7 +11,7 @@ export class Seat {
         this.height = size.height;
         this.fontSize = 7;
         
-        this.startPos = new Point();
+        this.startPos = new Point(0, 20);
         this.finalPos = new Point(lefttop.x, lefttop.y);
         this.finalWidth = size.width;
         this.finalHeight = size.height;
