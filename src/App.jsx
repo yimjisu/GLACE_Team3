@@ -8,15 +8,16 @@ import Panel from './components/Panel/panel';
 
 function App() {
   const [state, setState] = useState(0);
-  
+
   useEffect(() => {
     console.log(state);
   },[state]);
 
-
   return (
     <div className={styles.App}>
-      <Header/>
+      <Header
+        state={state}
+        setState={setState}/>
       <Menu 
         state={state}
         setState={setState}/>
