@@ -78,19 +78,7 @@ function animate(ctx) {
     mousePos.y = e.clientY - offsetY;
 
     for(let i=0; i<allSeats.length; i++) {
-      allSeats[i].up();
-    }
-  }
-
-  function onClick(e) {
-    mousePos.x = e.clientX - offsetX;
-    mousePos.y = e.clientY - offsetY;
-
-    for(let i=0; i<allSeats.length; i++) {
-      const seat = allSeats[i].click(mousePos.clone());
-      if (seat) {
-        break;
-      }
+      allSeats[i].up(mousePos.clone());
     }
   }
 
@@ -108,12 +96,38 @@ function animate(ctx) {
 
     let animationFrameId;
     const seats = seatData.seats;
+    seats.sort(function(a, b) {
+      if (a.rectangles[0].lefttop.y < b.rectangles[0].lefttop.y) {
+        return -1;
+      } else if (a.rectangles[0].lefttop.y > b.rectangles[0].lefttop.y) {
+        return 1;
+      }
+      if (a.rectangles[0].lefttop.x < b.rectangles[0].lefttop.x) {
+        return -1;
+      } else if (a.rectangles[0].lefttop.x > b.rectangles[0].lefttop.x) {
+        return 1;
+      } 
+      return 0;
+    })
     for (var i=0; i<seats.length; i++){
-        const rectangles = seats[i].rectangles
+        const rectangles = seats[i].rectangles;
+        rectangles.sort(function(a, b) {
+          if (a.lefttop.y < b.lefttop.y) {
+            return -1;
+          } else if (a.lefttop.y > b.lefttop.y) {
+            return 1;
+          }
+          if (a.lefttop.x < b.lefttop.x) {
+            return -1;
+          } else if (a.lefttop.x > b.lefttop.x) {
+            return 1;
+          } 
+          return 0;
+        })
         for (var x = 0; x < rectangles.length; x++){
           let s = rectangles[x];
-          let lefttop = s.lefttop;
-          let singleSeat = new Seat(lefttop.x, lefttop.y, seats[i].color);
+          let charName = String.fromCharCode(i+65) + String(x);
+          let singleSeat = new Seat(s.lefttop, s.size, seats[i].color, charName);
           allSeats.push(singleSeat);
         }
         
@@ -133,7 +147,6 @@ function animate(ctx) {
       canvas.addEventListener("pointerdown", onDown);
       canvas.addEventListener("pointermove", onMove);
       canvas.addEventListener("pointerup", onUp);
-      canvas.addEventListener("click", onClick);
       canvas.addEventListener("wheel", onWheel);
     }
     render()
