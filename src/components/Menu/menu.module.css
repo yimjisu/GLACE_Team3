@@ -118,9 +118,6 @@
     -moz-transform: skew(-45deg);
     transform: skew(-45deg);
   }
-  .progress{
-    cursor: pointer; 
-  }
 
   .current:before, .current:first-child:before, .current:last-child:before  {
     background-color: var(--current-color);
