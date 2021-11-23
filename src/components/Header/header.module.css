@@ -10,3 +10,12 @@
     font-size: x-large;
     font-weight: bolder;
 }
+
+.btn {
+    position: fixed;
+    left: 1660px;
+    top: 10px;
+    font-size: 16px;
+    background-color: rgba(117, 139, 255, 0.3);
+    border: none;
+}
