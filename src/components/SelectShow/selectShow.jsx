@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "./selectShow.module.css";
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row'
@@ -13,10 +13,13 @@ import poster3 from '../images/poster3.jpg';
 import db from "../../service/firebase";
 
 
+import { SocketContext} from '../../service/socket';
+
 const SelectShow = ({ 
     state, setState,setShowInfo
     }) => {
 
+    const socket = useContext(SocketContext);
     const cards = [
         {
             name : "보통날의 기적", place: "교양분관", period: "2021.09.01 ~ 2021.11.01", time: "100분", img: poster1
@@ -41,6 +44,8 @@ const SelectShow = ({
     
     const [showCard, setShowCard] = useState(-1);
     const onClickNext = (index) => {
+        
+        socket.emit("showSelected", index);
         setShowCard(index);
     }
     const onClickPrevBtn = () => {
@@ -51,6 +56,12 @@ const SelectShow = ({
         setShowInfo(cards[showCard]);
     }
 
+    useEffect(() => {
+        socket.emit("requestShowInfo");
+        socket.on("requestShowInfo", function(data){
+            console.log(data);
+        });
+    }, []);
     const [startDate, setStartDate] = useState(new Date());
     return (
         <div className = {styles.panelWindow}>
