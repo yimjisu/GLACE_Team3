@@ -14,6 +14,17 @@ const io = require('socket.io')(server, {
 
 io.on('connection', socket => {
 
+    
+    // const snap = firestore.collection("show_info");
+    // snap.get().then(snapshots => {
+    //     console.log(snapshots.docs.map(doc => doc.id))
+    // })
+    // console.log(typeof snap);
+    // snap.then(doc => {
+    //     console.log(doc.id, '=>', doc.data());
+    //     console.log(doc.data().place)
+    // });
+
 
     console.log("socket connected")
 
@@ -24,11 +35,29 @@ io.on('connection', socket => {
             current_data = data;
         });
 
-    socket.on("requestShowInfo", function () {
-        data = { 'user': 1 } // firebase 
-        console.log("here?")
-        socket.emit("requestShowInfo", data);
+    socket.on("requestShowInfo", async function () {
+        const snap = await firestore.collection("show_info").get();
+        var titles = snap.docs.map(doc => doc.id)
+
+        const show_info = []
+        for (var i = 0; i < titles.length; i++) {
+            var documentSnapshot = await firestore.collection(titles[i]).doc("공연정보").get()
+            var showData = documentSnapshot.data()
+            var show_dic = {}
+
+            show_dic["title"] = titles[i]
+            show_dic["place"] = showData.place
+            show_dic["period"] = showData.period
+            show_dic["runTime"] = showData.runTime
+            show_dic["poster"] = showData.poster
+
+            show_info.push(show_dic)
+        }
+
+        // console.log(show_info)
+        socket.emit("requenstShowInfo", show_info);
     })
+
     socket.on("user_add",
         function (data) {
             console.log("user add");
