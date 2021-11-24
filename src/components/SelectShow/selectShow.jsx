@@ -31,7 +31,7 @@ const SelectShow = ({
             name: "방방콘", place: "C", period: "2021.09.01 ~ 2021.11.01", time: "120분", img: poster3
         },
         {
-            name: "연극D", place: "D", period: "2021.09.01 ~ 2021.11.01", time: "130분", img: poster1
+            name: "겨울이야기", place: "D", period: "2021.09.01 ~ 2021.11.01", time: "130분", img: poster1
         },
         {
             name: "연극E", place: "E", period: "2021.09.01 ~ 2021.11.01", time: "140분", img: poster2

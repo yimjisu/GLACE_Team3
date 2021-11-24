@@ -29,10 +29,23 @@ io.on('connection', socket => {
     console.log("socket connected")
 
     socket.on('showSelected',
-        function (data) {
-            console.log("selected data");
-            console.log(data);
+        async function (data) {
+            // console.log("selected data");
+            // console.log(data);
             current_data = data;
+
+            var showTitle = data["name"]
+            var documentSnapshot = await firestore.collection(showTitle).get()
+            var times = documentSnapshot.docs.map(doc => doc.id)
+            for (var i = 0; i < times.length; i++) {
+                if (times[i] === '공연정보') {
+                    times.splice(i, 1);
+                    break
+                }
+            }
+
+            // console.log(times)
+            socket.emit("showSelected", times);
         });
 
     socket.on("requestShowInfo", async function () {
