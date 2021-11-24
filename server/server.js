@@ -14,18 +14,6 @@ const io = require('socket.io')(server, {
 
 io.on('connection', socket => {
 
-    
-    // const snap = firestore.collection("show_info");
-    // snap.get().then(snapshots => {
-    //     console.log(snapshots.docs.map(doc => doc.id))
-    // })
-    // console.log(typeof snap);
-    // snap.then(doc => {
-    //     console.log(doc.id, '=>', doc.data());
-    //     console.log(doc.data().place)
-    // });
-
-
     console.log("socket connected")
 
     socket.on('showSelected',
@@ -34,9 +22,9 @@ io.on('connection', socket => {
             // console.log(data);
             current_data = data;
 
-            var showTitle = data["name"]
-            var documentSnapshot = await firestore.collection(showTitle).get()
-            var times = documentSnapshot.docs.map(doc => doc.id)
+            var showTitle = data["name"];
+            var documentSnapshot = await firestore.collection(showTitle).get();
+            var times = documentSnapshot.docs.map(doc => doc.id);
             for (var i = 0; i < times.length; i++) {
                 if (times[i] === '공연정보') {
                     times.splice(i, 1);
@@ -69,6 +57,65 @@ io.on('connection', socket => {
 
         // console.log(show_info)
         socket.emit("requenstShowInfo", show_info);
+    })
+
+    socket.on("seatInfo", async function (data) {
+        /*
+        - input data format example
+
+        {
+            title: "겨울이야기",
+            date: "21.11.24",
+            time: "16:00"
+        }
+
+        - output data format example
+
+        {
+            jsonFilePath: "../SeatLayout/seats-kaist.json", // or some url
+            reserved: ['A10', 'B16', 'C2', 'D5'],
+            progress: ['A8', 'C25']
+        }
+        */
+        const seat_info = {};
+        var showTitle = data["title"];
+        var showTime = data["date"] + " " + data["time"];
+
+        var documentSnapshot = await firestore.collection(showTitle).doc("공연정보").get();
+        var showData = documentSnapshot.data();
+        jsonFilePath = showData.seatInfo;
+
+        const timeSnapshot = await firestore.collection(showTitle).doc(showTime).get();
+        var timeData = timeSnapshot.data();
+        // var reservationStates = Object.values(timeData);
+        // var seats = Object.keys(timeData);
+
+        var reserved = Object.keys(timeData).reduce(function (reserved, key) {
+            if(timeData[key] === 'Reserved') reserved.push(key);
+            return reserved;
+        }, []);
+
+        var progress = Object.keys(timeData).reduce(function (progress, key) {
+            if(timeData[key] === 'Progress') progress.push(key);
+            return progress;
+        }, []);
+
+        // var reserved = [];
+        // var progress = [];
+        // for (var i = 0; i < seats.length; i++) {
+        //     if (reservationStates[i] === "Reserved") {
+        //         reserved.push(seats[i]);
+        //     }
+        //     else {
+        //         progress.push(seats[i]);
+        //     }
+        // }
+
+        seat_info["jsonFilePath"] = jsonFilePath;
+        seat_info["reserved"] = reserved;
+        seat_info["progress"] = progress;
+
+        socket.emit("seatInfo", seat_info);
     })
 
     socket.on("user_add",
