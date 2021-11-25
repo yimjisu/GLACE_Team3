@@ -16,6 +16,7 @@ function App() {
   },[state]);
 
   return (
+    <SocketContext.Provider value={socket}>
     <div className={styles.App}>
       <Header
         state={state}
