@@ -20,8 +20,8 @@
     font-size: 25px;
 }
 
-.checkBtn {
-    margin-top: 5px;
-    margin-right: 5px;
-    float: right;
+.btn {
+    position: fixed;
+    bottom: 110px;
+    right: 120px;
 }

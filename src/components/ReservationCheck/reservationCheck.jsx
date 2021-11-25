@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import {checkPwd, checkPhoneNumber} from '../../util/util'
+import {phoneCheck, pwCheck, pwSame} from '../../util/util'
 
 
 const ReservationCheck = ({ 
@@ -13,30 +13,17 @@ const ReservationCheck = ({
     
     const headfootStyle = {backgroundColor: "#FFFFFF"};//"#758BFF"};
 
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const onChangePhoneNumber = (e) => {
-        setPhoneNumber(e.target.value);
-    }
-
-    const [pwd, setPwd] = useState('');
-    const onChangePwd = (e) => {
-        setPwd(e.target.value);
-    }
-
-    const [confirmPwd, setConfirmPwd] = useState('');
-    const onChangeConfirmPwd = (e) => {
-        setConfirmPwd(e.target.value);
-    }
-
     const onClickPrevBtn = () => {
         setState(state - 1);
     }
     
     function onClickNextBtn() {
-        if (checkPhoneNumber(phoneNumber) && checkPwd(pwd, confirmPwd)) {
+        if (phoneCheck() && pwCheck() && pwSame()) {
             setState(state + 1);
         }
     }
+    
+
 
     return (
         <div>
@@ -65,20 +52,33 @@ const ReservationCheck = ({
                     <form className={styles.userInfo}>
                         <div className={styles.title}>비회원 로그인</div><br/>
                         
-                        <div className={styles.text}>
-                        <b>휴대폰&nbsp;&nbsp;&nbsp;</b>
-                        <input type='text' placeholder="- 없이 숫자만 입력" onChange={onChangePhoneNumber} value={phoneNumber}/>
-                        </div>
-                        
-                        <div className={styles.text}>
-                        <b>비밀번호&nbsp;&nbsp;&nbsp;&nbsp;</b>
-                        <input type='password' onChange={onChangePwd} value={pwd}/>
-                        </div>
-
-                        <div className={styles.text}>
-                        <b>비밀번호 확인&nbsp;&nbsp;&nbsp;</b>
-                        <input type='password' onChange={onChangeConfirmPwd} value={confirmPwd}/>
-                        </div>
+                        <table width="750">
+                        <tr>
+                            <td width="50" align="center">*</td>
+                            <td width="150" align="left">휴대폰</td>
+                            <td align="left"><input class={styles.input} id='phone' type="text" size="26" placeholder="번호만 입력(ex.01012345678)"
+                                onKeyUp={phoneCheck}/>
+                                &nbsp;&nbsp;&nbsp;<span class={styles.explain} id="phoneCheck"></span></td>
+                        </tr>
+                        <tr height="7">
+                            <td colspan="3"><hr /></td>
+                        </tr>
+                        <tr>
+                            <td align="center">*</td>
+                            <td align="left">비밀번호</td>
+                            <td align="left"><input class={styles.input} id='pw' type="password" size="26" onKeyUp={pwCheck}/>
+                            &nbsp;&nbsp;&nbsp;<span class={styles.explain} id="pwCheck"></span></td>
+                        </tr>
+                        <tr height="7">
+                            <td colspan="3"><hr /></td>
+                        </tr>
+                        <tr>
+                            <td align="center">*</td>
+                            <td align="left">비밀번호 확인</td>
+                            <td align="left"><input class={styles.input} id='confirmPw' type="password" size="26" onKeyUp={pwSame}/>
+                            &nbsp;&nbsp;&nbsp;<span class={styles.explain} id="pwSame"></span></td>
+                        </tr>
+                        </table>
                     </form>
                 </Col>
             </Row>

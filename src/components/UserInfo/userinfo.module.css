@@ -1,0 +1,15 @@
+.title {
+    font-size: 30px;
+    position: relative;
+    bottom: 50%;
+}
+
+.userInfo {
+    display: grid;
+    place-items: center;
+    padding-top: 200px;
+}
+
+.btn {
+    margin-top: 100px;
+}

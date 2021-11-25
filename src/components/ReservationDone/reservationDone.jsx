@@ -4,11 +4,16 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button';
+import {State} from '../Panel/panel'
 
 
 const ReservationDone = ({ 
     state, setState, showInfo
     }) => {
+
+    const onClickBtn = () => {
+        setState(State.SelectShow);
+    }
 
     return (
         <div>
@@ -33,6 +38,8 @@ const ReservationDone = ({
                     </form>
                 </Col>
             </Row>
+
+            <Button className = {styles.btn} onClick={onClickBtn}>처음으로</Button>
         </div>
     );
 }
