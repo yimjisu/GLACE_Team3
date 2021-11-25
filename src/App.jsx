@@ -10,21 +10,16 @@ import { SocketContext, socket } from './service/socket';
 
 function App() {
   const [state, setState] = useState(0);
-  
+
   useEffect(() => {
     console.log(state);
   },[state]);
 
-  useEffect(() => {
-    socket.emit("USERON");
-  }, []);
-
   return (
-    <SocketContext.Provider value={socket}>
-      <div className={styles.App}>
-      <Header state={state}
-        setState={setState}
-      />
+    <div className={styles.App}>
+      <Header
+        state={state}
+        setState={setState}/>
       <Menu 
         state={state}
         setState={setState}/>
