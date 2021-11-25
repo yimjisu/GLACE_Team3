@@ -51,6 +51,13 @@ const SelectShow = ({
         setShowInfo(cards[showCard]);
     }
 
+    useEffect(() => {
+        socket.emit("requestShowInfo");
+        socket.on("requestShowInfo", function (data) {
+            console.log(data);
+        });
+    }, []);
+
     const [startDate, setStartDate] = useState(new Date());
     return (
         <div className = {styles.panelWindow}>
