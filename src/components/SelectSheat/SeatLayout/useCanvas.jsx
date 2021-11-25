@@ -4,11 +4,13 @@ import {Seat} from './seat';
 
 import seatData from './seats-kaist.json';
 
-const useCanvas = ({totalNum}) => {
+const useCanvas = ({peopleNum}) => {
   
   useEffect(() => {
-    console.log(totalNum);
-  }, [totalNum]);
+    console.log('canvas', peopleNum);
+  }, [peopleNum]);
+
+  const [selectedNum, setSelectedNum] = useState(0)
   const canvasRef = useRef(null);
   
   let mousePos;

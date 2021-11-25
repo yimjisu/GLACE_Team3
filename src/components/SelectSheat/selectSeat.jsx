@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import InputNumber from "./inputNumber";
 import Canvas from "./SeatLayout/canvas";
 import styles from './selectSeat.module.css';
 import Button from 'react-bootstrap/Button';
@@ -7,9 +6,6 @@ import Button from 'react-bootstrap/Button';
 const SelectSeat = ({ 
     state, setState, showInfo
     }) => {
-    const [num, setNum] = useState([0, 0, 0]);
-    const name = ['성인', '청소년', '유아'];
-
     const onClickPrevBtn = () => {
         setState(state - 1);
     }
@@ -17,15 +13,17 @@ const SelectSeat = ({
         setState(state + 1);
     }
 
-    const [totalNum, setTotalNum] = useState(0);
-    useEffect(() => {
-        console.log(num, 'change');
-        let totalNum = 0;
-        for (let i=0; i<num.length; i++) {
-            totalNum += num[i];
+    const [peopleNum, setPeopleNum] = useState(0);
+    
+    const increment = () => {
+        setPeopleNum(peopleNum + 1)
+    }
+  
+    const decrement = () => {
+        if (peopleNum > 0) {
+            setPeopleNum(peopleNum - 1)
         }
-        setTotalNum(totalNum);
-    }, [num]);
+    }
 
     
     return (
@@ -39,18 +37,23 @@ const SelectSeat = ({
                 </div>
             </div>
                 <div className = {styles.peopleNum}>
-                    { num.map((value, index) => {
-                        return <InputNumber 
-                            name = {name}
-                            index = {index} 
-                            num = {num}
-                            setNum = {setNum} />;
-                    })}
+                    <p className = {styles.name}>인원수</p>
+                    <div className={styles.inputNumber}>
+                    <div
+                        className = {styles.btn}
+                        type="button" onClick={decrement}>
+                        &minus; </div>
+                    <span>{peopleNum}</span>
+                    <div 
+                        className = {styles.btn}
+                        type="button" onClick={increment}>
+                        &#43;</div>     
+                    </div>
                 </div>
             </div>
             <Canvas 
                 className = {styles.seatLayout}
-                totalNum = {totalNum}/>
+                peopleNum = {peopleNum}/>
         </div>
          <Button className = {styles.prevBtn} onClick={onClickPrevBtn}>이전</Button>
          <Button className = {styles.nextBtn} onClick={onClickNextBtn}>다음</Button>
