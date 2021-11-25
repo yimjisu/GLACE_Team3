@@ -22,7 +22,9 @@ function App() {
   return (
     <SocketContext.Provider value={socket}>
       <div className={styles.App}>
-      <Header/>
+      <Header state={state}
+        setState={setState}
+      />
       <Menu 
         state={state}
         setState={setState}/>

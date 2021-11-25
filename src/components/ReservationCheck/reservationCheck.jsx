@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import { SocketContext } from '../../service/socket';
+import {checkPwd, checkPhoneNumber} from '../../util'
 
 const ReservationCheck = ({
     state, setState, showInfo
@@ -14,19 +14,19 @@ const ReservationCheck = ({
 
     const headfootStyle = { backgroundColor: "#FFFFFF" };//"#758BFF"};
 
-    const [text1, setText1] = useState('');
-    const onChange1 = (e) => {
-        setText1(e.target.value)
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const onChangePhoneNumber = (e) => {
+        setPhoneNumber(e.target.value);
     }
 
-    const [text2, setText2] = useState('');
-    const onChange2 = (e) => {
-        setText2(e.target.value)
+    const [pwd, setPwd] = useState('');
+    const onChangePwd = (e) => {
+        setPwd(e.target.value);
     }
 
-    const [text3, setText3] = useState('');
-    const onChange3 = (e) => {
-        setText3(e.target.value)
+    const [confirmPwd, setConfirmPwd] = useState('');
+    const onChangeConfirmPwd = (e) => {
+        setConfirmPwd(e.target.value);
     }
 
     const onClickPrevBtn = () => {
@@ -34,11 +34,7 @@ const ReservationCheck = ({
     }
 
     function onClickNextBtn() {
-        if (text2 == text3) {
-            var data = { phone: text1, password: text2 };
-            console.log("emit")
-            socket.emit("user_add", data);
-
+        if (checkPwd(pwd, confirmPwd) && checkPhoneNumber(phoneNumber)) {
             setState(state + 1);
         }
     }
@@ -84,9 +80,31 @@ const ReservationCheck = ({
                                 <b className={styles.text}>비밀번호 확인&nbsp;&nbsp;&nbsp;</b>
                                 <input className={styles.box} type='password' onChange={onChange3} value={text3} />
                             </div>
-                        </form>
-                    </Col>
-                </Row>
+                        </Card.Footer >
+                    </Card>
+                </Col>
+
+                <Col xs={5}>
+                    <form className={styles.userInfo}>
+                        <div className={styles.title}>비회원 로그인</div><br/>
+                        
+                        <div className={styles.text}>
+                        <b>휴대폰&nbsp;&nbsp;&nbsp;</b>
+                        <input type='text' placeholder="- 없이 숫자만 입력" onChange={onChangePhoneNumber} value={phoneNumber}/>
+                        </div>
+                        
+                        <div className={styles.text}>
+                        <b>비밀번호&nbsp;&nbsp;&nbsp;&nbsp;</b>
+                        <input type='password' onChange={onChangePwd} value={pwd}/>
+                        </div>
+
+                        <div className={styles.text}>
+                        <b>비밀번호 확인&nbsp;&nbsp;&nbsp;</b>
+                        <input type='password' onChange={onChangeConfirmPwd} value={confirmPwd}/>
+                        </div>
+                    </form>
+                </Col>
+            </Row>
             </div>
 
             <Button className={styles.prevBtn} onClick={onClickPrevBtn}>이전</Button>
