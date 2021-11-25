@@ -33,7 +33,7 @@ const ReservationCheck = ({
     }
     
     function onClickNextBtn() {
-        if (checkPwd(pwd, confirmPwd) && checkPhoneNumber(phoneNumber)) {
+        if (checkPhoneNumber(phoneNumber) && checkPwd(pwd, confirmPwd)) {
             setState(state + 1);
         }
     }

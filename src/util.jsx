@@ -34,7 +34,7 @@ export function checkPwd(p1, p2) {
 }
 
 export function checkPhoneNumber(phoneNumber) {
-    if (/^010[0-9]{8}/.test(phoneNumber)) {
+    if (/^010[0-9]{8}$/.test(phoneNumber)) {
         return true;
     }
     
