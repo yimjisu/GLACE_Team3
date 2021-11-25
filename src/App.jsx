@@ -6,6 +6,8 @@ import Header from './components/Header/header';
 import Menu from './components/Menu/menu';
 import Panel from './components/Panel/panel';
 
+import { SocketContext, socket } from './service/socket';
+
 function App() {
   const [state, setState] = useState(0);
   
@@ -13,8 +15,13 @@ function App() {
     console.log(state);
   },[state]);
 
+  useEffect(() => {
+    socket.emit("USERON");
+  }, []);
+
   return (
-    <div className={styles.App}>
+    <SocketContext.Provider value={socket}>
+      <div className={styles.App}>
       <Header/>
       <Menu 
         state={state}
@@ -23,6 +30,8 @@ function App() {
         state={state}
         setState={setState}/>
     </div>
+    </SocketContext.Provider>
+
   );
 }
 
