@@ -4,9 +4,7 @@ import styles from './menu.module.css';
 const ArrowMenu = ({
     name, state, index, setState
 }) => {
-
     const onClickMenu = (index) => {
-        console.log(index);
         setState(index);
     }
 

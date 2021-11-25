@@ -23,7 +23,6 @@ io.on('connection', socket => {
             current_data = data;
 
             var showTitle = data["name"];
-            console.log(showTitle)
             var documentSnapshot = await firestore.collection(showTitle).get();
             var times = documentSnapshot.docs.map(doc => doc.id);
             for (var i = 0; i < times.length; i++) {
@@ -56,7 +55,7 @@ io.on('connection', socket => {
             show_info.push(show_dic)
         }
 
-        console.log(show_info)
+        // console.log(show_info)
         socket.emit("requenstShowInfo", show_info);
     })
 
