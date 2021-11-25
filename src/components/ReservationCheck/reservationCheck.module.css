@@ -50,3 +50,7 @@ float: right;
     padding: 10px;
 }
 
+.help {
+    position: relative;
+    left: 20px;
+}

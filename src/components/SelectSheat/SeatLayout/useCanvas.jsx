@@ -4,8 +4,13 @@ import {Seat} from './seat';
 
 import seatData from './seats-kaist.json';
 
-const useCanvas = () => {
+const useCanvas = ({peopleNum}) => {
   
+  useEffect(() => {
+    console.log('canvas', peopleNum);
+  }, [peopleNum]);
+
+  const [selectedNum, setSelectedNum] = useState(0)
   const canvasRef = useRef(null);
   
   let mousePos;
@@ -109,6 +114,7 @@ function animate(ctx) {
       } 
       return 0;
     })
+    
     for (var i=0; i<seats.length; i++){
         const rectangles = seats[i].rectangles;
         rectangles.sort(function(a, b) {

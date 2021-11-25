@@ -6,6 +6,8 @@ import Header from './components/Header/header';
 import Menu from './components/Menu/menu';
 import Panel from './components/Panel/panel';
 
+import { SocketContext, socket } from './service/socket';
+
 function App() {
   const [state, setState] = useState(0);
 
@@ -25,6 +27,8 @@ function App() {
         state={state}
         setState={setState}/>
     </div>
+    </SocketContext.Provider>
+
   );
 }
 
