@@ -1,0 +1,36 @@
+.table {
+    margin-top: 120px;
+    width: 100%;
+}
+
+.userInfo {
+    position: relative;
+    left: 50px;
+    font-weight: normal;
+    font-size: 25px;
+}
+
+.text {
+    padding-top: 80px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.img {
+    position: relative;
+    right: 50px;
+}
+
+.rightTriangle {
+    border-top: 100px solid white;
+    border-bottom: 100px solid white;
+    border-left: 50px solid #758BFF;
+    border-right: 50px solid white;
+}
+
+.leftTriangle {
+    border-top: 100px solid white;
+    border-bottom: 100px solid white;
+    border-left: 50px solid white;
+    border-right: 50px solid #758BFF;
+}
