@@ -6,6 +6,17 @@ import ReservationCheck from "../ReservationCheck/reservationCheck";
 import ReservationDone from "../ReservationDone/reservationDone";
 import Menu from "../Menu/menu";
 import UserInfo from "../UserInfo/userinfo"
+import ReservationInfo from "../reservationInfo/reservationInfo";
+
+export const State = {
+    SelectShow : 0,
+    SelectSeat : 1,
+    ReservationCheck : 2,
+    ReservationDone : 3,
+    UserInfo : 4,
+    ReservationInfo : 5,
+}
+
 
 const Panel = ({ 
     state, setState
@@ -15,19 +26,22 @@ const Panel = ({
     return (
     <div className={styles.panel}>
         {
-        state == 0 && <SelectShow state={state} setState={setState} setShowInfo={setShowInfo}/>
+        state == State.SelectShow && <SelectShow state={state} setState={setState} setShowInfo={setShowInfo}/>
         }
         {
-            state == 1 && <SelectSeat state={state} setState={setState}  showInfo={showInfo}/>
+            state == State.SelectSeat && <SelectSeat state={state} setState={setState}  showInfo={showInfo}/>
         }
         {
-            state == 2 && <ReservationCheck state={state} setState={setState}  showInfo={showInfo}/>
+            state == State.ReservationCheck && <ReservationCheck state={state} setState={setState}  showInfo={showInfo}/>
         }
         {
-            state == 3 && <ReservationDone state={state} setState={setState} showInfo={showInfo}/>
+            state == State.ReservationDone && <ReservationDone state={state} setState={setState} showInfo={showInfo}/>
         }
         {
-            state == 4 && <UserInfo />
+            state == State.UserInfo && <UserInfo state={state} setState={setState} showInfo={showInfo}/>
+        }
+        {
+            state == State.ReservationInfo && <ReservationInfo state={state} setState={setState} showInfo={showInfo}/>
         }
     </div>
     );

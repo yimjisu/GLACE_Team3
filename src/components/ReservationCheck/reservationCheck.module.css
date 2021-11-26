@@ -44,13 +44,17 @@ float: right;
 .title {
     font-size: 30px;
     position: relative;
-    right: 30%;
+    bottom: 10%;
+    right: 40%;
 }
 .cardImg {
     padding: 10px;
 }
 
-.help {
-    position: relative;
-    left: 20px;
+.input {
+    border: #888888 2px solid;
+}
+
+.explain {
+    font-size: 12px;
 }

@@ -20,6 +20,15 @@
     left: 1660px;
     top: 10px;
     font-size: 16px;
-    background-color: rgba(117, 139, 255, 0.3);
+    background-color: rgba(117, 139, 255, 0);
     border: none;
+}
+
+.line {
+    position: fixed;
+    left: 1656px;
+    top: 5px;
+    font-size: 22px;
+    font-weight: 900;
+    font-family:'Times New Roman', Times, serif;
 }
