@@ -53,7 +53,7 @@ const ReservationInfo = ({
             <div className={styles.text}>예약 총 {total_num}건 (<span id="head_info">{num+1}</span>/{total_num})</div>
             <table className={styles.table}>
                 <tr>
-                    <td width="10%" align="center"><button className={styles.leftTriangle} onClick={onDecrease}></button></td>
+                    <td width="10%" align="center"><div className={styles.leftTriangle} onClick={onDecrease}></div></td>
                     <td width="40%" align="right">
                         <img className={styles.img} id="img" src="../images/poster1.jpg"/>
                     </td>
@@ -66,7 +66,7 @@ const ReservationInfo = ({
                             <p><b>좌석&nbsp;&nbsp;</b><span id="seat">C1, C2</span></p>
                         </div>
                     </td>
-                    <td width="10%" align="center"><button className={styles.rightTriangle} onClick={onIncrease}></button></td>
+                    <td width="10%" align="center"><div className={styles.rightTriangle} onClick={onIncrease}></div></td>
                 </tr>
                 <tr height="100"></tr>
                 <tr>
