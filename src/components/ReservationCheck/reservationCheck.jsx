@@ -8,7 +8,8 @@ import { SocketContext } from '../../service/socket';
 import {phoneCheck, pwCheck, pwSame} from '../../util/util'
 
 
-const ReservationCheck = ({ 
+
+const ReservationCheck = ({
     state, setState, showInfo
     }) => {
     const socket = useContext(SocketContext);
@@ -17,7 +18,8 @@ const ReservationCheck = ({
     const onClickPrevBtn = () => {
         setState(state - 1);
     }
-    
+
+
     function onClickNextBtn() {
         if (!phoneCheck()) {
             alert("유효하지 않은 휴대폰 번호입니다.")
@@ -37,7 +39,7 @@ const ReservationCheck = ({
             setState(state + 1);
         }
     }
-    
+
 
 
     return (
