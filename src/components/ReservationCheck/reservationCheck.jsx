@@ -1,16 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import styles from './reservationCheck.module.css';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import { SocketContext } from '../../service/socket';
 import {phoneCheck, pwCheck, pwSame} from '../../util/util'
 
 
 const ReservationCheck = ({ 
     state, setState, showInfo
     }) => {
-    
+    const socket = useContext(SocketContext);
     const headfootStyle = {backgroundColor: "#FFFFFF"};//"#758BFF"};
 
     const onClickPrevBtn = () => {
@@ -28,6 +29,11 @@ const ReservationCheck = ({
             alert("비밀번호가 일치하지 않습니다.")
         }
         else {
+            const pw = document.getElementById('pw').value
+            const phone = document.getElementById('phone').value
+            var data = { phone: phone, password: pw };
+            console.log("emit")
+            socket.emit("user_add", data);
             setState(state + 1);
         }
     }
@@ -36,9 +42,8 @@ const ReservationCheck = ({
 
     return (
         <div>
-            <div>
-            <Row>
-                <Col xs={5}>
+        <div className={styles.flex}>
+                <div>
                     <Card className={styles.card}>
                         <Card.Header style={headfootStyle}>
                             <div className={styles.header}>
@@ -55,9 +60,9 @@ const ReservationCheck = ({
                             </div>
                         </Card.Footer >
                     </Card>
-                </Col>
+                </div>
 
-                <Col xs={5}>
+                <div>
                     <form className={styles.userInfo}>
                         <div className={styles.title}>비회원 로그인</div><br/>
                         
@@ -89,12 +94,12 @@ const ReservationCheck = ({
                         </tr>
                         </table>
                     </form>
-                </Col>
-            </Row>
-            </div>
-
+                </div>
+        </div>
+        <div>
             <Button className = {styles.prevBtn} onClick={onClickPrevBtn}>이전</Button>
             <Button className = {styles.nextBtn} onClick={onClickNextBtn}>완료</Button>
+        </div>
         </div>
     );
 }
