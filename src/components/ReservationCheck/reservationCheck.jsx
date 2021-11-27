@@ -1,16 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import styles from './reservationCheck.module.css';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import { SocketContext } from '../../service/socket';
 import { phoneCheck, pwCheck, pwSame } from '../../util/util'
 
 
 const ReservationCheck = ({
     state, setState, showInfo
 }) => {
-
+    const socket = useContext(SocketContext);
     const headfootStyle = { backgroundColor: "#FFFFFF" };//"#758BFF"};
 
     const onClickPrevBtn = () => {
@@ -29,6 +30,11 @@ const ReservationCheck = ({
             alert("비밀번호가 일치하지 않습니다.")
         }
         else {
+            const pw = document.getElementById('pw').value
+            const phone = document.getElementById('phone').value
+            var data = { phone: phone, password: pw };
+            console.log("emit")
+            socket.emit("user_add", data);
             setState(state + 1);
         }
     }
