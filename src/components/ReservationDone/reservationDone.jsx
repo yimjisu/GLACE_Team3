@@ -28,12 +28,12 @@ const ReservationDone = ({
                 <Col xs={7}>
                     <form className={styles.userInfo}>
                         <div>
-                            <b>예약번호&nbsp;&nbsp;</b>서버에서 get<br/><br/>
                             <b>공연&nbsp;&nbsp;</b>{showInfo.name}<br/>
                             <b>장소&nbsp;&nbsp;</b>{showInfo.place}<br/>
                             <b>날짜&nbsp;&nbsp;</b>2021.11.17(수)<br/>
                             <b>시간&nbsp;&nbsp;</b>20:00<br/>
-                            <b>좌석&nbsp;&nbsp;</b>C1, C2
+                            <b>좌석&nbsp;&nbsp;</b>C1, C2<br/>
+                            <b>휴대폰&nbsp;&nbsp;</b>010-1234-5678
                         </div>
                     </form>
                 </Col>

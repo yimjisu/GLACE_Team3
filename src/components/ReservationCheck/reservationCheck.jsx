@@ -18,7 +18,16 @@ const ReservationCheck = ({
     }
     
     function onClickNextBtn() {
-        if (phoneCheck() && pwCheck() && pwSame()) {
+        if (!phoneCheck()) {
+            alert("유효하지 않은 휴대폰 번호입니다.")
+        }
+        else if (!pwCheck()) {
+            alert("유효하지 않은 비밀번호입니다.")
+        }
+        else if (!pwSame()) {
+            alert("비밀번호가 일치하지 않습니다.")
+        }
+        else {
             setState(state + 1);
         }
     }
@@ -56,9 +65,9 @@ const ReservationCheck = ({
                         <tr>
                             <td width="50" align="center">*</td>
                             <td width="150" align="left">휴대폰</td>
-                            <td align="left"><input class={styles.input} id='phone' type="text" size="26" placeholder="번호만 입력(ex.01012345678)"
+                            <td align="left"><input className={styles.input} id='phone' type="text" size="26" placeholder="번호만 입력(ex.01012345678)"
                                 onKeyUp={phoneCheck}/>
-                                &nbsp;&nbsp;&nbsp;<span class={styles.explain} id="phoneCheck"></span></td>
+                                &nbsp;&nbsp;&nbsp;<span className={styles.explain} id="phoneCheck"></span></td>
                         </tr>
                         <tr height="7">
                             <td colspan="3"><hr /></td>
@@ -66,8 +75,8 @@ const ReservationCheck = ({
                         <tr>
                             <td align="center">*</td>
                             <td align="left">비밀번호</td>
-                            <td align="left"><input class={styles.input} id='pw' type="password" size="26" onKeyUp={pwCheck}/>
-                            &nbsp;&nbsp;&nbsp;<span class={styles.explain} id="pwCheck"></span></td>
+                            <td align="left"><input className={styles.input} id='pw' type="password" size="26" onKeyUp={pwCheck}/>
+                            &nbsp;&nbsp;&nbsp;<span className={styles.explain} id="pwCheck"></span></td>
                         </tr>
                         <tr height="7">
                             <td colspan="3"><hr /></td>
@@ -75,8 +84,8 @@ const ReservationCheck = ({
                         <tr>
                             <td align="center">*</td>
                             <td align="left">비밀번호 확인</td>
-                            <td align="left"><input class={styles.input} id='confirmPw' type="password" size="26" onKeyUp={pwSame}/>
-                            &nbsp;&nbsp;&nbsp;<span class={styles.explain} id="pwSame"></span></td>
+                            <td align="left"><input className={styles.input} id='confirmPw' type="password" size="26" onKeyUp={pwSame}/>
+                            &nbsp;&nbsp;&nbsp;<span className={styles.explain} id="pwSame"></span></td>
                         </tr>
                         </table>
                     </form>
