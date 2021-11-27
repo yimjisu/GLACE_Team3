@@ -7,18 +7,9 @@ const ReservationInfo = ({
     state, setState, showInfo
     }) => {
 
-
-    const total_num = 5; //서버에서 받아오는 예약 개수
+    const total_num = 5; //서버에서 받아온 예약 개수
 
     const [num, setNum] = useState(0);
-
-    String.prototype.format = function() {
-        var formatted = this;
-        for( var arg in arguments ) {
-            formatted = formatted.replace("{" + arg + "}", arguments[arg]);
-        }
-        return formatted;
-    };
 
     const changeInfo = () => {
         document.getElementById("head_info").innerHTML = num + 1;

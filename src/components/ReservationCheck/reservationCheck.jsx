@@ -18,7 +18,16 @@ const ReservationCheck = ({
     }
     
     function onClickNextBtn() {
-        if (phoneCheck() && pwCheck() && pwSame()) {
+        if (!phoneCheck()) {
+            alert("유효하지 않은 휴대폰 번호입니다.")
+        }
+        else if (!pwCheck()) {
+            alert("유효하지 않은 비밀번호입니다.")
+        }
+        else if (!pwSame()) {
+            alert("비밀번호가 일치하지 않습니다.")
+        }
+        else {
             setState(state + 1);
         }
     }
