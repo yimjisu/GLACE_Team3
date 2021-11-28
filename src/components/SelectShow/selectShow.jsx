@@ -5,8 +5,10 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image';
 import DatePicker from 'react-datepicker';
+import { ko } from "date-fns/esm/locale";
 import Button from 'react-bootstrap/Button';
 import "react-datepicker/dist/react-datepicker.css";
+import Table from 'react-bootstrap/Table'
 import cards from '../data/showInfo';
 //import db from "../../service/firebase";
 
@@ -44,7 +46,7 @@ const SelectShow = ({
     
     const [startDate, setStartDate] = useState(new Date());
 
-    const monthday = startDate.getMonth()+1 + "-" + startDate.getDate();
+    const monthdayyear = startDate.getMonth()+1 + "-" + startDate.getDate() + "-" + startDate.getFullYear();
     return (
         <div className={styles.panelWindow}>
             {
@@ -91,24 +93,37 @@ const SelectShow = ({
                                     </header><br />
                                     <body>
                                         <DatePicker
+                                            locale = {ko}
                                             selected={startDate}
                                             onChange={(date) => setStartDate(date)}
+                                            minDate={new Date()}
+                                            maxDate={new Date("11-29-2021")}
                                             inline
                                         />
                                     </body>
                                 </Col>
                                 <Col>
                                     <Card>
-                                        <Card.Header>공연 시간 및 잔여 좌석</Card.Header>
+                                        <Card.Header>시간 및 좌석</Card.Header>
                                         <Card.Body>
                                         <div className={styles.show3}>
                                             {
-                                                cards[showCard].timeList[monthday].map((value) => {
+                                                cards[showCard].timeList[monthdayyear].map((value) => {
                                                     return (
-                                                        <div>
-                                                            {value.startTime}~{value.endTime}&emsp;&emsp;
-                                                            {value.reservedSeat}/{value.allSeat}<br/>
-                                                        </div>
+                                                        <Table striped bordered hover>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>공연 시간</th>
+                                                                    <th>잔여 좌석/전체 좌석</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>{value.startTime}~{value.endTime}</th>
+                                                                    <th>{value.reservedSeat}/{value.allSeat}</th>
+                                                                </tr>
+                                                            </tbody>                                   
+                                                        </Table>
                                                         );
                                                 })
                                             }
