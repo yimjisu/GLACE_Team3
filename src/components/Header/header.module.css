@@ -20,6 +20,7 @@
 }
 
 .btn {
+    position: absolute;
     position: fixed;
     right: 100px;
     top: 10px;
@@ -29,7 +30,7 @@
 }
 
 .line {
-    position: fixed;
+    position: absolute;
     right: 200px;
     top: 5px;
     font-size: 22px;
