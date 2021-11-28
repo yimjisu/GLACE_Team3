@@ -3,6 +3,7 @@ import {Point} from './point';
 import {Seat} from './seat';
 
 const useCanvas = ({seatInfo, peopleNum, selectedSeat, setSelectedSeat}) => {
+
   const canvasRef = useRef(null);
   const width = seatInfo.map.size.width;
   const height = seatInfo.map.size.height;
