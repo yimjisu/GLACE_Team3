@@ -7,9 +7,7 @@ import Image from 'react-bootstrap/Image';
 import DatePicker from 'react-datepicker';
 import Button from 'react-bootstrap/Button';
 import "react-datepicker/dist/react-datepicker.css";
-import poster1 from '../images/poster1.jpg';
-import poster2 from '../images/poster2.jpg';
-import poster3 from '../images/poster3.jpg';
+import cards from '../data/showInfo';
 //import db from "../../service/firebase";
 
 
@@ -20,26 +18,7 @@ const SelectShow = ({
 }) => {
 
     const socket = useContext(SocketContext);
-    const cards = [
-        {
-            name: "보통날의 기적", place: "교양분관", period: "2021.09.01 ~ 2021.11.01", time: "100분", img: poster1
-        },
-        {
-            name: "한여름 밤의 꿈", place: "B", period: "2021.09.01 ~ 2021.11.01", time: "110분", img: poster2
-        },
-        {
-            name: "방방콘", place: "C", period: "2021.09.01 ~ 2021.11.01", time: "120분", img: poster3
-        },
-        {
-            name: "겨울이야기", place: "D", period: "2021.09.01 ~ 2021.11.01", time: "130분", img: poster1
-        },
-        {
-            name: "연극E", place: "E", period: "2021.09.01 ~ 2021.11.01", time: "140분", img: poster2
-        },
-        {
-            name: "연극F", place: "F", period: "2021.09.01 ~ 2021.11.01", time: "150분", img: poster3
-        }
-    ];
+
     const footerStyle = { backgroundColor: "#FFFFFF" };//#3e3e3e"};
 
     const [showCard, setShowCard] = useState(-1);
@@ -64,6 +43,8 @@ const SelectShow = ({
     }, []);
     
     const [startDate, setStartDate] = useState(new Date());
+
+    const monthday = startDate.getMonth()+1 + "-" + startDate.getDate();
     return (
         <div className={styles.panelWindow}>
             {
@@ -118,9 +99,20 @@ const SelectShow = ({
                                 </Col>
                                 <Col>
                                     <Card>
-                                        <Card.Header>시간</Card.Header>
+                                        <Card.Header>공연 시간 및 잔여 좌석</Card.Header>
                                         <Card.Body>
-                                            정리
+                                        <div className={styles.show3}>
+                                            {
+                                                cards[showCard].timeList[monthday].map((value) => {
+                                                    return (
+                                                        <div>
+                                                            {value.startTime}~{value.endTime}&emsp;&emsp;
+                                                            {value.reservedSeat}/{value.allSeat}<br/>
+                                                        </div>
+                                                        );
+                                                })
+                                            }
+                                        </div>
                                         </Card.Body>
                                     </Card>
                                 </Col>

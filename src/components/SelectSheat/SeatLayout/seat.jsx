@@ -84,11 +84,6 @@ export class Seat {
         if (!this.isMove &&
             point.collide(this.finalPos,
                 this.finalWidth, this.finalHeight)) {
-            if (this.isSelected){
-                socket.emit("seatUnselected", this.seatName);
-            } else{
-                socket.emit("seatSelected", this.seatName);
-            }
             this.isSelected = !this.isSelected;    
             return this;
         } else {

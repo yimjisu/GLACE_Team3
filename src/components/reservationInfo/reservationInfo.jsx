@@ -46,7 +46,7 @@ const ReservationInfo = ({
                 <tr>
                     <td width="10%" align="center"><div className={styles.leftTriangle} onClick={onDecrease}></div></td>
                     <td width="40%" align="right">
-                        <img className={styles.img} id="img" src="../images/poster1.jpg"/>
+                        <img className={styles.img} id="img" src={showInfo.img}/>
                     </td>
                     <td width="40%" align="left">
                         <div className={styles.userInfo}>

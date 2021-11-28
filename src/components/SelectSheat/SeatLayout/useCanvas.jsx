@@ -2,35 +2,18 @@ import { useRef, useEffect, useState } from 'react';
 import {Point} from './point';
 import {Seat} from './seat';
 
-import seatData from './seats-kaist.json';
-
-const useCanvas = ({peopleNum}) => {
-  
-  useEffect(() => {
-    console.log('canvas', peopleNum);
-  }, [peopleNum]);
-
-  const [selectedNum, setSelectedNum] = useState(0)
+const useCanvas = ({seatInfo, peopleNum, selectedSeat, setSelectedSeat}) => {
   const canvasRef = useRef(null);
+  const width = seatInfo.map.size.width;
+  const height = seatInfo.map.size.height;
+  const backgroundColor = seatInfo.map.background;
   
-  let mousePos;
-  const width = seatData.map.size.width;
-  const height = seatData.map.size.height;
-  const backgroundColor = seatData.map.background;
-  
-  let allSeats = [];
-  var selectedSeats = [];
+  const [allSeats, setAllSeats] = useState([]);
   
   let offsetY = 180;
   var offsetX;
 
 function resize(canvas, ctx) {
-    // const clientWidth = document.body.clientWidth*0.8;
-    // const clientHeight = 700; // Math.round(document.body.clientHeight*0.8);
-    
-    // const width = Math.round(clientWidth * 0.7);
-    // const height = Math.round(clientHeight - 20);
-    // const offsetX = clientWidth - width;
     offsetY = canvas.offsetTop;
     offsetX = canvas.offsetLeft;
 
@@ -42,15 +25,12 @@ function resize(canvas, ctx) {
       context.scale(ratio, ratio);
       return true;
     }
-
-
     return false;
 }
 
 let scale = 1;
 
 function animate(ctx) {
-
   ctx.clearRect(0, 0, width, height);
   ctx.fillStyle = backgroundColor;
   ctx.fillRect(0, 0, width, height);
@@ -58,33 +38,54 @@ function animate(ctx) {
   for(let i=0; i<allSeats.length; i++) {
     allSeats[i].animate(ctx);
   }
+  setAllSeats(allSeats);
 }
 
   function onDown(e) {
+    let mousePos = new Point();
     mousePos.x = e.clientX - offsetX;
     mousePos.y = e.clientY - offsetY;
 
     for(let i=0; i<allSeats.length; i++) {
       allSeats[i].down(mousePos.clone());
     }
+    setAllSeats(allSeats);
   }
 
   function onMove(e) {
+    let mousePos = new Point();
     mousePos.x = e.clientX - offsetX;
     mousePos.y = e.clientY - offsetY;
 
     for(let i=0; i<allSeats.length; i++) {
       allSeats[i].move(mousePos.clone());
     }
+    setAllSeats(allSeats);
   }
 
-  function onUp(e) {
+  const onUp = (e) => {
+    let mousePos = new Point();
     mousePos.x = e.clientX - offsetX;
     mousePos.y = e.clientY - offsetY;
+    let newSelectedSeat = selectedSeat;
 
     for(let i=0; i<allSeats.length; i++) {
-      allSeats[i].up(mousePos.clone());
+      let seat = allSeats[i].up(mousePos.clone());
+      if(seat != null) {
+        if (seat.isSelected && selectedSeat.length >= peopleNum) {
+          seat.isSelected = false;
+          alert("선택한 좌석수가 인원수보다 많습니다")
+        } else {
+          if (seat.isSelected && !newSelectedSeat.includes(seat.seatName)) {
+            newSelectedSeat.push(seat.seatName);
+          } else if(! seat.isSelected){
+            newSelectedSeat = newSelectedSeat.filter((item) => item != seat.seatName);
+          }
+        }
+      }
     }
+    setAllSeats(allSeats);
+    setSelectedSeat(newSelectedSeat);    
   }
 
   function onWheel(e) {
@@ -92,15 +93,17 @@ function animate(ctx) {
     for(let i=0; i<allSeats.length; i++) {
       allSeats[i].zoom(deltaPos);
     }
+    setAllSeats(allSeats);
   }
 
+  const [canvas, setCanvas] = useState(canvasRef.current);
+  const [context, setContext] = useState(null);
   useEffect(() => {
-    
-    const canvas = canvasRef.current
-    const context = canvas.getContext('2d')
+    let canvasTemp = canvasRef.current;
+    setCanvas(canvasTemp);
+    setContext(canvasTemp.getContext('2d'));
 
-    let animationFrameId;
-    const seats = seatData.seats;
+    const seats = seatInfo.seats;
     seats.sort(function(a, b) {
       if (a.rectangles[0].lefttop.y < b.rectangles[0].lefttop.y) {
         return -1;
@@ -136,12 +139,15 @@ function animate(ctx) {
           let singleSeat = new Seat(s.lefttop, s.size, seats[i].color, charName);
           allSeats.push(singleSeat);
         }
-        
     }
 
-    resize(canvas, context);
+    setAllSeats(allSeats);
+  }, [])
 
-    mousePos = new Point();
+  useEffect(() => {
+    if (canvas == null || context == null) return;
+    let animationFrameId;
+    resize(canvas, context);
     const render = () => {
       offsetX = canvas.offsetLeft;
       offsetY = canvas.offsetTop;
@@ -149,7 +155,6 @@ function animate(ctx) {
       animate(context);
       
       canvas.addEventListener("resize", () => resize(canvas, context));
-
       canvas.addEventListener("pointerdown", onDown);
       canvas.addEventListener("pointermove", onMove);
       canvas.addEventListener("pointerup", onUp);
@@ -159,8 +164,14 @@ function animate(ctx) {
     
     return () => {
       window.cancelAnimationFrame(animationFrameId)
+      canvas.removeEventListener("resize", () => resize(canvas, context));
+      canvas.removeEventListener("pointerdown", onDown);
+      canvas.removeEventListener("pointermove", onMove);
+      canvas.removeEventListener("pointerup", onUp);
+      canvas.removeEventListener("wheel", onWheel);
     }
-  }, [])
+
+  }, [peopleNum, allSeats, canvas, context]);
   
   return canvasRef
 }
