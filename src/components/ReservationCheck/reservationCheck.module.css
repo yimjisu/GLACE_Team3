@@ -13,8 +13,7 @@ float: right;
 .header {
     font-size: 20px;
     height: 30px;
-    text-align: left;
-    color: #3e3e3e;
+    color: royalblue;
 }
 
 .footer {
@@ -23,11 +22,21 @@ float: right;
     height: 100px;
     text-align: left;
     color: #3e3e3e;
+    font-weight: normal;
 }
 
 .card {
+    margin-left: 20px;
     margin-top: 30px;
-    width: 400px;
+    padding-right : 20px;
+    width: 420px;
+    border-right: 1px #3e3e3e dashed;
+}
+
+.login {
+    width: 750px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .userInfo {
@@ -42,7 +51,7 @@ float: right;
     font-size: 30px;
     position: relative;
     bottom: 20%;
-    right: 40%;
+    right: 30%;
 }
 .cardImg {
     padding: 10px;
