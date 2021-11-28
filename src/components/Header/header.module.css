@@ -4,6 +4,8 @@
 }
 
 .logo{
+    display: flex;
+    justify-content: center;
     margin-top: 5px;
     margin-bottom: 5px;
     font-style: italic;
@@ -12,9 +14,11 @@
 }
 
 .logo2{
-    margin-left: 48%;
-    margin-right: 50%;
+    flex-basis: 75%;
+    margin-left: 6%;
+
 }
+
 .btn {
     position: fixed;
     right: 100px;
