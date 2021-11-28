@@ -23,19 +23,21 @@ const Panel = ({
     }) => {
         
     const [showInfo, setShowInfo] = useState(null);
+    const [selectedSeat, setSelectedSeat] = useState([]);
+
     return (
     <div className={styles.panel}>
         {
         state == State.SelectShow && <SelectShow state={state} setState={setState} setShowInfo={setShowInfo}/>
         }
         {
-            state == State.SelectSeat && <SelectSeat state={state} setState={setState}  showInfo={showInfo}/>
+            state == State.SelectSeat && <SelectSeat state={state} setState={setState}  showInfo={showInfo} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat}/>
         }
         {
-            state == State.ReservationCheck && <ReservationCheck state={state} setState={setState}  showInfo={showInfo}/>
+            state == State.ReservationCheck && <ReservationCheck state={state} setState={setState}  showInfo={showInfo} selectedSeat={selectedSeat}/>
         }
         {
-            state == State.ReservationDone && <ReservationDone state={state} setState={setState} showInfo={showInfo}/>
+            state == State.ReservationDone && <ReservationDone state={state} setState={setState} showInfo={showInfo} selectedSeat={selectedSeat}/>
         }
         {
             state == State.UserInfo && <UserInfo state={state} setState={setState} showInfo={showInfo}/>
