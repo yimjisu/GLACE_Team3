@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Canvas from "./SeatLayout/canvas";
 import styles from './selectSeat.module.css';
 import Button from 'react-bootstrap/Button';
+import seatInfo from "../data/seatInfo";
 
 const SelectSeat = ({ 
     state, setState, showInfo
@@ -53,6 +54,7 @@ const SelectSeat = ({
             </div>
             <Canvas 
                 className = {styles.seatLayout}
+                seatInfo = {seatInfo}
                 peopleNum = {peopleNum}/>
         </div>
          <Button className = {styles.prevBtn} onClick={onClickPrevBtn}>이전</Button>
