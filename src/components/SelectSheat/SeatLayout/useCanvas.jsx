@@ -2,9 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import {Point} from './point';
 import {Seat} from './seat';
 
-import seatData from './seats-kaist.json';
-
-const useCanvas = ({peopleNum}) => {
+const useCanvas = ({seatInfo, peopleNum}) => {
   
   useEffect(() => {
     console.log('canvas', peopleNum);
@@ -14,9 +12,9 @@ const useCanvas = ({peopleNum}) => {
   const canvasRef = useRef(null);
   
   let mousePos;
-  const width = seatData.map.size.width;
-  const height = seatData.map.size.height;
-  const backgroundColor = seatData.map.background;
+  const width = seatInfo.map.size.width;
+  const height = seatInfo.map.size.height;
+  const backgroundColor = seatInfo.map.background;
   
   let allSeats = [];
   var selectedSeats = [];
@@ -100,7 +98,7 @@ function animate(ctx) {
     const context = canvas.getContext('2d')
 
     let animationFrameId;
-    const seats = seatData.seats;
+    const seats = seatInfo.seats;
     seats.sort(function(a, b) {
       if (a.rectangles[0].lefttop.y < b.rectangles[0].lefttop.y) {
         return -1;
