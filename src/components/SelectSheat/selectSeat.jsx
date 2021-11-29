@@ -31,16 +31,20 @@ const SelectSeat = ({
             setPeopleNum(peopleNum - 1);
         }
     }
+
     
     return (
         <div>
         <div className = {styles.seat}>
             <div className = {styles.panelWindow}>
             <div className = {styles.seatInfo}>
-                <img style={{height: "100px"}} src={showInfo.img}/>
+                <img src={showInfo.img}/>
+                <div className={styles.text}>
                 <b>{showInfo.name}</b> 
                 <div className={styles.info}>
-                    <br/>장소: {showInfo.place}<br/>기간: {showInfo.period}
+                    <p>장소: {showInfo.place}</p>
+                    <p>시간: {showInfo.period}</p>
+                </div>
                 </div>
             </div>
                 <div className = {styles.peopleNum}>

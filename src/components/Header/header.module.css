@@ -20,18 +20,12 @@
 }
 
 .btn {
-    position: absolute;
-    right: 100px;
-    top: 10px;
     font-size: 16px;
     background-color: rgba(117, 139, 255, 0);
     border: none;
-}
-
+    }
+    
 .line {
-    position: absolute;
-    right: 200px;
-    top: 5px;
     font-size: 22px;
     font-weight: 900;
     font-family:'Times New Roman', Times, serif;

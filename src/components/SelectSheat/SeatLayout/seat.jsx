@@ -28,6 +28,7 @@ export class Seat {
         this.zoomIndex = 1;     
 
         this.isMove = false;
+        this.isReserved = false;
     }
 
     animate(ctx) {          
@@ -37,6 +38,8 @@ export class Seat {
         ctx.beginPath();
         if (this.isSelected) {
             this.opacity = 1;
+        } else if (this.isReserved ) {
+            this.opacity = 0.5;
         } else {
             this.opacity = 0.3;
         }
@@ -48,6 +51,8 @@ export class Seat {
         this.finalWidth = this.width * this.zoomIndex;
         this.finalHeight = this.height * this.zoomIndex;
         this.finalFontSize = this.fontSize * this.zoomIndex;
+        ctx.clearRect(this.finalPos.x, this.finalPos.y,
+            this.finalWidth, this.finalHeight);
         ctx.fillRect(this.finalPos.x, this.finalPos.y,
             this.finalWidth, this.finalHeight);
 
@@ -63,6 +68,25 @@ export class Seat {
             this.seatName, 
             this.finalPos.x + (this.finalWidth - fontWidth) /2, 
             this.finalPos.y + this.finalHeight / 1.5);
+        
+        if(this.isReserved) {
+            ctx.fillStyle = "#3e3e3e";
+            ctx.beginPath();
+            ctx.moveTo(this.finalPos.x + this.finalWidth * 0.1, 
+                this.finalPos.y + this.finalHeight * 0.1);
+            ctx.lineTo(this.finalPos.x+this.finalWidth * 0.9,
+                this.finalPos.y + this.finalHeight * 0.9);
+            ctx.closePath();
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(this.finalPos.x+this.finalWidth* 0.9, 
+                this.finalPos.y + this.finalHeight * 0.1);
+            ctx.lineTo(this.finalPos.x + this.finalWidth * 0.1
+                , this.finalPos.y + this.finalHeight * 0.9);
+            ctx.closePath();
+            ctx.stroke();
+        }
     }
 
     down(point) {
@@ -101,5 +125,9 @@ export class Seat {
             this.zoomIndex += index;            
             this.zoomIndex = Math.min(this.zoomIndex, 5);
         }
+    }
+
+    reserved(state) {
+        this.isReserved = state;
     }
 }

@@ -5,21 +5,21 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image';
 import DatePicker from 'react-datepicker';
+import { ko } from "date-fns/esm/locale";
 import Button from 'react-bootstrap/Button';
 import "react-datepicker/dist/react-datepicker.css";
+import Table from 'react-bootstrap/Table'
 import cards from '../data/showInfo';
-//import db from "../../service/firebase";
-
-
 import { SocketContext } from '../../service/socket';
+
 
 const SelectShow = ({
     state, setState, setShowInfo
 }) => {
-
     const socket = useContext(SocketContext);
 
-    const footerStyle = { backgroundColor: "#FFFFFF" };//#3e3e3e"};
+    const headerStyle = {};//{ backgroundColor : "#FFFFFF"};
+    const footerStyle = {};//{ backgroundColor : "#FFFFFF" };//#3e3e3e"};
 
     const [showCard, setShowCard] = useState(-1);
     const onClickNext = (index) => {
@@ -43,8 +43,8 @@ const SelectShow = ({
     }, []);
     
     const [startDate, setStartDate] = useState(new Date());
-
-    const monthday = startDate.getMonth()+1 + "-" + startDate.getDate();
+    const monthdayyear = startDate.getMonth()+1 + "-" + startDate.getDate() + "-" + startDate.getFullYear();
+    
     return (
         <div className={styles.panelWindow}>
             {
@@ -58,7 +58,7 @@ const SelectShow = ({
                                         <Card.Footer style={footerStyle} className={styles.show} >
                                             <b>{value.name}</b>
                                             <div className={styles.info}>
-                                                <br />장소: {value.place}<br />기간: {value.period}
+                                                장소: {value.place}<br />기간: {value.period}
                                             </div>
                                         </Card.Footer >
                                     </Card>);
@@ -67,56 +67,62 @@ const SelectShow = ({
                     </div>
                 ) : (
                     <div className={styles.panel2}>
-                        <div>
-                            <Row xs={1} md={3}>
-                                <Col>
-                                    <div className={styles.show2}>
-                                        {cards[showCard].name}
-                                    </div><br />
-                                    <Image variant="top" src={cards[showCard].img} width="300px" />
-                                    <br /><br />
-                                    <div className={styles.show2}>
-                                        장소: {cards[showCard].place}
-                                    </div><br />
-                                    <div className={styles.show2}>
-                                        기간: {cards[showCard].period}
-                                    </div><br />
-                                    <div className={styles.show2}>
-                                        관람시간: {cards[showCard].time}
+                        <div className = {styles.row}>
+                        <div className = {styles.column}>
+                            <Card className={styles.card}>
+                                <Card.Header style={headerStyle}>
+                                    <div className={styles.header}>
+                                    {cards[showCard].name}
                                     </div>
-                                </Col>
-                                <Col>
-                                    <header>
-                                        <div className={styles.show2}>날짜</div>
-                                    </header><br />
-                                    <body>
-                                        <DatePicker
-                                            selected={startDate}
-                                            onChange={(date) => setStartDate(date)}
-                                            inline
-                                        />
-                                    </body>
-                                </Col>
-                                <Col>
-                                    <Card>
-                                        <Card.Header>공연 시간 및 잔여 좌석</Card.Header>
-                                        <Card.Body>
-                                        <div className={styles.show3}>
-                                            {
-                                                cards[showCard].timeList[monthday].map((value) => {
-                                                    return (
-                                                        <div>
-                                                            {value.startTime}~{value.endTime}&emsp;&emsp;
-                                                            {value.reservedSeat}/{value.allSeat}<br/>
-                                                        </div>
-                                                        );
-                                                })
-                                            }
-                                        </div>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            </Row>
+                                </Card.Header>
+                                <Card.Img className = {styles.cardImg} variant="top" height="500px" src={cards[showCard].img}/>
+                                <Card.Footer style={footerStyle}>                    
+                                    <div className={styles.footer}>
+                                            장소 : {cards[showCard].place}<br/>
+                                            기간 : {cards[showCard].period}<br/>
+                                            관람 시간 : {cards[showCard].time}<br/>
+                                    </div>
+                                </Card.Footer >
+                            </Card>                                    
+                        </div>
+                        <div className = {styles.border}></div>
+                        <div className = {styles.column}>
+                                <div className={styles.title}>날짜</div>
+                                <DatePicker
+                                    locale = {ko}
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                    minDate={new Date()}
+                                    maxDate={new Date("11-29-2021")}
+                                    inline
+                                />
+                        </div>
+                        <div className = {styles.border}></div>
+                        <div className = {styles.column}>
+                            <div className = {styles.title}>시간 및 좌석</div>
+                            <div className={styles.show3}>
+                                {
+                                    cards[showCard].timeList[monthdayyear].map((value) => {
+                                        return (
+                                            <Table striped bordered hover>
+                                                <thead>
+                                                    <tr>
+                                                        <th>공연 시간</th>
+                                                        <th>잔여 좌석/전체 좌석</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>{value.startTime}~{value.endTime}</th>
+                                                        <th>{value.reservedSeat}/{value.allSeat}</th>
+                                                    </tr>
+                                                </tbody>                                   
+                                            </Table>
+                                            );
+                                    })
+                                }
+                            </div>
+                        </div>
                         </div>
                         <Button className={styles.prevBtn} onClick={onClickPrevBtn}>이전</Button>
                         <Button className={styles.nextBtn} onClick={onClickNextBtn}>다음</Button>
