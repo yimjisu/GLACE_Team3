@@ -2,8 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import {Point} from './point';
 import {Seat} from './seat';
 
-const useCanvas = ({seatInfo, peopleNum, selectedSeat, setSelectedSeat}) => {
-
+const useCanvas = ({seatInfo, seatReservationInfo, peopleNum, selectedSeat, setSelectedSeat}) => {
   const canvasRef = useRef(null);
   const width = seatInfo.map.size.width;
   const height = seatInfo.map.size.height;
@@ -64,7 +63,7 @@ function animate(ctx) {
     setAllSeats(allSeats);
   }
 
-  const onUp = (e) => {
+  const onUp = async (e) => {
     let mousePos = new Point();
     mousePos.x = e.clientX - offsetX;
     mousePos.y = e.clientY - offsetY;
@@ -73,21 +72,28 @@ function animate(ctx) {
     for(let i=0; i<allSeats.length; i++) {
       let seat = allSeats[i].up(mousePos.clone());
       if(seat != null) {
+        console.log(seat.seatName, seat.isSelected, peopleNum)
         if (seat.isSelected && selectedSeat.length >= peopleNum) {
           seat.isSelected = false;
           alert("선택한 좌석수가 인원수보다 많습니다")
         } else {
           if (seat.isSelected && !newSelectedSeat.includes(seat.seatName)) {
             newSelectedSeat.push(seat.seatName);
-          } else if(! seat.isSelected){
+          } else {
             newSelectedSeat = newSelectedSeat.filter((item) => item != seat.seatName);
           }
         }
       }
     }
+    console.log('new', newSelectedSeat)
     setAllSeats(allSeats);
     setSelectedSeat(newSelectedSeat);    
   }
+
+  
+  useEffect(() => {
+    console.log(selectedSeat);
+  }, [selectedSeat, peopleNum]);
 
   function onWheel(e) {
     const deltaPos = new Point(e.deltaX, e.deltaY);
@@ -99,11 +105,15 @@ function animate(ctx) {
 
   const [canvas, setCanvas] = useState(canvasRef.current);
   const [context, setContext] = useState(null);
+
+  useEffect(() => {
+    console.log('seat')
+  }, [seatReservationInfo]);
+
   useEffect(() => {
     let canvasTemp = canvasRef.current;
     setCanvas(canvasTemp);
     setContext(canvasTemp.getContext('2d'));
-
     const seats = seatInfo.seats;
     seats.sort(function(a, b) {
       if (a.rectangles[0].lefttop.y < b.rectangles[0].lefttop.y) {
@@ -141,12 +151,29 @@ function animate(ctx) {
           allSeats.push(singleSeat);
         }
     }
-
     setAllSeats(allSeats);
   }, [])
 
   useEffect(() => {
     if (canvas == null || context == null) return;
+
+    let tempSeatReservationInfo = seatReservationInfo;
+    for(let i=0; i<allSeats.length; i++) {
+      let reserved = false;
+      for(let j=0; j< tempSeatReservationInfo.length; j++) {
+        const name = tempSeatReservationInfo[j];
+        if (name == allSeats[i].seatName) {
+          allSeats[i].reserved(true);
+          tempSeatReservationInfo = tempSeatReservationInfo.filter((item) => item != name)
+          reserved = true;
+          break;
+        }
+      }
+      if (!reserved) {
+        allSeats[i].reserved(false);
+      }
+    }
+
     let animationFrameId;
     resize(canvas, context);
     const render = () => {
@@ -172,7 +199,7 @@ function animate(ctx) {
       canvas.removeEventListener("wheel", onWheel);
     }
 
-  }, [peopleNum, allSeats, canvas, context]);
+  }, [peopleNum, allSeats, canvas, context, selectedSeat]);
   
   return canvasRef
 }
