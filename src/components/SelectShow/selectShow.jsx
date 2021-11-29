@@ -14,7 +14,7 @@ import { SocketContext } from '../../service/socket';
 
 
 const SelectShow = ({
-    state, setState, setShowInfo
+    state, setState, setShowInfo, setDateInfo
 }) => {
     const socket = useContext(SocketContext);
 
@@ -36,10 +36,7 @@ const SelectShow = ({
     }
 
     useEffect(() => {
-        socket.emit("requestShowInfo");
-        socket.on("requestShowInfo", function (data) {
-            console.log(data);
-        });
+        
     }, []);
     
     const [startDate, setStartDate] = useState(new Date());
