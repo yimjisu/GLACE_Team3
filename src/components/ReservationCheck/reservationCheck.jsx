@@ -10,13 +10,12 @@ import {phoneCheck, pwCheck, pwSame} from '../../util/util'
 
 
 const ReservationCheck = ({
-    state, setState, showInfo
+    state, setState, showInfo, selectedSeat
     }) => {
     const socket = useContext(SocketContext);
     const onClickPrevBtn = () => {
         setState(state - 1);
     }
-
 
     function onClickNextBtn() {
         if (!phoneCheck()) {
@@ -56,7 +55,7 @@ const ReservationCheck = ({
                                 장소: {showInfo.place}<br/>
                                 날짜: 2021.11.17(수)<br/>
                                 시간: 20:00<br/>
-                                좌석: C1, C2
+                                좌석: {selectedSeat.join(", ")}
                             </div>
                         </Card.Footer >
                     </Card>

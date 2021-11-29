@@ -44,7 +44,6 @@ const SelectShow = ({
     
     const [startDate, setStartDate] = useState(new Date());
     const monthdayyear = startDate.getMonth()+1 + "-" + startDate.getDate() + "-" + startDate.getFullYear();
-    
     return (
         <div className={styles.panelWindow}>
             {
