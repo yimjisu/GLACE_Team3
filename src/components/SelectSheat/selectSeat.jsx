@@ -5,9 +5,8 @@ import Button from 'react-bootstrap/Button';
 import seatInfo from "../data/seatInfo";
 
 const SelectSeat = ({ 
-    state, setState, showInfo
+    state, setState, showInfo, selectedSeat, setSelectedSeat
     }) => {
-    const [selectedSeat, setSelectedSeat] = useState([]);
     const [peopleNum, setPeopleNum] = useState(0);
 
     const onClickPrevBtn = () => {
