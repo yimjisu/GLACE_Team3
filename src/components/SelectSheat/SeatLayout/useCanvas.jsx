@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import {Point} from './point';
 import {Seat} from './seat';
 
-const useCanvas = ({seatInfo, peopleNum, selectedSeat, setSelectedSeat}) => {
+const useCanvas = ({seatInfo, seatReservationInfo, peopleNum, selectedSeat, setSelectedSeat}) => {
   const canvasRef = useRef(null);
   const width = seatInfo.map.size.width;
   const height = seatInfo.map.size.height;
@@ -98,11 +98,33 @@ function animate(ctx) {
 
   const [canvas, setCanvas] = useState(canvasRef.current);
   const [context, setContext] = useState(null);
+
   useEffect(() => {
     let canvasTemp = canvasRef.current;
     setCanvas(canvasTemp);
     setContext(canvasTemp.getContext('2d'));
+  }, []);
 
+  useEffect(() => {
+    let tempSeatReservationInfo = seatReservationInfo;
+    for(let i=0; i<allSeats.length; i++) {
+      let reserved = false;
+      for(let j=0; j< tempSeatReservationInfo.length; j++) {
+        const name = tempSeatReservationInfo[j] 
+        if (name == allSeats[i].seatName) {
+          allSeats[i].reserved(true);
+          tempSeatReservationInfo = tempSeatReservationInfo.filter((item) => item != name)
+          reserved = true;
+          break;
+        }
+      }
+      if (!reserved) {
+        allSeats[i].reserve(false);
+      }
+    }
+  }, [seatReservationInfo]);
+
+  useEffect(() => {
     const seats = seatInfo.seats;
     seats.sort(function(a, b) {
       if (a.rectangles[0].lefttop.y < b.rectangles[0].lefttop.y) {
@@ -140,9 +162,8 @@ function animate(ctx) {
           allSeats.push(singleSeat);
         }
     }
-
     setAllSeats(allSeats);
-  }, [])
+  }, [seatInfo])
 
   useEffect(() => {
     if (canvas == null || context == null) return;

@@ -2,7 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import Canvas from "./SeatLayout/canvas";
 import styles from './selectSeat.module.css';
 import Button from 'react-bootstrap/Button';
+
+// datas
 import seatInfo from "../data/seatInfo";
+import seatReservationInfo from "../data/seat-reservation";
 
 const SelectSeat = ({ 
     state, setState, showInfo
@@ -28,18 +31,13 @@ const SelectSeat = ({
             setPeopleNum(peopleNum - 1);
         }
     }
-
-    useEffect(() => {
-        console.log('selectedSeat', selectedSeat);
-        console.log('peopleNum', peopleNum);
-    }, [selectedSeat, peopleNum]);
-
     
     return (
         <div>
         <div className = {styles.seat}>
             <div className = {styles.panelWindow}>
             <div className = {styles.seatInfo}>
+                <img style={{height: "100px"}} src={showInfo.img}/>
                 <b>{showInfo.name}</b> 
                 <div className={styles.info}>
                     <br/>장소: {showInfo.place}<br/>기간: {showInfo.period}
@@ -63,6 +61,7 @@ const SelectSeat = ({
             <Canvas 
                 className = {styles.seatLayout}
                 seatInfo = {seatInfo}
+                seatReservationInfo = {seatReservationInfo}
                 peopleNum = {peopleNum}
                 selectedSeat = {selectedSeat}
                 setSelectedSeat = {setSelectedSeat} />
