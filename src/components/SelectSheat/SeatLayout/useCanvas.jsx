@@ -9,6 +9,10 @@ const useCanvas = ({seatInfo, peopleNum, selectedSeat, setSelectedSeat}) => {
   const height = seatInfo.map.size.height;
   const backgroundColor = seatInfo.map.background;
   
+  const width = seatInfo.map.size.width;
+  const height = seatInfo.map.size.height;
+  const backgroundColor = seatInfo.map.background;
+  
   const [allSeats, setAllSeats] = useState([]);
   
   let offsetY = 180;
