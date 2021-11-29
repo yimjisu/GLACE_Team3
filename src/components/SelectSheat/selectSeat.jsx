@@ -41,7 +41,8 @@ const SelectSeat = ({
             <div className = {styles.seatInfo}>
                 <b>{showInfo.name}</b> 
                 <div className={styles.info}>
-                    <br/>장소: {showInfo.place}<br/>기간: {showInfo.period}
+                    <p>장소: {showInfo.place}</p>
+                    <p>시간: {showInfo.period}</p>
                 </div>
             </div>
                 <div className = {styles.peopleNum}>

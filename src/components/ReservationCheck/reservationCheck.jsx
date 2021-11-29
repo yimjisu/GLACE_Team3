@@ -13,8 +13,6 @@ const ReservationCheck = ({
     state, setState, showInfo, selectedSeat
     }) => {
     const socket = useContext(SocketContext);
-    const headfootStyle = {backgroundColor: "#FFFFFF"};//"#758BFF"};
-
     const onClickPrevBtn = () => {
         setState(state - 1);
     }
@@ -44,15 +42,15 @@ const ReservationCheck = ({
     return (
         <div>
         <div className={styles.flex}>
-                <div>
-                    <Card className={styles.card}>
-                        <Card.Header style={headfootStyle}>
+                <div className = {styles.card}>
+                    <Card>
+                        <Card.Header>
                             <div className={styles.header}>
                             {showInfo.name}
                             </div>
                         </Card.Header>
-                        <Card.Img className = {styles.cardImg} variant="top" height="500px" src={showInfo.img}/>
-                        <Card.Footer style={headfootStyle}>                    
+                        <Card.Img  variant="top" height="500px" src={showInfo.img}/>
+                        <Card.Footer>                    
                             <div className={styles.footer}>
                                 장소: {showInfo.place}<br/>
                                 날짜: 2021.11.17(수)<br/>
@@ -63,11 +61,11 @@ const ReservationCheck = ({
                     </Card>
                 </div>
 
-                <div>
+                <div className = {styles.login}>
                     <form className={styles.userInfo}>
                         <div className={styles.title}>비회원 로그인</div><br/>
                         
-                        <table width="750">
+                        <table>
                         <tr>
                             <td width="50" align="center">*</td>
                             <td width="150" align="left">휴대폰</td>

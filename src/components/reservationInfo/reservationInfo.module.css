@@ -1,42 +1,62 @@
-.table {
-    margin-top: 120px;
-    width: 100%;
+.flexBox{
+    display: flex;
+    align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
-
 .userInfo {
-    position: relative;
-    left: 50px;
     font-weight: normal;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .text {
-    padding-top: 80px;
-    font-size: 30px;
+    padding-top: 20px;
+    font-size: 20px;
     text-align: center;
 }
 
 .img {
-    position: relative;
-    right: 50px;
+    margin-right: 30px;
+    margin-left: 10px;
+    align-self: center;
 }
 
 .rightTriangle {
+    position: absolute;
+    right: 20px;
+    top: 40%;
     width: 0px;
     height: 0px;
-    border-top: 100px solid white;
-    border-bottom: 100px solid white;
+    border-top: 35px solid white;
+    border-bottom: 35px solid white;
     border-left: 50px solid #758BFF;
     border-right: 50px solid none;
     cursor: pointer;
 }
 
+.rightTriangle:hover{
+    border-left: 50px solid #647eff;
+}
+
 .leftTriangle {
+    position:absolute;
+    left: 20px;
+    top: 40%;
     width: 0px;
     height: 0px;
-    border-top: 100px solid white;
-    border-bottom: 100px solid white;
+    border-top: 35px solid white;
+    border-bottom: 35px solid white;
     border-left: 50px solid none;
     border-right: 50px solid #758BFF;
     cursor: pointer;
+}
+
+.leftTriangle:hover{
+    border-right: 50px solid #647eff;
+}
+
+.body {
+    display: block;
+    position: relative;
 }
