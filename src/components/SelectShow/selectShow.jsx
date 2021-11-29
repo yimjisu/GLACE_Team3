@@ -9,7 +9,6 @@ import { ko } from "date-fns/esm/locale";
 import Button from 'react-bootstrap/Button';
 import "react-datepicker/dist/react-datepicker.css";
 import Table from 'react-bootstrap/Table'
-import cards from '../data/showInfo';
 //import db from "../../service/firebase";
 
 
@@ -47,6 +46,7 @@ const SelectShow = ({
     const [startDate, setStartDate] = useState(new Date());
 
     const monthdayyear = startDate.getMonth()+1 + "-" + startDate.getDate() + "-" + startDate.getFullYear();
+
     return (
         <div className={styles.panelWindow}>
             {

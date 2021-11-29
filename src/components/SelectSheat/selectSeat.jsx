@@ -5,26 +5,33 @@ import Button from 'react-bootstrap/Button';
 import seatInfo from "../data/seatInfo";
 
 const SelectSeat = ({ 
-    state, setState, showInfo
+    state, setState, showInfo, selectedSeat, setSelectedSeat
     }) => {
+    const [peopleNum, setPeopleNum] = useState(0);
+
     const onClickPrevBtn = () => {
         setState(state - 1);
     }
     const onClickNextBtn = () => {
         setState(state + 1);
     }
-
-    const [peopleNum, setPeopleNum] = useState(0);
     
-    const increment = () => {
-        setPeopleNum(peopleNum + 1)
+    const increment = async() => {
+        setPeopleNum(peopleNum + 1);
     }
   
-    const decrement = () => {
-        if (peopleNum > 0) {
-            setPeopleNum(peopleNum - 1)
+    const decrement = async() => {
+        if (selectedSeat.length > 0 && peopleNum <= selectedSeat.length) {
+            alert("선택한 좌석수가 인원수보다 많습니다");
+        } else if (peopleNum > 0) {
+            setPeopleNum(peopleNum - 1);
         }
     }
+
+    useEffect(() => {
+        console.log('selectedSeat', selectedSeat);
+        console.log('peopleNum', peopleNum);
+    }, [selectedSeat, peopleNum]);
 
     
     return (
@@ -55,7 +62,9 @@ const SelectSeat = ({
             <Canvas 
                 className = {styles.seatLayout}
                 seatInfo = {seatInfo}
-                peopleNum = {peopleNum}/>
+                peopleNum = {peopleNum}
+                selectedSeat = {selectedSeat}
+                setSelectedSeat = {setSelectedSeat} />
         </div>
          <Button className = {styles.prevBtn} onClick={onClickPrevBtn}>이전</Button>
          <Button className = {styles.nextBtn} onClick={onClickNextBtn}>다음</Button>
