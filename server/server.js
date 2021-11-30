@@ -27,7 +27,8 @@ app.get('/requestShowInfo', async (req, res) => {
 
         show_dic["title"] = titles[i]
         show_dic["place"] = showData.place
-        show_dic["period"] = showData.period
+        show_dic["startDate"] = showData.startDate
+        show_dic["endDate"] = showData.endDate
         show_dic["runTime"] = showData.runTime
         show_dic["poster"] = showData.poster
 
@@ -35,7 +36,7 @@ app.get('/requestShowInfo', async (req, res) => {
     }
 
     // console.log(show_info)
-    return res.json(show_info)
+    return res.status(200).json(show_info)
 })
 
 app.get('/showSelected', async (req, res) => {
@@ -54,7 +55,10 @@ app.get('/showSelected', async (req, res) => {
 
     var times_info = {}
 
-    var showTitle = await req.body["name"];
+    var showTitle = await req.query.name;
+    if (typeof showTitle != 'string') {
+        return res.status(400).send("'name' must be String");
+    }
     var documentSnapshot = await firestore.collection(showTitle).get();
     var times = documentSnapshot.docs.map(doc => doc.id);
     for (var i = 0; i < times.length; i++) {
@@ -71,7 +75,7 @@ app.get('/showSelected', async (req, res) => {
     }
 
     console.log(times_info)
-    return res.json(200, times_info)
+    return res.status(200).json(times_info)
 })
 
 app.get('/seatInfo', async (req, res) => {
@@ -92,11 +96,11 @@ app.get('/seatInfo', async (req, res) => {
         progress: ['A8', 'C25']
     }
     */
-    var data = req.body
+    var data = req.query
 
     const seat_info = {};
-    var showTitle = data["title"];
-    var showTime = data["date"] + " " + data["time"];
+    var showTitle = data.title;
+    var showTime = data.date + " " + data.time;
 
     var documentSnapshot = await firestore.collection(showTitle).doc("공연정보").get();
     var showData = documentSnapshot.data();
@@ -132,7 +136,7 @@ app.get('/seatInfo', async (req, res) => {
     seat_info["reserved"] = reserved;
     seat_info["progress"] = progress;
 
-    return res.send(200, seat_info)
+    return res.status(200).send(seat_info)
 })
 
 app.get('/checkSeatReservation', async (req, res) => {
@@ -151,11 +155,11 @@ app.get('/checkSeatReservation', async (req, res) => {
     0: 좌석 선점 중, 좌석 선택 불가능
     1: 좌석 선택 가능
     */
-    var data = req.body
+    var data = req.query
 
-    var showTitle = data["title"];
-    var showTime = data["date"] + " " + data["time"];
-    var findingSeat = data["seat"];
+    var showTitle = data.title;
+    var showTime = data.date + " " + data.time;
+    var findingSeat = data.seat;
 
     const timeSnapshot = await firestore.collection(showTitle).doc(showTime).get();
     var timeData = timeSnapshot.data();
@@ -163,9 +167,9 @@ app.get('/checkSeatReservation', async (req, res) => {
     var seats = Object.keys(timeData);
 
     if(seats.indexOf(findingSeat) === -1) {
-        return res.send("1")
+        return res.status(200).send("1")
     } else {
-        return res.send("0")
+        return res.status(200).send("0")
     }
 })
 
