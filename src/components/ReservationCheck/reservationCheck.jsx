@@ -6,12 +6,17 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import { SocketContext } from '../../service/socket';
 import { phoneCheck, pwCheck, pwSame } from '../../util/util'
+//import axios from 'axios';
+
 
 
 const ReservationCheck = ({
     state, setState, showInfo
 }) => {
-    const socket = useContext(SocketContext);
+    //const socket = useContext(SocketContext);
+    //const require = createRequire(import.meta.url);
+
+
     const headfootStyle = { backgroundColor: "#FFFFFF" };//"#758BFF"};
 
     const onClickPrevBtn = () => {
@@ -33,8 +38,23 @@ const ReservationCheck = ({
             const pw = document.getElementById('pw').value
             const phone = document.getElementById('phone').value
             var data = { phone: phone, password: pw };
+            /*
             console.log("emit")
-            socket.emit("user_add", data);
+            router.get('/:id', function (req, res) {
+                res.send('Received a GET request, param:' + req.params.id);
+            });
+            router.post('/check', function (req, res) {
+                res.send('POST request to the homepage');
+            });*/
+            //socket.emit("user_add", data);
+
+            axios.post('/msg', {
+                user: 'velopert',
+                message: data
+            })
+                .then(response => { console.log(response) })
+                .catch(response => { console.log(response) });
+
             setState(state + 1);
         }
     }
