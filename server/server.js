@@ -92,8 +92,8 @@ app.get('/seatInfo', async (req, res) => {
         progress: ['A8', 'C25']
     }
     */
-    var data = req.body
-
+    var data = req.query;
+    
     const seat_info = {};
     var showTitle = data["title"];
     var showTime = data["date"] + " " + data["time"];
@@ -132,7 +132,7 @@ app.get('/seatInfo', async (req, res) => {
     seat_info["reserved"] = reserved;
     seat_info["progress"] = progress;
 
-    return res.send(200, seat_info)
+    return res.status(200).send(seat_info)
 })
 
 app.get('/checkSeatReservation', async (req, res) => {

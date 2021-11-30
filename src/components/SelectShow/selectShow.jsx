@@ -97,8 +97,7 @@ const SelectShow = ({
                             <div className = {styles.title}>시간 및 좌석</div>
                             <div className={styles.show3}>
                                 {
-                                     cards[showCard].timeList[monthdayyear] && 
-                                     
+                                     cards[showCard].timeList[monthdayyear] &&          
                                      cards[showCard].timeList[monthdayyear].map((value) => {
                                         return (
                                             <Table striped bordered hover>

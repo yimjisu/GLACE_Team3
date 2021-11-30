@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import Canvas from "./SeatLayout/canvas";
 import styles from './selectSeat.module.css';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 // datas
 import seatInfo from "../data/seatInfo";
-import seatReservationInfo from "../data/seat-reservation";
 
 const SelectSeat = ({ 
     state, setState, showInfo, selectedSeat, setSelectedSeat
@@ -30,6 +30,26 @@ const SelectSeat = ({
             setPeopleNum(peopleNum - 1);
         }
     }
+
+    const [seatReservationInfo, setSeatReservationInfo] = useState([]);
+    // const [seatInfo, setSeatInfo] = useState({});
+    useEffect(() => {
+        axios.get('/seatInfo',  { params: {
+            title: "겨울이야기",
+            date: "21.11.24",
+            time: "16:00"
+        }}).then(response => {
+            const data = response.data;
+            let tempInfo = [];
+            for(let i=0; i<data.progress.length; i++) {
+                tempInfo.push(data.progress[i])
+            }
+            for(let i=0; i<data.reserved.length; i++) {
+                tempInfo.push(data.reserved[i])
+            }
+            setSeatReservationInfo(tempInfo);
+        })
+    }, [])
 
     
     return (

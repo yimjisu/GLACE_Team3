@@ -152,7 +152,7 @@ function animate(ctx) {
         }
     }
     setAllSeats(allSeats);
-  }, [])
+  }, [seatInfo])
 
   useEffect(() => {
     if (canvas == null || context == null) return;
@@ -199,7 +199,7 @@ function animate(ctx) {
       canvas.removeEventListener("wheel", onWheel);
     }
 
-  }, [peopleNum, allSeats, canvas, context, selectedSeat]);
+  }, [peopleNum, allSeats, canvas, context, selectedSeat, seatReservationInfo]);
   
   return canvasRef
 }
