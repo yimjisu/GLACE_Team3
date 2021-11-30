@@ -23,8 +23,7 @@ const SelectShow = ({
 
     const [showCard, setShowCard] = useState(-1);
     const onClickNext = (index) => {
-        console.log("showSelected");
-        socket.emit("showSelected", cards[index]);
+        console.log(index);
         setShowCard(index);
     }
     const onClickPrevBtn = () => {
@@ -36,11 +35,8 @@ const SelectShow = ({
     }
 
     useEffect(() => {
-        socket.emit("requestShowInfo");
-        socket.on("requestShowInfo", function (data) {
-            console.log(data);
-        });
-    }, []);
+        console.log(showCard, cards[showCard]);
+    }, [cards, showCard]);
     
     const [startDate, setStartDate] = useState(new Date());
     const monthdayyear = startDate.getMonth()+1 + "-" + startDate.getDate() + "-" + startDate.getFullYear();
@@ -52,7 +48,7 @@ const SelectShow = ({
                         {
                             cards.map((value, index) => {
                                 return (
-                                    <Card className={styles.cards} onClick={() => { onClickNext(index); }} style={{ cursor: 'pointer' }}>
+                                    <Card className={styles.cards} onClick={() => onClickNext(index)} style={{ cursor: 'pointer' }}>
                                         <Card.Img variant="top" height="400px" src={value.img} />
                                         <Card.Footer style={footerStyle} className={styles.show} >
                                             <b>{value.name}</b>
@@ -91,8 +87,8 @@ const SelectShow = ({
                                     locale = {ko}
                                     selected={startDate}
                                     onChange={(date) => setStartDate(date)}
-                                    minDate={new Date()}
-                                    maxDate={new Date("11-29-2021")}
+                                    minDate={Date.now()}
+                                    maxDate={new Date("12-16-2021")}
                                     inline
                                 />
                         </div>
@@ -101,7 +97,9 @@ const SelectShow = ({
                             <div className = {styles.title}>시간 및 좌석</div>
                             <div className={styles.show3}>
                                 {
-                                    cards[showCard].timeList[monthdayyear].map((value) => {
+                                     cards[showCard].timeList[monthdayyear] && 
+                                     
+                                     cards[showCard].timeList[monthdayyear].map((value) => {
                                         return (
                                             <Table striped bordered hover>
                                                 <thead>
