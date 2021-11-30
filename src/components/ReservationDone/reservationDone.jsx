@@ -8,7 +8,7 @@ import {State} from '../Panel/panel'
 
 
 const ReservationDone = ({ 
-    state, setState, showInfo
+    state, setState, showInfo, selectedSeat
     }) => {
 
     const onClickBtn = () => {
@@ -34,7 +34,7 @@ const ReservationDone = ({
                                 <b>장소&nbsp;&nbsp;</b>{showInfo.place}<br/>
                                 <b>날짜&nbsp;&nbsp;</b>2021.11.17(수)<br/>
                                 <b>시간&nbsp;&nbsp;</b>20:00<br/>
-                                <b>좌석&nbsp;&nbsp;</b>C1, C2<br/>
+                                <b>좌석&nbsp;&nbsp;</b>{selectedSeat.join(", ")}<br/>
                                 <b>휴대폰&nbsp;&nbsp;</b>010-1234-5678
                             </div>
                         </form>

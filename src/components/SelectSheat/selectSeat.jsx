@@ -8,9 +8,8 @@ import seatInfo from "../data/seatInfo";
 import seatReservationInfo from "../data/seat-reservation";
 
 const SelectSeat = ({ 
-    state, setState, showInfo
+    state, setState, showInfo, selectedSeat, setSelectedSeat
     }) => {
-    const [selectedSeat, setSelectedSeat] = useState([]);
     const [peopleNum, setPeopleNum] = useState(0);
 
     const onClickPrevBtn = () => {
