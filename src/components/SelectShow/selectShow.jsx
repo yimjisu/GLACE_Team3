@@ -14,7 +14,7 @@ import { SocketContext } from '../../service/socket';
 
 
 const SelectShow = ({
-    state, setState, setShowInfo
+    state, setState, setShowInfo, setDateInfo
 }) => {
     const socket = useContext(SocketContext);
 
@@ -36,10 +36,7 @@ const SelectShow = ({
     }
 
     useEffect(() => {
-        socket.emit("requestShowInfo");
-        socket.on("requestShowInfo", function (data) {
-            console.log(data);
-        });
+        
     }, []);
     
     const [startDate, setStartDate] = useState(new Date());
@@ -91,8 +88,8 @@ const SelectShow = ({
                                     locale = {ko}
                                     selected={startDate}
                                     onChange={(date) => setStartDate(date)}
-                                    minDate={new Date()}
-                                    maxDate={new Date("11-29-2021")}
+                                    minDate={Date.now()}
+                                    maxDate={new Date("12-31-2021")}
                                     inline
                                 />
                         </div>
@@ -101,6 +98,7 @@ const SelectShow = ({
                             <div className = {styles.title}>시간 및 좌석</div>
                             <div className={styles.show3}>
                                 {
+                                     cards[showCard].timeList[monthdayyear] && 
                                     cards[showCard].timeList[monthdayyear].map((value) => {
                                         return (
                                             <Table striped bordered hover>
