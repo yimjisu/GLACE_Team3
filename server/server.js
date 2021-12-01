@@ -49,7 +49,6 @@ app.get('/showSelected', async (req, res) => {
         "21.11.24 20:00": 0 
     }
     */
-
     current_data = await req;
 
     var times_info = {}
@@ -76,7 +75,6 @@ app.get('/showSelected', async (req, res) => {
     console.log(times_info)
     return res.status(200).json(times_info)
 })
-
 app.get('/seatInfo', async (req, res) => {
     /*
     - input data format example
@@ -97,7 +95,6 @@ app.get('/seatInfo', async (req, res) => {
     const seat_info = {};
     var showTitle = data.title;
     var showTime = data.date + " " + data.time;
-
     var documentSnapshot = await firestore.collection(showTitle).doc("공연정보").get();
     var showData = documentSnapshot.data();
     var jsonFilePath = showData.seatInfo;
@@ -165,7 +162,6 @@ app.get('/checkSeatReservation', async (req, res) => {
         return res.status(200).send("0")
     }
 })
-
 
 app.post('/addReservationInfo', async (req, res) => {
     /*

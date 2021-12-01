@@ -4,6 +4,8 @@
 }
 
 .logo{
+    display: flex;
+    justify-content: center;
     margin-top: 5px;
     margin-bottom: 5px;
     font-style: italic;
@@ -12,22 +14,18 @@
 }
 
 .logo2{
-    margin-left: 48%;
-    margin-right: 50%;
+    flex-basis: 75%;
+    margin-left: 6%;
+
 }
+
 .btn {
-    position: fixed;
-    right: 100px;
-    top: 10px;
     font-size: 16px;
     background-color: rgba(117, 139, 255, 0);
     border: none;
 }
-
+    
 .line {
-    position: fixed;
-    right: 104px;
-    top: 5px;
     font-size: 22px;
     font-weight: 900;
     font-family:'Times New Roman', Times, serif;

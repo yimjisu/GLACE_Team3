@@ -5,42 +5,21 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image';
 import DatePicker from 'react-datepicker';
+import { ko } from "date-fns/esm/locale";
 import Button from 'react-bootstrap/Button';
 import "react-datepicker/dist/react-datepicker.css";
-import poster1 from '../images/poster1.jpg';
-import poster2 from '../images/poster2.jpg';
-import poster3 from '../images/poster3.jpg';
-//import db from "../../service/firebase";
-
-
+import Table from 'react-bootstrap/Table'
+import cards from '../data/showInfo';
 import { SocketContext } from '../../service/socket';
 
-const SelectShow = ({
-    state, setState, setShowInfo
-}) => {
 
+const SelectShow = ({
+    state, setState, setShowInfo, setDateInfo
+}) => {
     const socket = useContext(SocketContext);
-    const cards = [
-        {
-            name: "보통날의 기적", place: "교양분관", period: "2021.09.01 ~ 2021.11.01", time: "100분", img: poster1
-        },
-        {
-            name: "한여름 밤의 꿈", place: "B", period: "2021.09.01 ~ 2021.11.01", time: "110분", img: poster2
-        },
-        {
-            name: "방방콘", place: "C", period: "2021.09.01 ~ 2021.11.01", time: "120분", img: poster3
-        },
-        {
-            name: "겨울이야기", place: "D", period: "2021.09.01 ~ 2021.11.01", time: "130분", img: poster1
-        },
-        {
-            name: "연극E", place: "E", period: "2021.09.01 ~ 2021.11.01", time: "140분", img: poster2
-        },
-        {
-            name: "연극F", place: "F", period: "2021.09.01 ~ 2021.11.01", time: "150분", img: poster3
-        }
-    ];
-    const footerStyle = { backgroundColor: "#FFFFFF" };//#3e3e3e"};
+
+    const headerStyle = {};//{ backgroundColor : "#FFFFFF"};
+    const footerStyle = {};//{ backgroundColor : "#FFFFFF" };//#3e3e3e"};
 
     const [showCard, setShowCard] = useState(-1);
     const onClickNext = (index) => {
@@ -57,13 +36,11 @@ const SelectShow = ({
     }
 
     useEffect(() => {
-        socket.emit("requestShowInfo");
-        socket.on("requestShowInfo", function (data) {
-            console.log(data);
-        });
+        
     }, []);
     
     const [startDate, setStartDate] = useState(new Date());
+    const monthdayyear = startDate.getMonth()+1 + "-" + startDate.getDate() + "-" + startDate.getFullYear();
     return (
         <div className={styles.panelWindow}>
             {
@@ -77,7 +54,7 @@ const SelectShow = ({
                                         <Card.Footer style={footerStyle} className={styles.show} >
                                             <b>{value.name}</b>
                                             <div className={styles.info}>
-                                                <br />장소: {value.place}<br />기간: {value.period}
+                                                장소: {value.place}<br />기간: {value.period}
                                             </div>
                                         </Card.Footer >
                                     </Card>);
@@ -86,45 +63,63 @@ const SelectShow = ({
                     </div>
                 ) : (
                     <div className={styles.panel2}>
-                        <div>
-                            <Row xs={1} md={3}>
-                                <Col>
-                                    <div className={styles.show2}>
-                                        {cards[showCard].name}
-                                    </div><br />
-                                    <Image variant="top" src={cards[showCard].img} width="300px" />
-                                    <br /><br />
-                                    <div className={styles.show2}>
-                                        장소: {cards[showCard].place}
-                                    </div><br />
-                                    <div className={styles.show2}>
-                                        기간: {cards[showCard].period}
-                                    </div><br />
-                                    <div className={styles.show2}>
-                                        관람시간: {cards[showCard].time}
+                        <div className = {styles.row}>
+                        <div className = {styles.column}>
+                            <Card className={styles.card}>
+                                <Card.Header style={headerStyle}>
+                                    <div className={styles.header}>
+                                    {cards[showCard].name}
                                     </div>
-                                </Col>
-                                <Col>
-                                    <header>
-                                        <div className={styles.show2}>날짜</div>
-                                    </header><br />
-                                    <body>
-                                        <DatePicker
-                                            selected={startDate}
-                                            onChange={(date) => setStartDate(date)}
-                                            inline
-                                        />
-                                    </body>
-                                </Col>
-                                <Col>
-                                    <Card>
-                                        <Card.Header>시간</Card.Header>
-                                        <Card.Body>
-                                            정리
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            </Row>
+                                </Card.Header>
+                                <Card.Img className = {styles.cardImg} variant="top" height="500px" src={cards[showCard].img}/>
+                                <Card.Footer style={footerStyle}>                    
+                                    <div className={styles.footer}>
+                                            장소 : {cards[showCard].place}<br/>
+                                            기간 : {cards[showCard].period}<br/>
+                                            관람 시간 : {cards[showCard].time}<br/>
+                                    </div>
+                                </Card.Footer >
+                            </Card>                                    
+                        </div>
+                        <div className = {styles.border}></div>
+                        <div className = {styles.column}>
+                                <div className={styles.title}>날짜</div>
+                                <DatePicker
+                                    locale = {ko}
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                    minDate={Date.now()}
+                                    maxDate={new Date("12-31-2021")}
+                                    inline
+                                />
+                        </div>
+                        <div className = {styles.border}></div>
+                        <div className = {styles.column}>
+                            <div className = {styles.title}>시간 및 좌석</div>
+                            <div className={styles.show3}>
+                                {
+                                     cards[showCard].timeList[monthdayyear] && 
+                                    cards[showCard].timeList[monthdayyear].map((value) => {
+                                        return (
+                                            <Table striped bordered hover>
+                                                <thead>
+                                                    <tr>
+                                                        <th>공연 시간</th>
+                                                        <th>잔여 좌석/전체 좌석</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>{value.startTime}~{value.endTime}</th>
+                                                        <th>{value.reservedSeat}/{value.allSeat}</th>
+                                                    </tr>
+                                                </tbody>                                   
+                                            </Table>
+                                            );
+                                    })
+                                }
+                            </div>
+                        </div>
                         </div>
                         <Button className={styles.prevBtn} onClick={onClickPrevBtn}>이전</Button>
                         <Button className={styles.nextBtn} onClick={onClickNextBtn}>다음</Button>

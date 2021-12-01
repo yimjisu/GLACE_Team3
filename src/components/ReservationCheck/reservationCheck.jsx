@@ -5,7 +5,8 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import { SocketContext } from '../../service/socket';
-import { phoneCheck, pwCheck, pwSame } from '../../util/util'
+import {phoneCheck, pwCheck, pwSame} from '../../util/util'
+
 
 
 
@@ -60,7 +61,6 @@ const ReservationCheck = ({
                         </Card.Footer >
                     </Card>
                 </div>
-
                 <div className={styles.login}>
                     <form className={styles.userInfo}>
                         <div className={styles.title}>비회원 로그인</div><br />

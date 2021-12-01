@@ -13,8 +13,7 @@ float: right;
 .header {
     font-size: 20px;
     height: 30px;
-    text-align: left;
-    color: #3e3e3e;
+    color: royalblue;
 }
 
 .footer {
@@ -23,18 +22,25 @@ float: right;
     height: 100px;
     text-align: left;
     color: #3e3e3e;
+    font-weight: normal;
 }
 
 .card {
+    margin-left: 20px;
     margin-top: 30px;
-    margin-left: 200px;
-    width: 500px;
+    padding-right : 20px;
+    width: 420px;
+    border-right: 1px #3e3e3e dashed;
+}
+
+.login {
+    width: 750px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .userInfo {
-    position: fixed;
-    top: 35%;
-    left: 50%;
+    position: relative;
 }
 
 .text {
@@ -44,8 +50,8 @@ float: right;
 .title {
     font-size: 30px;
     position: relative;
-    bottom: 10%;
-    right: 40%;
+    bottom: 20%;
+    right: 30%;
 }
 .cardImg {
     padding: 10px;
@@ -57,4 +63,10 @@ float: right;
 
 .explain {
     font-size: 12px;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }

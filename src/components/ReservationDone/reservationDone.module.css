@@ -12,16 +12,17 @@
 }
 
 .userInfo {
-    position: absolute;
-    top: 35%;
-    left: 45%;
+    position: relative;
+    top: 30%;
     text-align: left;
     font-weight: normal;
     font-size: 25px;
 }
 
 .btn {
-    position: fixed;
-    bottom: 110px;
-    right: 120px;
+    margin-bottom: 10px;
+}
+
+.block {
+    display: block;
 }
