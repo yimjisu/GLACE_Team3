@@ -28,7 +28,7 @@ const ReservationDone = ({
                 password : userInfo.password                
             }
         })
-    })
+    }, [])
     return (
         <div>
             <div className={styles.block}>
