@@ -88,7 +88,11 @@ app.get('/show/:name', async (req, res) => {
             if(!(date in times_info)) {
                 times_info[date] = []
             }
+<<<<<<< HEAD
             times_info[date].push({time: time, reservedSeat: reserveNum})
+=======
+            times_info[date].push({time: time, reservaedSeat: reserveNum})
+>>>>>>> c05310ebd18b2374919d62cfdc6304236466c18f
         }
     }
 
