@@ -180,7 +180,7 @@ app.post('/addReservationInfo', async (req, res) => {
 
     
     */
-    var data = req.query;
+    var data = req.body;
     console.log(data);
     firestore.collection("reservation_info").add({
         title: data.title,
