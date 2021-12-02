@@ -12,6 +12,7 @@
     "cors": "^2.8.5",
     "date-fns": "^2.26.0",
     "firebase": "^9.3.0",
+    "firebase-admin": "^10.0.0",
     "path": "^0.12.7",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.2",
@@ -49,4 +50,5 @@
   },
   "type": "module",
   "proxy": "http://localhost:4000"
+
 }
