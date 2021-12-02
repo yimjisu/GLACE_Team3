@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import { SocketContext } from '../../service/socket';
-import {phoneCheck, pwCheck, pwSame} from '../../util/util'
+import { phoneCheck, pwCheck, pwSame } from '../../util/util'
 
 
 
@@ -36,8 +36,8 @@ const ReservationCheck = ({
             // socket.emit("user_add", data);
             setState(state + 1);
             setUserInfo({
-                pw : pw,
-                phone : phone
+                pw: pw,
+                phone: phone
             })
         }
     }
