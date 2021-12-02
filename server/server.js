@@ -254,7 +254,7 @@ app.post('/checkReservationInfo', async (req, res) => {
     const q = query(reservRef, where("phone", "==", data.phone), where("password", "==", encodeURIComponent(data.password)));
 
     const querySnapshot = await getDocs(q);
-    console.log("data!!");
+    //console.log("data!!");
     var reserv_info = [];
     querySnapshot.forEach((doc) => {
         //console.log(doc.id, " => ", doc.data());
@@ -305,54 +305,6 @@ io.on('connection', socket => {
             });
             */
 
-
-})
-
-io.on('connection', socket => {
-
-    console.log("socket connected")
-
-    socket.on("user_add",
-        function (data) {
-            console.log("user add");
-            console.log(current_data);
-            firestore.collection("user_info").add({
-                phone: data.phone,
-                password: data.password,
-                play: current_data.name,
-                place: current_data.place,
-                time: current_data.time,
-                seat: "??"
-            })
-                .then(() => {
-                    console.log("Document successfully written!");
-                })
-                .catch((error) => {
-                    console.error("Error writing document: ", error);
-                });
-
-
-            firestore.collection(current_data.name).
-                add({
-                    phone: data.phone,
-                    password: data.password,
-                    seat: "???"
-                })
-                .then(() => {
-                    console.log("Document successfully written!");
-                })
-                .catch((error) => {
-                    console.error("Error writing document: ", error);
-                });
-        });
-
-    socket.on("seatSelected", function (seatName) {
-        console.log("seat selected", seatName)
-    })
-
-    socket.on("seatUnselected", function (seatName) {
-        console.log("seat unselected", seatName)
-    })
 
 })
 
