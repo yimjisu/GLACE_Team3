@@ -90,8 +90,8 @@ app.get('/seatInfo', async (req, res) => {
         progress: ['A8', 'C25']
     }
     */
-    var data = req.query
-
+    var data = req.query;
+    console.log(data);
     const seat_info = {};
     var showTitle = data.title;
     var showTime = data.date + " " + data.time;
@@ -180,7 +180,8 @@ app.post('/addReservationInfo', async (req, res) => {
 
     
     */
-    var data = req.body
+    var data = req.body;
+    console.log(data);
     firestore.collection("reservation_info").add({
         title: data.title,
         place: data.place,
@@ -300,11 +301,6 @@ io.on('connection', socket => {
     })
 
 })
-
-server.listen(4000, function () {
-    console.log('listening on port 4000');
-})
-
 
 server.listen(4000, function () {
     console.log('listening on port 4000');
