@@ -14,9 +14,18 @@ const io = require('socket.io')(server, {
     }
 });
 
+// admin firebase
+const admin = require('firebase-admin');
+var serviceAccount = require("../glace-team3-firebase-adminsdk-7n3hx-86e0c8186f.json");
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://glace-team3-default-rtdb.firebaseio.com"
+  });
+
 app.use(bodyParser.json());
 
-app.get('/requestShowInfo', async (req, res) => {
+app.get('/shows', async (req, res) => {
     const snap = await firestore.collection("show_info").get();
     var titles = snap.docs.map(doc => doc.id)
 
@@ -31,7 +40,7 @@ app.get('/requestShowInfo', async (req, res) => {
         show_dic["startDate"] = showData.startDate
         show_dic["endDate"] = showData.endDate
         show_dic["runTime"] = showData.runTime
-        show_dic["poster"] = showData.poster
+        show_dic["img"] = showData.poster
 
         show_info.push(show_dic)
     }
@@ -40,37 +49,47 @@ app.get('/requestShowInfo', async (req, res) => {
     return res.status(200).json(show_info)
 })
 
-app.get('/showSelected', async (req, res) => {
+app.get('/show/:name', async (req, res) => {
     /*
     - output data format example
     {
-        // 공연 날짜 시간: 예약 완료 좌석 (예약 완료, 예약중 두 상태 모두)
-        "21.11.24 16:00": 6,
-        "21.11.24 18:00": 0,
-        "21.11.24 20:00": 0 
+        '11-24-2021': [
+            { time: '10:00', reservaedSeat: 3 },
+            { time: '14:00', reservaedSeat: 2 }
+        ],
+        '11-26-2021': [ { time: '10:00', reservaedSeat: 2 } ]
     }
     */
     current_data = await req;
 
     var times_info = {}
 
-    var showTitle = await req.query.name;
+    var showTitle = await req.params.name;
     if (typeof showTitle != 'string') {
         return res.status(400).send("'name' must be String");
     }
     var documentSnapshot = await firestore.collection(showTitle).get();
     var times = documentSnapshot.docs.map(doc => doc.id);
-    for (var i = 0; i < times.length; i++) {
-        if (times[i] === '공연정보') {
-            times.splice(i, 1);
-            break
-        }
-    }
 
     for (var i = 0; i < times.length; i++) {
-        var timeSnapshot = await firestore.collection(showTitle).doc(times[i]).get();
-        var timeData = timeSnapshot.data();
-        times_info[times[i]] = Object.keys(timeData).length
+        if (times[i] === '공연정보' || typeof times[i] != "string") {
+            // times.splice(i, 1);
+            continue
+        }
+        else {
+            var timeSnapshot = await firestore.collection(showTitle).doc(times[i]).get();
+            var timeData = timeSnapshot.data();
+            var reserveNum = Object.keys(timeData).length;
+
+            var split_string = times[i].split(' ');
+            var date = split_string[0];
+            var time = split_string[1];
+
+            if(!(date in times_info)) {
+                times_info[date] = []
+            }
+            times_info[date].push({time: time, reservaedSeat: reserveNum})
+        }
     }
 
     console.log(times_info)
@@ -133,35 +152,73 @@ app.get('/seatInfo', async (req, res) => {
     return res.status(200).send(seat_info)
 })
 
-app.get('/checkSeatReservation', async (req, res) => {
+app.post('/seat/:seatID', async (req, res) => {
     /*
     - input data format example
     {
         title: "겨울이야기",
-        date: "21.11.24",
-        time: "16:00"
-        seat: "A8"
+        date: "11-24-2021",
+        time: "10:00"
+        seat: "A11"
+        type: "Progress" or "Cancel" or "Reserved"
     }
     - output data format example
-    0: 좌석 선점 중, 좌석 선택 불가능
-    1: 좌석 선택 가능
+
+    0: 업데이트 실패
+    1: 업데이트 성공
     */
-    var data = req.query
 
-    var showTitle = data.title;
-    var showTime = data.date + " " + data.time;
-    var findingSeat = data.seat;
+    var data = req.body
 
-    const timeSnapshot = await firestore.collection(showTitle).doc(showTime).get();
-    var timeData = timeSnapshot.data();
+    var showTitle = data["title"];
+    var showTime = data["date"] + " " + data["time"];
+    // var seat = data["seat"];
+    var seat = req.params.seatID;
+    var updateType = data["type"];
+
+    const timeSnapshot = admin.firestore().collection(showTitle).doc(showTime);
+    // var timeSnapshotGet = timeSnapshot.get();
+    // var timeData = timeSnapshotGet.data();
+    var timeData = (await timeSnapshot.get()).data();
 
     var seats = Object.keys(timeData);
 
-    if (seats.indexOf(findingSeat) === -1) {
+    if (updateType === 'Progress') {
+        if(seats.indexOf(seat) === -1) {
+            timeSnapshot.update({
+                [seat]: updateType
+            });
+
+            // 선점 timeout
+            setTimeout(() => {
+                console.log(seat);
+                timeSnapshot.update({
+                    [seat]: admin.firestore.FieldValue.delete()
+                });
+                console.log('erase');
+            }, 300000);
+            
+            return res.status(201).send("1")
+        } else {
+            return res.status(409).send("0")
+        }
+    } else if (updateType === 'Cancel') {
+        if(seats.indexOf(seat) != -1) {
+            timeSnapshot.update({
+                [seat]: admin.firestore.FieldValue.delete()
+            });
+            return res.status(200).send("1")
+        } else {
+            return res.status(400).send("0")
+        }
+    } else if (updateType === 'Reserved') {
+        timeSnapshot.update({
+            [seat]: updateType
+        });
         return res.status(200).send("1")
-    } else {
-        return res.status(200).send("0")
     }
+
+    return res.status(400).send("0")
 })
 
 app.post('/addReservationInfo', async (req, res) => {
@@ -218,7 +275,6 @@ app.post('/addReservationInfo', async (req, res) => {
 
 })
 
-
 app.post('/checkReservationInfo', async (req, res) => {
     /*
     - input data format example
@@ -263,48 +319,6 @@ app.post('/checkReservationInfo', async (req, res) => {
     console.log(reserv_info);
 
     return res.status(200).send(reserv_info)
-
-})
-
-io.on('connection', socket => {
-
-    console.log("socket connected")
-    /*
-        socket.on("user_add",
-            function (data) {
-                console.log("user add");
-                console.log(current_data);
-                firestore.collection("user_info").add({
-                    phone: data.phone,
-                    password: data.password,
-                    play: current_data.name,
-                    place: current_data.place,
-                    time: current_data.time,
-                    seat: "??"
-                })
-                    .then(() => {
-                        console.log("Document successfully written!");
-                    })
-                    .catch((error) => {
-                        console.error("Error writing document: ", error);
-                    });
-    
-    
-                firestore.collection(current_data.name).
-                    add({
-                        phone: data.phone,
-                        password: data.password,
-                        seat: "???"
-                    })
-                    .then(() => {
-                        console.log("Document successfully written!");
-                    })
-                    .catch((error) => {
-                        console.error("Error writing document: ", error);
-                    });
-            });
-            */
-
 
 })
 
