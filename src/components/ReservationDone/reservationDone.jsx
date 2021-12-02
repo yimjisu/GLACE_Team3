@@ -18,15 +18,17 @@ const ReservationDone = ({
 
     useEffect(() => {
         axios.post('/addReservationInfo', {
+            params : {
                 title : selectedShowInfo.title,
                 date : selectedShowInfo.date,
                 time : selectedShowInfo.time,
                 place : selectedShowInfo.place,
                 seat : selectedSeat,
                 phone : userInfo.phone,
-                password : userInfo.password  
+                password : userInfo.password                
+            }
         })
-    }, [])
+    })
     return (
         <div>
             <div className={styles.block}>

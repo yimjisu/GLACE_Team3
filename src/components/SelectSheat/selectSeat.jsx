@@ -37,7 +37,7 @@ const SelectSeat = ({
         axios.get('/seatInfo',  { params: {
             title: selectedShowInfo.title,
             date: selectedShowInfo.date,
-            time: selectedShowInfo.time.startTime
+            time: selectedShowInfo.time.time
         }}).then(response => {
             const data = response.data;
             // setSeatInfo(data.json_path);
@@ -55,6 +55,7 @@ const SelectSeat = ({
     useEffect(() => {
         setSelectedSeat([]);
     }, []);
+
     return (
         <div>
         <div className = {styles.seat}>
@@ -68,7 +69,7 @@ const SelectSeat = ({
                     <div className={styles.info}>
                         <p>장소: {selectedShowInfo.place}</p>
                         <p>날짜: {selectedShowInfo.date}</p>
-                        <p>시간: {selectedShowInfo.time.startTime} ~ {selectedShowInfo.time.endTime}</p>
+                        <p>시간: {selectedShowInfo.time.time}</p>
                     </div>
                     </div>
                     </div>
@@ -90,8 +91,10 @@ const SelectSeat = ({
             </div>
             <Canvas 
                 className = {styles.seatLayout}
+                selectedShowInfo = {selectedShowInfo}
                 seatInfo = {seatInfo}
                 seatReservationInfo = {seatReservationInfo}
+                setSeatReservationInfo = {setSeatReservationInfo}
                 peopleNum = {peopleNum}
                 selectedSeat = {selectedSeat}
                 setSelectedSeat = {setSelectedSeat} />
