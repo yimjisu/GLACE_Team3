@@ -195,6 +195,16 @@ app.post('/seat/:seatID', async (req, res) => {
             timeSnapshot.update({
                 [seat]: updateType
             });
+
+            // 선점 timeout
+            setTimeout(() => {
+                console.log(seat);
+                timeSnapshot.update({
+                    [seat]: admin.firestore.FieldValue.delete()
+                });
+                console.log('erase');
+            }, 300000);
+            
             return res.status(201).send("1")
         } else {
             return res.status(409).send("0")
