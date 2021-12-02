@@ -11,10 +11,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import Table from 'react-bootstrap/Table'
 import cards from '../data/showInfo';
 import { SocketContext } from '../../service/socket';
+import axios from 'axios';
 
 
 const SelectShow = ({
-    state, setState, setShowInfo
+    state, setState, setShowInfo, setDateInfo
 }) => {
     const socket = useContext(SocketContext);
 
@@ -35,8 +36,8 @@ const SelectShow = ({
     }
 
     useEffect(() => {
-        console.log(showCard, cards[showCard]);
-    }, [cards, showCard]);
+        
+    }, []);
     
     const [startDate, setStartDate] = useState(new Date());
     const monthdayyear = startDate.getMonth()+1 + "-" + startDate.getDate() + "-" + startDate.getFullYear();
@@ -88,7 +89,7 @@ const SelectShow = ({
                                     selected={startDate}
                                     onChange={(date) => setStartDate(date)}
                                     minDate={Date.now()}
-                                    maxDate={new Date("12-16-2021")}
+                                    maxDate={new Date("12-31-2021")}
                                     inline
                                 />
                         </div>
@@ -98,8 +99,7 @@ const SelectShow = ({
                             <div className={styles.show3}>
                                 {
                                      cards[showCard].timeList[monthdayyear] && 
-                                     
-                                     cards[showCard].timeList[monthdayyear].map((value) => {
+                                    cards[showCard].timeList[monthdayyear].map((value) => {
                                         return (
                                             <Table striped bordered hover>
                                                 <thead>
