@@ -13,9 +13,8 @@ import cards from '../data/showInfo';
 import { SocketContext } from '../../service/socket';
 import axios from 'axios';
 
-
 const SelectShow = ({
-    state, setState, setShowInfo, setDateInfo
+    state, setState, setShowInfo, setSelectedShowInfo
 }) => {
     const socket = useContext(SocketContext);
 
@@ -30,17 +29,50 @@ const SelectShow = ({
     const onClickPrevBtn = () => {
         setShowCard(-1);
     }
-    const onClickNextBtn = () => {
-        setState(state + 1);
-        setShowInfo(cards[showCard]);
+    function onClickNextBtn() {
+        if (selectedIndex == null) {
+            alert("시간 및 좌석을 선택해야합니다.")
+        }
+        else {
+            setState(state + 1);
+            setShowInfo(cards[showCard]);
+        }
     }
 
-    useEffect(() => {
-        
-    }, []);
+    // 주석 처리 빼고 실행 되어야함.
+    // const [cards, setCards] = useState([]);
+    // useEffect(() => {
+    //     axios.get('/requestShowInfo').then(
+    //         (response) => {
+    //             console.log(response.data);
+    //             setCards(response.data);
+    //         }
+    //     )
+    // }, []);
     
-    const [startDate, setStartDate] = useState(new Date());
-    const monthdayyear = startDate.getMonth()+1 + "-" + startDate.getDate() + "-" + startDate.getFullYear();
+    const [startDate, setStartDate] = useState(new Date('11-28-2021'));
+    const [monthdayyear, setMonthdayyear] = useState(null);
+
+    useEffect(() => {
+        setMonthdayyear(startDate.getMonth()+1 + "-" + startDate.getDate() + "-" + startDate.getFullYear());
+    }, [startDate])
+
+    const [selectedIndex, setSelectedIndex] = useState(null);
+    const onSelected = (index) => {
+        const showInfo = cards[showCard];
+        let temp = {
+            title : showInfo.title,
+            place : showInfo.place,
+            img : showInfo.img,
+            date : monthdayyear,
+            time : showInfo.timeList[monthdayyear][index]
+        }
+        console.log(temp);
+        setSelectedShowInfo(temp);
+        setSelectedIndex(index);
+        console.log(index);
+    }
+
     return (
         <div className={styles.panelWindow}>
             {
@@ -52,9 +84,9 @@ const SelectShow = ({
                                     <Card className={styles.cards} onClick={() => onClickNext(index)} style={{ cursor: 'pointer' }}>
                                         <Card.Img variant="top" height="400px" src={value.img} />
                                         <Card.Footer style={footerStyle} className={styles.show} >
-                                            <b>{value.name}</b>
+                                            <b>{value.title}</b>
                                             <div className={styles.info}>
-                                                장소: {value.place}<br />기간: {value.period}
+                                                장소: {value.place}<br />기간: {value.startDate}~{value.endDate}
                                             </div>
                                         </Card.Footer >
                                     </Card>);
@@ -87,8 +119,11 @@ const SelectShow = ({
                                 <DatePicker
                                     locale = {ko}
                                     selected={startDate}
-                                    onChange={(date) => setStartDate(date)}
-                                    minDate={Date.now()}
+                                    onChange={(date) => {
+                                        setSelectedIndex(null)
+                                        setStartDate(date)
+                                    }}
+                                    minDate={new Date("11-28-2021")}
                                     maxDate={new Date("12-31-2021")}
                                     inline
                                 />
@@ -98,8 +133,8 @@ const SelectShow = ({
                             <div className = {styles.title}>시간 및 좌석</div>
                             <div className={styles.show3}>
                                 {
-                                     cards[showCard].timeList[monthdayyear] && 
-                                    cards[showCard].timeList[monthdayyear].map((value) => {
+                                     cards[showCard].timeList[monthdayyear] &&          
+                                     cards[showCard].timeList[monthdayyear].map((value, index) => {
                                         return (
                                             <Table striped bordered hover>
                                                 <thead>
@@ -108,11 +143,22 @@ const SelectShow = ({
                                                         <th>잔여 좌석/전체 좌석</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th>{value.startTime}~{value.endTime}</th>
-                                                        <th>{value.reservedSeat}/{value.allSeat}</th>
-                                                    </tr>
+                                                <tbody onClick={() => onSelected(index)}>
+                                                    {
+
+                                                        index == selectedIndex ? (
+                                                            <tr style={{backgroundColor: "royalblue"}}>
+                                                                <th style={{color: "white"}}>{value.startTime}~{value.endTime}</th>
+                                                                <th style={{color: "white"}}>{value.reservedSeat}/{value.allSeat}</th>
+                                                            </tr>
+                                                        ) : (
+                                                            <tr>
+                                                                <th>{value.startTime}~{value.endTime}</th>
+                                                                <th>{value.reservedSeat}/{value.allSeat}</th>
+                                                            </tr>
+                                                        )
+                                                    }
+                                                    
                                                 </tbody>                                   
                                             </Table>
                                             );

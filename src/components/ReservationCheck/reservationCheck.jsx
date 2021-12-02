@@ -11,7 +11,7 @@ import {phoneCheck, pwCheck, pwSame} from '../../util/util'
 
 
 const ReservationCheck = ({
-    state, setState, showInfo, selectedSeat
+    state, setState, selectedSeat, selectedShowInfo, setUserInfo
 }) => {
     const socket = useContext(SocketContext);
     const onClickPrevBtn = () => {
@@ -32,9 +32,13 @@ const ReservationCheck = ({
             const pw = document.getElementById('pw').value
             const phone = document.getElementById('phone').value
             var data = { phone: phone, password: pw };
-            console.log("emit")
-            socket.emit("user_add", data);
+            // console.log("emit")
+            // socket.emit("user_add", data);
             setState(state + 1);
+            setUserInfo({
+                pw : pw,
+                phone : phone
+            })
         }
     }
 
@@ -47,15 +51,15 @@ const ReservationCheck = ({
                     <Card>
                         <Card.Header>
                             <div className={styles.header}>
-                                {showInfo.name}
+                                {selectedShowInfo.title}
                             </div>
                         </Card.Header>
-                        <Card.Img variant="top" height="500px" src={showInfo.img} />
+                        <Card.Img variant="top" height="500px" src={selectedShowInfo.img} />
                         <Card.Footer>
                             <div className={styles.footer}>
-                                장소: {showInfo.place}<br />
-                                날짜: 2021.11.17(수)<br />
-                                시간: 20:00<br />
+                                장소: {selectedShowInfo.place}<br />
+                                날짜: {selectedShowInfo.date}<br />
+                                시간:{selectedShowInfo.time.startTime} ~ {selectedShowInfo.time.endTime}<br />
                                 좌석: {selectedSeat.join(", ")}
                             </div>
                         </Card.Footer >

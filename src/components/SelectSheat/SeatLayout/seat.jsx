@@ -105,9 +105,12 @@ export class Seat {
 
     up(point) {
         this.isDown = false;
-        if (!this.isMove &&
+        if (!this.isMove && 
             point.collide(this.finalPos,
                 this.finalWidth, this.finalHeight)) {
+            if (this.isReserved){
+                return null;
+            }
             this.isSelected = !this.isSelected;    
             return this;
         } else {
