@@ -57,11 +57,11 @@ export function pwCheck() {
         document.getElementById('pwCheck').style.color = 'red';
         return false;
     }
-    /*if (num < 0 | eng < 0 | spe < 0) {
-        document.getElementById('pwCheck').innerHTML='비밀번호에는 숫자, 영문, 특수문자를 포함해 주세요.';
-        document.getElementById('pwCheck').style.color='red';
+    if (num < 0 | eng < 0 | spe < 0) {
+        document.getElementById('pwCheck').innerHTML = '비밀번호에는 숫자, 영문, 특수문자를 포함해 주세요.';
+        document.getElementById('pwCheck').style.color = 'red';
         return false;
-    }*/
+    }
 
     if (confirmPW == '') {
         document.getElementById('pwSame').innerHTML = '';
