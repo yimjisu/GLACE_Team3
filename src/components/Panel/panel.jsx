@@ -23,21 +23,26 @@ const Panel = ({
     }) => {
         
     const [showInfo, setShowInfo] = useState(null);
+    const [selectedShowInfo, setSelectedShowInfo] = useState({});
     const [selectedSeat, setSelectedSeat] = useState([]);
+    const [userInfo, setUserInfo] = useState({});
 
+    useEffect(() => {
+        console.log(selectedShowInfo);
+    }, [selectedShowInfo])
     return (
     <div className={styles.panel}>
         {
-        state == State.SelectShow && <SelectShow state={state} setState={setState} setShowInfo={setShowInfo}/>
+        state == State.SelectShow && <SelectShow state={state} setState={setState} setShowInfo={setShowInfo} setSelectedShowInfo={setSelectedShowInfo}/>
         }
         {
-            state == State.SelectSeat && <SelectSeat state={state} setState={setState}  showInfo={showInfo} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat}/>
+            state == State.SelectSeat && <SelectSeat state={state} setState={setState}  showInfo={showInfo} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat}  selectedShowInfo={selectedShowInfo} setSelectedShowInfo={setSelectedShowInfo}/>
         }
         {
-            state == State.ReservationCheck && <ReservationCheck state={state} setState={setState}  showInfo={showInfo} selectedSeat={selectedSeat}/>
+            state == State.ReservationCheck && <ReservationCheck state={state} setState={setState} selectedSeat={selectedSeat} selectedShowInfo={selectedShowInfo} setUserInfo={setUserInfo}/>
         }
         {
-            state == State.ReservationDone && <ReservationDone state={state} setState={setState} showInfo={showInfo} selectedSeat={selectedSeat}/>
+            state == State.ReservationDone && <ReservationDone state={state} setState={setState} selectedSeat={selectedSeat} selectedShowInfo={selectedShowInfo} userInfo = {userInfo}/>
         }
         {
             state == State.UserInfo && <UserInfo state={state} setState={setState} showInfo={showInfo}/>

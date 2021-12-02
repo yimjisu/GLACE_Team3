@@ -8,7 +8,7 @@ import axios from 'axios';
 import seatInfo from "../data/seatInfo";
 
 const SelectSeat = ({ 
-    state, setState, showInfo, selectedSeat, setSelectedSeat
+    state, setState, showInfo, selectedSeat, setSelectedSeat, selectedShowInfo, setSelectedShowInfo
     }) => {
     const [peopleNum, setPeopleNum] = useState(0);
 
@@ -35,11 +35,12 @@ const SelectSeat = ({
     // const [seatInfo, setSeatInfo] = useState({});
     useEffect(() => {
         axios.get('/seatInfo',  { params: {
-            title: "겨울이야기",
-            date: "21.11.24",
-            time: "16:00"
+            title: selectedShowInfo.title,
+            date: selectedShowInfo.date,
+            time: selectedShowInfo.time.startTime
         }}).then(response => {
             const data = response.data;
+            // setSeatInfo(data.json_path);
             let tempInfo = [];
             for(let i=0; i<data.progress.length; i++) {
                 tempInfo.push(data.progress[i])
@@ -49,23 +50,25 @@ const SelectSeat = ({
             }
             setSeatReservationInfo(tempInfo);
         })
-    }, [])
-
-    
+    }, [selectedShowInfo])
     return (
         <div>
         <div className = {styles.seat}>
             <div className = {styles.panelWindow}>
-            <div className = {styles.seatInfo}>
-                <img src={showInfo.img}/>
-                <div className={styles.text}>
-                <b>{showInfo.name}</b> 
-                <div className={styles.info}>
-                    <p>장소: {showInfo.place}</p>
-                    <p>시간: {showInfo.period}</p>
-                </div>
-                </div>
-            </div>
+                {
+                    selectedShowInfo &&
+                    <div className = {styles.seatInfo}>
+                    <img src={selectedShowInfo.img}/>
+                    <div className={styles.text}>
+                    <b>{selectedShowInfo.title}</b> 
+                    <div className={styles.info}>
+                        <p>장소: {selectedShowInfo.place}</p>
+                        <p>날짜: {selectedShowInfo.date}</p>
+                        <p>시간: {selectedShowInfo.time.startTime} ~ {selectedShowInfo.time.endTime}</p>
+                    </div>
+                    </div>
+                    </div>
+                }
                 <div className = {styles.peopleNum}>
                     <p className = {styles.name}>인원수</p>
                     <div className={styles.inputNumber}>
