@@ -1,8 +1,9 @@
 import { useRef, useEffect, useState } from 'react';
 import {Point} from './point';
 import {Seat} from './seat';
+import axios from 'axios';
 
-const useCanvas = ({seatInfo, seatReservationInfo, peopleNum, selectedSeat, setSelectedSeat}) => {
+const useCanvas = ({selectedShowInfo, seatInfo, seatReservationInfo, setSeatReservationInfo, peopleNum, selectedSeat, setSelectedSeat}) => {
   const canvasRef = useRef(null);
   const width = seatInfo.map.size.width;
   const height = seatInfo.map.size.height;
@@ -72,22 +73,43 @@ function animate(ctx) {
     for(let i=0; i<allSeats.length; i++) {
       let seat = allSeats[i].up(mousePos.clone());
       if(seat != null) {
-        console.log(seat.seatName, seat.isSelected, peopleNum)
-        if (seat.isSelected && selectedSeat.length >= peopleNum) {
-          seat.isSelected = false;
-          alert("선택한 좌석수가 인원수보다 많습니다")
-        } else {
-          if (seat.isSelected && !newSelectedSeat.includes(seat.seatName)) {
-            newSelectedSeat.push(seat.seatName);
-          } else {
-            newSelectedSeat = newSelectedSeat.filter((item) => item != seat.seatName);
+        axios.get('/checkSeatReservation', {
+          params : {
+            title : selectedShowInfo.title,
+            date : selectedShowInfo.date,
+            time : selectedShowInfo.time.time,
+            seat : seat.seatName
           }
-        }
+        }).then(response => {
+          const data = response.data;
+          console.log(data);
+          if (data == 0) {
+            alert("이미 선점된 좌석입니다");
+            seat.isReserved = true;
+            seat.isSelected = false;
+
+            let temp = seatReservationInfo;
+            if (! temp.includes(seat.seatName)) {
+              temp.push(seat.seatName);
+            }
+            setSeatReservationInfo(temp);
+          } else if (seat.isSelected) {
+            console.log('selected')
+            if (selectedSeat.length >= peopleNum) {
+              seat.isSelected = false;
+              alert("선택한 좌석수가 인원수보다 많습니다")
+            } else {
+              newSelectedSeat.push(seat.seatName);
+            }
+          } else {
+            console.log('selected 해제')
+            newSelectedSeat = newSelectedSeat.filter((item) => item != seat.seatName);
+          }                
+          setAllSeats(allSeats);
+          setSelectedSeat(newSelectedSeat);    
+        })
       }
     }
-    console.log('new', newSelectedSeat)
-    setAllSeats(allSeats);
-    setSelectedSeat(newSelectedSeat);    
   }
 
   

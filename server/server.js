@@ -40,7 +40,7 @@ app.get('/shows', async (req, res) => {
         show_dic["startDate"] = showData.startDate
         show_dic["endDate"] = showData.endDate
         show_dic["runTime"] = showData.runTime
-        show_dic["img"] = showData.poster
+        show_dic["img"] = showData.img
 
         show_info.push(show_dic)
     }
@@ -63,10 +63,9 @@ app.get('/show/:name', async (req, res) => {
     current_data = await req;
 
     var times_info = {}
-
     var showTitle = await req.params.name;
     if (typeof showTitle != 'string') {
-        return res.status(400).send("'name' must be String");
+        return res.status(400).send("'title' must be String");
     }
     var documentSnapshot = await firestore.collection(showTitle).get();
     var times = documentSnapshot.docs.map(doc => doc.id);
@@ -118,8 +117,8 @@ app.get('/seatInfo', async (req, res) => {
     var documentSnapshot = await firestore.collection(showTitle).doc("공연정보").get();
     var showData = documentSnapshot.data();
     var jsonFilePath = showData.seatInfo;
-
     const timeSnapshot = await firestore.collection(showTitle).doc(showTime).get();
+    
     var timeData = timeSnapshot.data();
     // var reservationStates = Object.values(timeData);
     // var seats = Object.keys(timeData);

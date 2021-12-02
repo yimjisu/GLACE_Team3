@@ -26,7 +26,7 @@ const ReservationDone = ({
             phone: userInfo.phone,
             password: userInfo.pw
         })
-    }, [])
+    })
     return (
         <div>
             <div className={styles.block}>
