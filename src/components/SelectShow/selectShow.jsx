@@ -29,9 +29,14 @@ const SelectShow = ({
     const onClickPrevBtn = () => {
         setShowCard(-1);
     }
-    const onClickNextBtn = () => {
-        setState(state + 1);
-        setShowInfo(cards[showCard]);
+    function onClickNextBtn() {
+        if (selectedIndex == null) {
+            alert("시간 및 좌석을 선택해야합니다.")
+        }
+        else {
+            setState(state + 1);
+            setShowInfo(cards[showCard]);
+        }
     }
 
     // 주석 처리 빼고 실행 되어야함.
@@ -65,6 +70,7 @@ const SelectShow = ({
         console.log(temp);
         setSelectedShowInfo(temp);
         setSelectedIndex(index);
+        console.log(index);
     }
 
     return (
@@ -139,6 +145,7 @@ const SelectShow = ({
                                                 </thead>
                                                 <tbody onClick={() => onSelected(index)}>
                                                     {
+
                                                         index == selectedIndex ? (
                                                             <tr style={{backgroundColor: "royalblue"}}>
                                                                 <th style={{color: "white"}}>{value.startTime}~{value.endTime}</th>
