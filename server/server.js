@@ -1,4 +1,5 @@
 import { firestore } from "../src/service/firebase.js";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 var current_data = {};
@@ -180,15 +181,19 @@ app.post('/addReservationInfo', async (req, res) => {
 
     
     */
+    //console.log(encodeURIComponent("4oif2/!?:;fe"));
+
     var data = req.body;
     console.log(data);
+
+
     firestore.collection("reservation_info").add({
         title: data.title,
         place: data.place,
         date: data.date,
         time: data.time,
         phone: data.phone,
-        password: data.password,
+        password: encodeURIComponent(data.password),
         seat: data.seat
     })
         .then(() => {
@@ -201,7 +206,7 @@ app.post('/addReservationInfo', async (req, res) => {
     firestore.collection(data.title).
         add({
             phone: data.phone,
-            password: data.password,
+            password: encodeURIComponent(data.password),
             seat: data.seat
         })
         .then(() => {
@@ -213,43 +218,92 @@ app.post('/addReservationInfo', async (req, res) => {
 
 })
 
+
+app.post('/checkReservationInfo', async (req, res) => {
+    /*
+    - input data format example
+
+    {
+        phone:"01012345678",
+        password:"abcdef1!"
+    }
+
+    - output data format example
+    [
+        {
+            password: 'qwertyui',
+            seat: [ 'A115' ],
+            date: '11-28-2021',
+            place: 'C',
+            time: {
+            endTime: '14:00',
+            allSeat: 400,
+            startTime: '12:00',
+            reservedSeat: 200
+            },
+            title: '방방콘',
+            phone: '01023433333'
+        },
+        ...
+    ]
+    */
+    var data = req.body;
+    console.log(data);
+
+    const reservRef = collection(firestore, "reservation_info");
+    const q = query(reservRef, where("phone", "==", data.phone), where("password", "==", encodeURIComponent(data.password)));
+
+    const querySnapshot = await getDocs(q);
+    console.log("data!!");
+    var reserv_info = [];
+    querySnapshot.forEach((doc) => {
+        //console.log(doc.id, " => ", doc.data());
+        reserv_info.push(doc.data());
+    });
+    console.log(reserv_info);
+
+    return res.status(200).send(reserv_info)
+
+})
+
 io.on('connection', socket => {
 
     console.log("socket connected")
-
-    socket.on("user_add",
-        function (data) {
-            console.log("user add");
-            console.log(current_data);
-            firestore.collection("user_info").add({
-                phone: data.phone,
-                password: data.password,
-                play: current_data.name,
-                place: current_data.place,
-                time: current_data.time,
-                seat: "??"
-            })
-                .then(() => {
-                    console.log("Document successfully written!");
-                })
-                .catch((error) => {
-                    console.error("Error writing document: ", error);
-                });
-
-
-            firestore.collection(current_data.name).
-                add({
+    /*
+        socket.on("user_add",
+            function (data) {
+                console.log("user add");
+                console.log(current_data);
+                firestore.collection("user_info").add({
                     phone: data.phone,
                     password: data.password,
-                    seat: "???"
+                    play: current_data.name,
+                    place: current_data.place,
+                    time: current_data.time,
+                    seat: "??"
                 })
-                .then(() => {
-                    console.log("Document successfully written!");
-                })
-                .catch((error) => {
-                    console.error("Error writing document: ", error);
-                });
-        });
+                    .then(() => {
+                        console.log("Document successfully written!");
+                    })
+                    .catch((error) => {
+                        console.error("Error writing document: ", error);
+                    });
+    
+    
+                firestore.collection(current_data.name).
+                    add({
+                        phone: data.phone,
+                        password: data.password,
+                        seat: "???"
+                    })
+                    .then(() => {
+                        console.log("Document successfully written!");
+                    })
+                    .catch((error) => {
+                        console.error("Error writing document: ", error);
+                    });
+            });
+            */
 
 
 })
