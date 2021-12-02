@@ -50,7 +50,11 @@ const SelectSeat = ({
             }
             setSeatReservationInfo(tempInfo);
         })
-    }, [selectedShowInfo])
+    }, [selectedShowInfo]);
+
+    useEffect(() => {
+        setSelectedSeat([]);
+    }, []);
     return (
         <div>
         <div className = {styles.seat}>
