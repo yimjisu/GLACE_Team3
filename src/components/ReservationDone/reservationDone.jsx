@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button';
 import { State } from '../Panel/panel';
-import axios from 'axios';
+
 
 
 const ReservationDone = ({
@@ -15,18 +15,6 @@ const ReservationDone = ({
     const onClickBtn = () => {
         setState(State.SelectShow);
     }
-
-    useEffect(() => {
-        axios.post('/addReservationInfo', {
-            title: selectedShowInfo.title,
-            date: selectedShowInfo.date,
-            time: selectedShowInfo.time,
-            place: selectedShowInfo.place,
-            seat: selectedSeat,
-            phone: userInfo.phone,
-            password: userInfo.pw
-        })
-    })
     return (
         <div>
             <div className={styles.block}>
@@ -45,7 +33,7 @@ const ReservationDone = ({
                                     <b>공연&nbsp;&nbsp;</b>{selectedShowInfo.name}<br />
                                     <b>장소&nbsp;&nbsp;</b>{selectedShowInfo.place}<br />
                                     <b>날짜&nbsp;&nbsp;</b>{selectedShowInfo.date}<br />
-                                    <b>시간&nbsp;&nbsp;</b>{selectedShowInfo.time.startTime} ~ {selectedShowInfo.time.endTime}<br />
+                                    <b>시간&nbsp;&nbsp;</b>{selectedShowInfo.time.time}<br />
                                     <b>좌석&nbsp;&nbsp;</b>{selectedSeat.join(", ")}<br />
                                     <b>휴대폰&nbsp;&nbsp;</b>{userInfo.phone}
                                 </div>
