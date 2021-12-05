@@ -12,7 +12,7 @@ const UserInfo = ({
     const onClickBtn = () => {
         const pw = document.getElementById('pw').value;
         const phone = document.getElementById('phone').value;
-        axios.get('/user/reservation?phone='+phone+'&password='+pw).then(
+        axios.post('/user/reservation?phone='+phone+'&password='+pw).then(
             (response) => {
                 const data = response.data;
                 setUserReservationInfo(data);
