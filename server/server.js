@@ -221,7 +221,7 @@ app.post('/seat/:seatID', async (req, res) => {
     return res.status(400).send("0")
 })
 
-app.post('/addReservationInfo', async (req, res) => {
+app.post('/reservation', async (req, res) => {
     /*
     - input data format example
 
@@ -275,7 +275,7 @@ app.post('/addReservationInfo', async (req, res) => {
 
 })
 
-app.post('/checkReservationInfo', async (req, res) => {
+app.get('/user/:reservation?:phone&:passwords', async (req, res) => {
     /*
     - input data format example
 

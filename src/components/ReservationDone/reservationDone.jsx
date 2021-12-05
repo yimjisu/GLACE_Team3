@@ -15,18 +15,6 @@ const ReservationDone = ({
     const onClickBtn = () => {
         setState(State.SelectShow);
     }
-
-    useEffect(() => {
-        axios.post('/addReservationInfo', {
-            title: selectedShowInfo.title,
-            date: selectedShowInfo.date,
-            time: selectedShowInfo.time,
-            place: selectedShowInfo.place,
-            seat: selectedSeat,
-            phone: userInfo.phone,
-            password: userInfo.pw
-        })
-    })
     return (
         <div>
             <div className={styles.block}>

@@ -6,9 +6,7 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import { SocketContext } from '../../service/socket';
 import { phoneCheck, pwCheck, pwSame } from '../../util/util'
-
-
-
+import axios from 'axios';
 
 const ReservationCheck = ({
     state, setState, selectedSeat, selectedShowInfo, setUserInfo
@@ -29,19 +27,37 @@ const ReservationCheck = ({
             alert("비밀번호가 일치하지 않습니다.")
         }
         else {
-            const pw = document.getElementById('pw').value
-            const phone = document.getElementById('phone').value
+            const pw = document.getElementById('pw').value;
+            const phone = document.getElementById('phone').value;
             var data = { phone: phone, password: pw };
-            // console.log("emit")
-            // socket.emit("user_add", data);
             setState(state + 1);
             setUserInfo({
                 pw: pw,
                 phone: phone
             })
+
+            axios.post('/reservation', {
+                title: selectedShowInfo.title,
+                date: selectedShowInfo.date,
+                time: selectedShowInfo.time,
+                place: selectedShowInfo.place,
+                seat: selectedSeat,
+                phone: phone,
+                password: pw
+            })
         }
     }
 
+    const [ymd, setYmd] = useState('');
+    useEffect(() => {
+        const date = selectedShowInfo.date;
+        const month = date.substring(0, 2);
+        const day = date.substring(3, 5);
+        const year = date.substring(6);
+
+        setYmd(year+'.'+month+'.'+day);
+
+    }, [selectedShowInfo])
 
 
     return (
@@ -58,8 +74,8 @@ const ReservationCheck = ({
                         <Card.Footer>
                             <div className={styles.footer}>
                                 장소: {selectedShowInfo.place}<br />
-                                날짜: {selectedShowInfo.date}<br />
-                                시간:{selectedShowInfo.time.startTime} ~ {selectedShowInfo.time.endTime}<br />
+                                날짜: {ymd}<br />
+                                시간:{selectedShowInfo.time.time}<br />
                                 좌석: {selectedSeat.join(", ")}
                             </div>
                         </Card.Footer >
