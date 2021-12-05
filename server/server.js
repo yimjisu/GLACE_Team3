@@ -41,6 +41,7 @@ app.get('/shows', async (req, res) => {
         show_dic["endDate"] = showData.endDate
         show_dic["runTime"] = showData.runTime
         show_dic["img"] = showData.img
+        show_dic["totalSeatNumber"] = showData.totalSeatNumber
 
         show_info.push(show_dic)
     }
@@ -87,7 +88,11 @@ app.get('/show/:name', async (req, res) => {
             if(!(date in times_info)) {
                 times_info[date] = []
             }
+<<<<<<< HEAD
+            times_info[date].push({time: time, reservedSeat: reserveNum})
+=======
             times_info[date].push({time: time, reservaedSeat: reserveNum})
+>>>>>>> c05310ebd18b2374919d62cfdc6304236466c18f
         }
     }
 

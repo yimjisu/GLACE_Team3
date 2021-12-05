@@ -39,35 +39,17 @@ const SelectShow = ({
     }
     const [timeList, setTimeList] = useState([]);
     useEffect(() => {
-        console.log(showCard);
+        console.log(cards[showCard].totalSeatNumber);
         if (showCard == -1) return;
-        axios.get('/showSelected', {
-            params : {
-                title : cards[showCard].title
-            }
-        }).then(response => {
+        axios.get('/show/'+cards[showCard].title).then(response => {
             const data = response.data;
-            // console.log(data);
-            // let temp = {};
-            // for (var key in data) {
-            //     console.log(key);
-            //     const date = key.substring(0, 10);
-            //     const time = key.substring(11);
-            //     if (date in temp) {
-            //         temp[date].push({time : time, reservedSeat: 100, allSeat: 500});
-            //     } else {
-            //         temp[date] = [{time : time, reservedSeat: 100, allSeat: 500}]
-            //     }
-            // }
-            // console.log(temp);
-            // setTimeList(temp);
             setTimeList(data);
         })      
     }, [showCard]);
 
     const [cards, setCards] = useState([]);
     useEffect(() => {
-        axios.get('/requestShowInfo').then(
+        axios.get('/shows').then(
             (response) => {
                 console.log(response.data);
                 setCards(response.data);
@@ -172,12 +154,12 @@ const SelectShow = ({
                                                         index == selectedIndex ? (
                                                             <tr style={{backgroundColor: "royalblue"}}>
                                                                 <th style={{color: "white"}}>{value.time}</th>
-                                                                <th style={{color: "white"}}>{value.reservedSeat}/{value.allSeat}</th>
+                                                                <th style={{color: "white"}}>{value.reservedSeat}/{cards[showCard].totalSeatNumber}</th>
                                                             </tr>
                                                         ) : (
                                                             <tr>
                                                                 <th>{value.time}</th>
-                                                                <th>{value.reservedSeat}/{value.allSeat}</th>
+                                                                <th>{value.reservedSeat}/{cards[showCard].totalSeatNumber}</th>
                                                             </tr>
                                                         )
                                                     }

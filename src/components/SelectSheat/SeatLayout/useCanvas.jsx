@@ -173,6 +173,11 @@ function animate(ctx) {
           allSeats.push(singleSeat);
         }
     }
+
+    for(let i=0; i<allSeats.length; i++) {
+        allSeats[i].reserved(false);
+    }
+
     setAllSeats(allSeats);
   }, [seatInfo])
 

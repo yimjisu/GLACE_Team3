@@ -55,7 +55,6 @@ const SelectSeat = ({
     useEffect(() => {
         setSelectedSeat([]);
     }, []);
-
     return (
         <div>
           <div className = {styles.seat}>
