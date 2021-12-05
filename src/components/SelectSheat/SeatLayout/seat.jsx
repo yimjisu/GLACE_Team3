@@ -35,7 +35,6 @@ export class Seat {
         const move = this.movePos.clone().subtract(this.startPos);
         this.startPos = this.startPos.add(move);
         
-        ctx.beginPath();
         if (this.isSelected) {
             this.opacity = 1;
         } else if (this.isReserved ) {
@@ -68,8 +67,7 @@ export class Seat {
             this.seatName, 
             this.finalPos.x + (this.finalWidth - fontWidth) /2, 
             this.finalPos.y + this.finalHeight / 1.5);
-        
-        if(this.isReserved) {
+        if(this.isReserved && !this.isSelected) {
             ctx.fillStyle = "#3e3e3e";
             ctx.beginPath();
             ctx.moveTo(this.finalPos.x + this.finalWidth * 0.1, 
@@ -108,15 +106,18 @@ export class Seat {
         if (!this.isMove && 
             point.collide(this.finalPos,
                 this.finalWidth, this.finalHeight)) {
-            if (this.isReserved){
-                return null;
-            }
-            this.isSelected = !this.isSelected;    
+            // if (this.isReserved){
+            //     return null;
+            // }   
             return this;
         } else {
             this.isMove = false;
             return null;
         }
+    }
+
+    select(value) {
+        this.isSelected = value;
     }
 
     zoom(deltaPoint) {

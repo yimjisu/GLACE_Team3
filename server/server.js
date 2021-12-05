@@ -319,7 +319,18 @@ app.post('/checkReservationInfo', async (req, res) => {
     console.log(reserv_info);
 
     return res.status(200).send(reserv_info)
+})
 
+io.on('connection', function(socket) {
+    console.log('user in');
+    socket.on("seatChange", function(data) {
+        const showTitle = data.title;
+        const showTime = data.date+ " " + data.time.time;
+        const timeSnapshot = admin.firestore().collection(showTitle).doc(showTime);
+        timeSnapshot.onSnapshot((doc) => {
+            socket.emit("seatChanged", doc.data());
+        })
+    })    
 })
 
 server.listen(4000, function () {

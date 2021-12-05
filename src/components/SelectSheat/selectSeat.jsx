@@ -1,15 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Canvas from "./SeatLayout/canvas";
 import styles from './selectSeat.module.css';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-
-// datas
-import seatInfo from "../data/seatInfo";
+import { SocketContext } from '../../service/socket';
 
 const SelectSeat = ({
     state, setState, showInfo, selectedSeat, setSelectedSeat, selectedShowInfo, setSelectedShowInfo
 }) => {
+    const socket = useContext(SocketContext);
     const [peopleNum, setPeopleNum] = useState(0);
 
     const onClickPrevBtn = () => {
@@ -33,6 +32,7 @@ const SelectSeat = ({
 
     const [seatReservationInfo, setSeatReservationInfo] = useState([]);
     const [seatInfo, setSeatInfo] = useState(null);
+    const [seatChange, setSeatChange] = useState(null);
     useEffect(() => {
         axios.get('/seatInfo',  { params: {
             title: selectedShowInfo.title,
@@ -41,20 +41,16 @@ const SelectSeat = ({
         }}).then(response => {
             const data = response.data;
             setSeatInfo(data.jsonFile);
-            console.log(data.jsonFile);
-            let tempInfo = [];
-            for (let i = 0; i < data.progress.length; i++) {
-                tempInfo.push(data.progress[i])
-            }
-            for (let i = 0; i < data.reserved.length; i++) {
-                tempInfo.push(data.reserved[i])
-            }
-            setSeatReservationInfo(tempInfo);
+            setSeatReservationInfo(data.progress.concat(data.reserved));
         })
     }, [selectedShowInfo]);
 
     useEffect(() => {
         setSelectedSeat([]);
+        socket.emit("seatChange", selectedShowInfo);
+        socket.on("seatChanged", function(data) {
+            setSeatReservationInfo(Object.keys(data));
+        });
     }, []);
     
     return (

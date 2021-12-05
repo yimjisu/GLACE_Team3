@@ -36,6 +36,25 @@ function animate(ctx) {
   ctx.fillStyle = backgroundColor;
   ctx.fillRect(0, 0, width, height);
   ctx.scale(scale, scale);
+
+  let tempSeatReservationInfo = seatReservationInfo;
+    for(let i=0; i<allSeats.length; i++) {
+      let reserved = false;
+      for(let j=0; j< tempSeatReservationInfo.length; j++) {
+        const name = tempSeatReservationInfo[j];
+        if (name == allSeats[i].seatName) {
+          allSeats[i].reserved(true);
+          tempSeatReservationInfo = tempSeatReservationInfo.filter((item) => item != name)
+          reserved = true;
+          break;
+        }
+      }
+      if (!reserved) {
+        allSeats[i].reserved(false);
+      }
+    }
+
+
   for(let i=0; i<allSeats.length; i++) {
     allSeats[i].animate(ctx);
   }
@@ -73,42 +92,54 @@ function animate(ctx) {
     for(let i=0; i<allSeats.length; i++) {
       let seat = allSeats[i].up(mousePos.clone());
       if(seat != null) {
-        if (seat.isS)
-        axios.post('/seat/'+seat.seatName, {
-          params : {
-            title : selectedShowInfo.title,
-            date : selectedShowInfo.date,
-            time : selectedShowInfo.time.time,
-          }
-        }).then(response => {
-        });
-        //   const data = response.data;
-        //   console.log(data);
-        //   if (data == 0) {
-        //     alert("이미 선점된 좌석입니다");
-        //     seat.isReserved = true;
-        //     seat.isSelected = false;
+        if (seat.isSelected) {
+          try {
+            const response = await axios.post('/seat/'+seat.seatName, {
+              title : selectedShowInfo.title,
+              date : selectedShowInfo.date,
+              time : selectedShowInfo.time.time,
+              type : "Cancel"
+            });
+            const data = response.data;
+            seat.reserved(false);
+            seat.select(false);
 
-        //     let temp = seatReservationInfo;
-        //     if (! temp.includes(seat.seatName)) {
-        //       temp.push(seat.seatName);
-        //     }
-        //     setSeatReservationInfo(temp);
-        //   } else if (seat.isSelected) {
-        //     console.log('selected')
-        //     if (selectedSeat.length >= peopleNum) {
-        //       seat.isSelected = false;
-        //       alert("선택한 좌석수가 인원수보다 많습니다")
-        //     } else {
-        //       newSelectedSeat.push(seat.seatName);
-        //     }
-        //   } else {
-        //     console.log('selected 해제')
-        //     newSelectedSeat = newSelectedSeat.filter((item) => item != seat.seatName);
-        //   }                
-        //   setAllSeats(allSeats);
-        //   setSelectedSeat(newSelectedSeat);    
-        // })
+            let newSeatReservationInfo = seatReservationInfo.filter((item) => item != seat.seatName);
+            setSeatReservationInfo(newSeatReservationInfo);
+            newSelectedSeat = newSelectedSeat.filter((item) => item != seat.seatName);
+            setSelectedSeat(newSelectedSeat);
+          } catch(err) {
+            seat.reserved(true);
+            seat.select(false);
+            alert("이미 선점된 좌석입니다")
+          }
+        } else {
+          if (selectedSeat.length >= peopleNum) {
+            seat.select(false);
+            alert("선택한 좌석수가 인원수보다 많습니다");
+          } else {
+            try {
+              const response = await axios.post('/seat/'+seat.seatName, {
+                title : selectedShowInfo.title,
+                date : selectedShowInfo.date,
+                time : selectedShowInfo.time.time,
+                type : "Progress"
+              });
+                seat.select(true);
+                newSelectedSeat.push(seat.seatName);
+                setSelectedSeat(newSelectedSeat);
+            } catch(err) {
+              seat.select(false);
+              seat.reserved(true);
+              let temp = seatReservationInfo;
+              if (! temp.includes(seat.seatName)) {
+                temp.push(seat.seatName);
+              }
+              setSeatReservationInfo(temp);
+              alert("이미 선점된 좌석입니다");
+            }
+          }
+        }
       }
     }
   }
@@ -128,10 +159,6 @@ function animate(ctx) {
 
   const [canvas, setCanvas] = useState(canvasRef.current);
   const [context, setContext] = useState(null);
-
-  useEffect(() => {
-    console.log('seat')
-  }, [seatReservationInfo]);
 
   useEffect(() => {
     let canvasTemp = canvasRef.current;
@@ -185,23 +212,6 @@ function animate(ctx) {
   useEffect(() => {
     if (canvas == null || context == null) return;
 
-    let tempSeatReservationInfo = seatReservationInfo;
-    for(let i=0; i<allSeats.length; i++) {
-      let reserved = false;
-      for(let j=0; j< tempSeatReservationInfo.length; j++) {
-        const name = tempSeatReservationInfo[j];
-        if (name == allSeats[i].seatName) {
-          allSeats[i].reserved(true);
-          tempSeatReservationInfo = tempSeatReservationInfo.filter((item) => item != name)
-          reserved = true;
-          break;
-        }
-      }
-      if (!reserved) {
-        allSeats[i].reserved(false);
-      }
-    }
-
     let animationFrameId;
     resize(canvas, context);
     const render = () => {
@@ -227,7 +237,7 @@ function animate(ctx) {
       canvas.removeEventListener("wheel", onWheel);
     }
 
-  }, [peopleNum, allSeats, canvas, context, selectedSeat, seatReservationInfo]);
+  }, [peopleNum, allSeats, canvas, context, selectedSeat, seatReservationInfo, seatInfo]);
   
   return canvasRef
 }
