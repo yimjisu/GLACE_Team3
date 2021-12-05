@@ -40,7 +40,7 @@ const Panel = ({
             state == State.SelectSeat && <SelectSeat state={state} setState={setState}  showInfo={showInfo} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat}  selectedShowInfo={selectedShowInfo} setSelectedShowInfo={setSelectedShowInfo}/>
         }
         {
-            state == State.ReservationCheck && <ReservationCheck state={state} setState={setState} selectedSeat={selectedSeat} selectedShowInfo={selectedShowInfo} setUserInfo={setUserInfo}/>
+            state == State.ReservationCheck && <ReservationCheck state={state} setState={setState} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat} selectedShowInfo={selectedShowInfo} setUserInfo={setUserInfo}/>
         }
         {
             state == State.ReservationDone && <ReservationDone state={state} setState={setState} selectedSeat={selectedSeat} selectedShowInfo={selectedShowInfo} userInfo = {userInfo}/>

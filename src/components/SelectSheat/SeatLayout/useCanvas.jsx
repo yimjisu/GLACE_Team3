@@ -38,6 +38,7 @@ function animate(ctx) {
   ctx.scale(scale, scale);
 
   let tempSeatReservationInfo = seatReservationInfo;
+  let tempSelectSeat = selectedSeat;
     for(let i=0; i<allSeats.length; i++) {
       let reserved = false;
       for(let j=0; j< tempSeatReservationInfo.length; j++) {
@@ -51,6 +52,20 @@ function animate(ctx) {
       }
       if (!reserved) {
         allSeats[i].reserved(false);
+      }
+
+      let select = false;
+      for(let j=0; j< tempSelectSeat.length; j++) {
+        const name = tempSelectSeat[j];
+        if (name == allSeats[i].seatName) {
+          allSeats[i].select(true);
+          tempSelectSeat = tempSelectSeat.filter((item) => item != name)
+          select = true;
+          break;
+        }
+      }
+      if (!select) {
+        allSeats[i].select(false);
       }
     }
 
@@ -147,11 +162,6 @@ function animate(ctx) {
         }
     }
   }
-
-  
-  useEffect(() => {
-    console.log(selectedSeat);
-  }, [selectedSeat, peopleNum]);
 
   function onWheel(e) {
     const deltaPos = new Point(e.deltaX, e.deltaY);

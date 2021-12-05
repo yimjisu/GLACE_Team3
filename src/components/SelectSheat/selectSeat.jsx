@@ -58,6 +58,23 @@ const SelectSeat = ({
             setSeatReservationInfo(Object.keys(data));
         });
     }, []);
+
+    useEffect(()=> {
+        console.log(seatReservationInfo, selectedSeat);
+        let eraseSeats = [];
+        for(let i=0; i<selectedSeat.length; i++) {
+            const seat = selectedSeat[i];
+            if(!seatReservationInfo.includes(seat)){
+                eraseSeats.push(seat);
+            }
+        }
+        if (eraseSeats.length > 0){
+            console.log(eraseSeats);
+            setSelectedSeat(
+                selectedSeat.filter(
+                    (item) => !eraseSeats.includes(item)));
+        }
+    }, [seatReservationInfo, selectedSeat]);
     
     return (
         <div>
