@@ -39,12 +39,13 @@ const ReservationCheck = ({
             axios.post('/reservation', {
                 title: selectedShowInfo.title,
                 date: selectedShowInfo.date,
-                time: selectedShowInfo.time,
+                time: selectedShowInfo.time.time,
                 place: selectedShowInfo.place,
                 seat: selectedSeat,
                 phone: phone,
                 password: pw
             })
+
         }
     }
 
