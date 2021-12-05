@@ -7,6 +7,7 @@ import ReservationDone from "../ReservationDone/reservationDone";
 import Menu from "../Menu/menu";
 import UserInfo from "../UserInfo/userinfo"
 import ReservationInfo from "../reservationInfo/reservationInfo";
+import axios from 'axios';
 
 export const State = {
     SelectShow : 0,
@@ -28,9 +29,26 @@ const Panel = ({
     const [userInfo, setUserInfo] = useState({});
     const [userReservationInfo, setUserReservationInfo] = useState([]);
 
-    useEffect(() => {
-        console.log(selectedShowInfo);
-    }, [selectedShowInfo])
+    useEffect(async () => {
+        if (selectedSeat.length == 0) return;
+        if (state == State.SelectShow || state == State.SelectSeat ||
+            state == State.UserInfo || state == State.ReservationInfo) {
+            for(let i=0; i<selectedSeat.length; i++){
+                const seatName = selectedSeat[i];
+                try {
+                const response = await axios.post('/seat/'+seatName, {
+                    title : selectedShowInfo.title,
+                    date : selectedShowInfo.date,
+                    time : selectedShowInfo.time.time,
+                    type : "Cancel"
+                    });
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+            setSelectedSeat([]);
+        }
+    }, [state, selectedSeat, selectedShowInfo]);
     return (
     <div className={styles.panel}>
         {
