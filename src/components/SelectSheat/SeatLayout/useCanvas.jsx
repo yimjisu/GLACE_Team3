@@ -88,10 +88,15 @@ function animate(ctx) {
     mousePos.x = e.clientX - offsetX;
     mousePos.y = e.clientY - offsetY;
     let newSelectedSeat = selectedSeat;
-
+    let selectIndex = null;
     for(let i=0; i<allSeats.length; i++) {
-      let seat = allSeats[i].up(mousePos.clone());
-      if(seat != null) {
+      if (allSeats[i].up(mousePos.clone()) != null){
+        selectIndex = i;
+      }
+    }
+
+    if (selectIndex != null) {
+      let seat = allSeats[selectIndex];
         if (seat.isSelected) {
           try {
             const response = await axios.post('/seat/'+seat.seatName, {
@@ -114,33 +119,32 @@ function animate(ctx) {
             alert("이미 선점된 좌석입니다")
           }
         } else {
-          if (selectedSeat.length >= peopleNum) {
-            seat.select(false);
-            alert("선택한 좌석수가 인원수보다 많습니다");
-          } else {
-            try {
-              const response = await axios.post('/seat/'+seat.seatName, {
-                title : selectedShowInfo.title,
-                date : selectedShowInfo.date,
-                time : selectedShowInfo.time.time,
-                type : "Progress"
-              });
-                seat.select(true);
-                newSelectedSeat.push(seat.seatName);
-                setSelectedSeat(newSelectedSeat);
-            } catch(err) {
+            if (selectedSeat.length >= peopleNum) {
               seat.select(false);
-              seat.reserved(true);
-              let temp = seatReservationInfo;
-              if (! temp.includes(seat.seatName)) {
-                temp.push(seat.seatName);
+              alert("선택한 좌석수가 인원수보다 많습니다");
+            } else {
+              try {
+                const response = await axios.post('/seat/'+seat.seatName, {
+                  title : selectedShowInfo.title,
+                  date : selectedShowInfo.date,
+                  time : selectedShowInfo.time.time,
+                  type : "Progress"
+                });
+                  seat.select(true);
+                  newSelectedSeat.push(seat.seatName);
+                  setSelectedSeat(newSelectedSeat);
+              } catch(err) {
+                seat.select(false);
+                seat.reserved(true);
+                let temp = seatReservationInfo;
+                if (! temp.includes(seat.seatName)) {
+                  temp.push(seat.seatName);
+                }
+                setSeatReservationInfo(temp);
+                alert("이미 선점된 좌석입니다");
               }
-              setSeatReservationInfo(temp);
-              alert("이미 선점된 좌석입니다");
             }
-          }
         }
-      }
     }
   }
 
