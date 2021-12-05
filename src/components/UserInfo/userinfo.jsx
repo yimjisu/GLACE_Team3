@@ -2,14 +2,29 @@ import { useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import styles from './userinfo.module.css';
 import Button from 'react-bootstrap/Button';
-import {State} from '../Panel/panel'
+import {State} from '../Panel/panel';
+import axios from 'axios';
 
 const UserInfo = ({
-    state, setState, showInfo
+    setState, setUserReservationInfo
     }) => {
 
     const onClickBtn = () => {
-        setState(State.ReservationInfo);
+        const pw = document.getElementById('pw').value;
+        const phone = document.getElementById('phone').value;
+        axios.get('/user/reservation?phone='+phone+'&password='+pw).then(
+            (response) => {
+                const data = response.data;
+                setUserReservationInfo(data);
+                setState(State.ReservationInfo);
+            }
+        ).catch(
+            err => {
+                console.log(err);
+                alert('존재하지 않는 사용자입니다.')
+            }
+        );
+
     }
 
     return (

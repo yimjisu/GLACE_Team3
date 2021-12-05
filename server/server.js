@@ -250,6 +250,7 @@ app.post('/reservation', async (req, res) => {
         date: data.date,
         time: data.time,
         phone: data.phone,
+        img: data.img,
         password: encodeURIComponent(data.password),
         seat: data.seat
     })
@@ -275,7 +276,7 @@ app.post('/reservation', async (req, res) => {
 
 })
 
-app.get('/user/:reservation?:phone&:passwords', async (req, res) => {
+app.get('/user/reservation', async (req, res) => {
     /*
     - input data format example
 
@@ -298,16 +299,18 @@ app.get('/user/:reservation?:phone&:passwords', async (req, res) => {
             reservedSeat: 200
             },
             title: '방방콘',
+            img: 'imgUrl',
             phone: '01023433333'
         },
         ...
     ]
     */
-    var data = req.body;
-    console.log(data);
+    var phone = req.query.phone;
+    var password = req.query.password;
+    console.log(phone, password);
 
     const reservRef = collection(firestore, "reservation_info");
-    const q = query(reservRef, where("phone", "==", data.phone), where("password", "==", encodeURIComponent(data.password)));
+    const q = query(reservRef, where("phone", "==", phone), where("password", "==", encodeURIComponent(password)));
 
     const querySnapshot = await getDocs(q);
     //console.log("data!!");
@@ -316,9 +319,10 @@ app.get('/user/:reservation?:phone&:passwords', async (req, res) => {
         //console.log(doc.id, " => ", doc.data());
         reserv_info.push(doc.data());
     });
-    console.log(reserv_info);
+    if (reserv_info.length > 0)
+        return res.status(200).send(reserv_info);
 
-    return res.status(200).send(reserv_info)
+    return res.status(409).send(null);
 })
 
 io.on('connection', function(socket) {

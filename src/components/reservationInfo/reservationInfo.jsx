@@ -5,10 +5,14 @@ import Button from 'react-bootstrap/Button';
 import poster1 from '../data/images/poster1.jpg';
 
 const ReservationInfo = ({ 
-    state, setState, showInfo
+    setState, userReservationInfo
     }) => {
 
-    const total_num = 5; //서버에서 받아온 예약 개수
+    const [totalNum, setTotalNum] = useState(userReservationInfo.length);
+
+    useEffect(() => {
+        setTotalNum(userReservationInfo.length);
+    }, [userReservationInfo]);
 
     const [num, setNum] = useState(0);
 
@@ -23,7 +27,7 @@ const ReservationInfo = ({
     }
 
     const onIncrease = () => {
-        if (num + 1 < total_num) {
+        if (num + 1 < totalNum) {
             setNum(num + 1);
             changeInfo();
         }
@@ -40,29 +44,40 @@ const ReservationInfo = ({
         setState(State.SelectShow);
     }
 
+    const [ymd, setYmd] = useState('');
+    useEffect(() => {
+        const date = userReservationInfo[num].date;
+        const month = date.substring(0, 2);
+        const day = date.substring(3, 5);
+        const year = date.substring(6);
+
+        setYmd(year+'.'+month+'.'+day);
+
+    }, [userReservationInfo, num])
+
     return (
         <div className = {styles.body}>
-            <div className={styles.text}>예약 총 {total_num}건 (<span id="head_info">{num+1}</span>/{total_num})</div>
+            <div className={styles.text}>예약 총 {totalNum}건 (<span id="head_info">{num+1}</span>/{totalNum})</div>
             
             { num > 0 && <div className={styles.leftTriangle} onClick={onDecrease}></div>}
             <div className = {styles.flexBox}>
-                <img className={styles.img} id="img" style={{height:"500px"}} src={poster1}/>
+                <img className={styles.img} id="img" style={{height:"500px"}} src={userReservationInfo[num].img}/>
                     
                 <table className={styles.table}>
                 <tr>
                     <td align="left">
                         <div className={styles.userInfo}>
-                            <p><b>공연&nbsp;&nbsp;</b><span id="name">아케인</span></p>
-                            <p><b>장소&nbsp;&nbsp;</b><span id="place">교양분관</span></p>
-                            <p><b>날짜&nbsp;&nbsp;</b><span id="date">2021.11.17(수)</span></p>
-                            <p><b>시간&nbsp;&nbsp;</b><span id="time">20:00</span></p>
-                            <p><b>좌석&nbsp;&nbsp;</b><span id="seat">C1, C2</span></p>
+                            <p><b>공연&nbsp;&nbsp;</b><span id="name">{userReservationInfo[num].title}</span></p>
+                            <p><b>장소&nbsp;&nbsp;</b><span id="place">{userReservationInfo[num].place}</span></p>
+                            <p><b>날짜&nbsp;&nbsp;</b><span id="date">{ymd}</span></p>
+                            <p><b>시간&nbsp;&nbsp;</b><span id="time">{userReservationInfo[num].time}</span></p>
+                            <p><b>좌석&nbsp;&nbsp;</b><span id="seat">{userReservationInfo[num].seat.join(',')}</span></p>
                         </div>
                     </td>
                 </tr>
                 </table>
             </div>
-            { num < total_num - 1 && <div className={styles.rightTriangle} onClick={onIncrease}></div>}
+            { num < totalNum - 1 && <div className={styles.rightTriangle} onClick={onIncrease}></div>}
             <div>
                 <Button onClick={onClickBtn}>처음으로</Button>
             </div>

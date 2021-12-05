@@ -41,6 +41,7 @@ const ReservationCheck = ({
                 date: selectedShowInfo.date,
                 time: selectedShowInfo.time.time,
                 place: selectedShowInfo.place,
+                img: selectedShowInfo.img,
                 seat: selectedSeat,
                 phone: phone,
                 password: pw
