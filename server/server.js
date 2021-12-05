@@ -22,6 +22,18 @@ admin.initializeApp({
     databaseURL: "https://glace-team3-default-rtdb.firebaseio.com"
   });
 
+async function checkTimeout(showTitle, showTime, seat) {
+    const timeSnapshot = admin.firestore().collection(showTitle).doc(showTime);
+    var tmpData = (await timeSnapshot.get()).data();
+    console.log(seat, tmpData[seat]);
+    if(tmpData[seat] == 'Progress') {
+        timeSnapshot.update({
+            [seat]: admin.firestore.FieldValue.delete()
+        });
+        console.log('erase');
+    }
+}
+
 app.use(bodyParser.json());
 
 app.get('/shows', async (req, res) => {
@@ -192,17 +204,13 @@ app.post('/seat/:seatID', async (req, res) => {
 
     if (updateType === 'Progress') {
         if(seats.indexOf(seat) === -1) {
-            timeSnapshot.update({
+            await timeSnapshot.update({
                 [seat]: updateType
             });
-
+            
             // 선점 timeout
             setTimeout(() => {
-                console.log(seat);
-                timeSnapshot.update({
-                    [seat]: admin.firestore.FieldValue.delete()
-                });
-                console.log('erase');
+                checkTimeout(showTitle, showTime, seat)
             }, 300000);
             
             return res.status(201).send("1")
