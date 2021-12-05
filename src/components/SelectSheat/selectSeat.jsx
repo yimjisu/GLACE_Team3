@@ -15,7 +15,13 @@ const SelectSeat = ({
         setState(state - 1);
     }
     const onClickNextBtn = () => {
-        setState(state + 1);
+        if (selectedSeat.length == 0){
+            alert("좌석을 선택해주세요")   
+        }else if (selectedSeat.length == peopleNum){
+            setState(state + 1);
+        }  else {
+            alert("선택한 인원수보다 좌석수가 적습니다")
+        }
     }
 
     const increment = async () => {
@@ -32,7 +38,7 @@ const SelectSeat = ({
 
     const [seatReservationInfo, setSeatReservationInfo] = useState([]);
     const [seatInfo, setSeatInfo] = useState(null);
-    const [seatChange, setSeatChange] = useState(null);
+
     useEffect(() => {
         axios.get('/seatInfo',  { params: {
             title: selectedShowInfo.title,
