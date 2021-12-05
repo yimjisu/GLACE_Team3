@@ -211,7 +211,7 @@ app.post('/seat/:seatID', async (req, res) => {
             return res.status(409).send("0")
         }
     } else if (updateType === 'Cancel') {
-        if(seats.indexOf(seat) != -1) {
+        if(seats.indexOf(seat) != -1 && timeData[seat] == 'Progress') {
             timeSnapshot.update({
                 [seat]: admin.firestore.FieldValue.delete()
             });

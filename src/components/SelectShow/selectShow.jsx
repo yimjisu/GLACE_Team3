@@ -60,8 +60,22 @@ const SelectShow = ({
     const [monthdayyear, setMonthdayyear] = useState(null);
 
     useEffect(() => {
-        setMonthdayyear(startDate.getMonth()+1 + "-" + startDate.getDate() + "-" + startDate.getFullYear());
+        let month = startDate.getMonth()+1;
+        let day = startDate.getDate();
+        const year = startDate.getFullYear();
+        
+        if (month < 10) {
+            month = '0'+month.toString()
+        }
+        if (day < 10) {
+            day = '0'+day.toString();
+        }
+        setMonthdayyear(month + "-" + day + "-" + year);
     }, [startDate])
+
+    useEffect(() => {
+        console.log(monthdayyear);
+    }, [monthdayyear]);
 
     const [selectedIndex, setSelectedIndex] = useState(null);
     const onSelected = (index) => {
