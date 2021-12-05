@@ -1,5 +1,6 @@
-import { firestore } from "../src/service/firebase.js";
+import { firestore, db } from "../src/service/firebase.js";
 import { collection, query, where, getDocs } from "firebase/firestore";
+import { getDatabase, ref, child, get } from "firebase/database";
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 var current_data = {};
@@ -41,6 +42,7 @@ app.get('/shows', async (req, res) => {
         show_dic["endDate"] = showData.endDate
         show_dic["runTime"] = showData.runTime
         show_dic["img"] = showData.img
+        show_dic["totalSeatNumber"] = showData.totalSeatNumber
 
         show_info.push(show_dic)
     }
@@ -87,7 +89,7 @@ app.get('/show/:name', async (req, res) => {
             if(!(date in times_info)) {
                 times_info[date] = []
             }
-            times_info[date].push({time: time, reservaedSeat: reserveNum})
+            times_info[date].push({time: time, reservedSeat: reserveNum})
         }
     }
 
@@ -104,19 +106,18 @@ app.get('/seatInfo', async (req, res) => {
     }
     - output data format example
     {
-        jsonFilePath: "../SeatLayout/seats-kaist.json", // or some url
         reserved: ['A10', 'B16', 'C2', 'D5'],
         progress: ['A8', 'C25']
     }
     */
     var data = req.query;
-    console.log(data);
     const seat_info = {};
     var showTitle = data.title;
     var showTime = data.date + " " + data.time;
     var documentSnapshot = await firestore.collection(showTitle).doc("공연정보").get();
     var showData = documentSnapshot.data();
-    var jsonFilePath = showData.seatInfo;
+    const dbRef = db.ref();
+    var jsonFile = await dbRef.child(data.title).get();
     const timeSnapshot = await firestore.collection(showTitle).doc(showTime).get();
     
     var timeData = timeSnapshot.data();
@@ -144,7 +145,7 @@ app.get('/seatInfo', async (req, res) => {
     //     }
     // }
 
-    seat_info["jsonFilePath"] = jsonFilePath;
+    seat_info["jsonFile"] = jsonFile;
     seat_info["reserved"] = reserved;
     seat_info["progress"] = progress;
 
