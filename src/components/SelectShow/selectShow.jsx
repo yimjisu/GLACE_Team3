@@ -39,7 +39,6 @@ const SelectShow = ({
     }
     const [timeList, setTimeList] = useState([]);
     useEffect(() => {
-        console.log(cards[showCard].totalSeatNumber);
         if (showCard == -1) return;
         axios.get('/show/'+cards[showCard].title).then(response => {
             const data = response.data;

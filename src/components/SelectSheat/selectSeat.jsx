@@ -32,7 +32,7 @@ const SelectSeat = ({
     }
 
     const [seatReservationInfo, setSeatReservationInfo] = useState([]);
-    // const [seatInfo, setSeatInfo] = useState({});
+    const [seatInfo, setSeatInfo] = useState(null);
     useEffect(() => {
         axios.get('/seatInfo',  { params: {
             title: selectedShowInfo.title,
@@ -40,7 +40,8 @@ const SelectSeat = ({
             time: selectedShowInfo.time.time
         }}).then(response => {
             const data = response.data;
-            // setSeatInfo(data.json_path);
+            setSeatInfo(data.jsonFile);
+            console.log(data.jsonFile);
             let tempInfo = [];
             for (let i = 0; i < data.progress.length; i++) {
                 tempInfo.push(data.progress[i])
@@ -50,11 +51,12 @@ const SelectSeat = ({
             }
             setSeatReservationInfo(tempInfo);
         })
-    }, [selectedShowInfo])
+    }, [selectedShowInfo]);
 
     useEffect(() => {
         setSelectedSeat([]);
     }, []);
+    
     return (
         <div>
           <div className = {styles.seat}>
@@ -88,7 +90,9 @@ const SelectSeat = ({
                     </div>
                 </div>
             </div>
-            <Canvas 
+            {
+                seatInfo && 
+                <Canvas 
                 className = {styles.seatLayout}
                 selectedShowInfo = {selectedShowInfo}
                 seatInfo = {seatInfo}
@@ -97,6 +101,8 @@ const SelectSeat = ({
                 peopleNum = {peopleNum}
                 selectedSeat = {selectedSeat}
                 setSelectedSeat = {setSelectedSeat} />
+            }
+            
              </div>
             <Button className={styles.prevBtn} onClick={onClickPrevBtn}>이전</Button>
             <Button className={styles.nextBtn} onClick={onClickNextBtn}>다음</Button>

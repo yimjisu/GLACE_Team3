@@ -73,41 +73,42 @@ function animate(ctx) {
     for(let i=0; i<allSeats.length; i++) {
       let seat = allSeats[i].up(mousePos.clone());
       if(seat != null) {
-        axios.get('/checkSeatReservation', {
+        if (seat.isS)
+        axios.post('/seat/'+seat.seatName, {
           params : {
             title : selectedShowInfo.title,
             date : selectedShowInfo.date,
             time : selectedShowInfo.time.time,
-            seat : seat.seatName
           }
         }).then(response => {
-          const data = response.data;
-          console.log(data);
-          if (data == 0) {
-            alert("이미 선점된 좌석입니다");
-            seat.isReserved = true;
-            seat.isSelected = false;
+        });
+        //   const data = response.data;
+        //   console.log(data);
+        //   if (data == 0) {
+        //     alert("이미 선점된 좌석입니다");
+        //     seat.isReserved = true;
+        //     seat.isSelected = false;
 
-            let temp = seatReservationInfo;
-            if (! temp.includes(seat.seatName)) {
-              temp.push(seat.seatName);
-            }
-            setSeatReservationInfo(temp);
-          } else if (seat.isSelected) {
-            console.log('selected')
-            if (selectedSeat.length >= peopleNum) {
-              seat.isSelected = false;
-              alert("선택한 좌석수가 인원수보다 많습니다")
-            } else {
-              newSelectedSeat.push(seat.seatName);
-            }
-          } else {
-            console.log('selected 해제')
-            newSelectedSeat = newSelectedSeat.filter((item) => item != seat.seatName);
-          }                
-          setAllSeats(allSeats);
-          setSelectedSeat(newSelectedSeat);    
-        })
+        //     let temp = seatReservationInfo;
+        //     if (! temp.includes(seat.seatName)) {
+        //       temp.push(seat.seatName);
+        //     }
+        //     setSeatReservationInfo(temp);
+        //   } else if (seat.isSelected) {
+        //     console.log('selected')
+        //     if (selectedSeat.length >= peopleNum) {
+        //       seat.isSelected = false;
+        //       alert("선택한 좌석수가 인원수보다 많습니다")
+        //     } else {
+        //       newSelectedSeat.push(seat.seatName);
+        //     }
+        //   } else {
+        //     console.log('selected 해제')
+        //     newSelectedSeat = newSelectedSeat.filter((item) => item != seat.seatName);
+        //   }                
+        //   setAllSeats(allSeats);
+        //   setSelectedSeat(newSelectedSeat);    
+        // })
       }
     }
   }
@@ -136,7 +137,7 @@ function animate(ctx) {
     let canvasTemp = canvasRef.current;
     setCanvas(canvasTemp);
     setContext(canvasTemp.getContext('2d'));
-    const seats = seatInfo.seats;
+    const seats = Object.values(seatInfo.seats);
     seats.sort(function(a, b) {
       if (a.rectangles[0].lefttop.y < b.rectangles[0].lefttop.y) {
         return -1;
@@ -152,7 +153,7 @@ function animate(ctx) {
     })
     
     for (var i=0; i<seats.length; i++){
-        const rectangles = seats[i].rectangles;
+        const rectangles = Object.values(seats[i].rectangles);
         rectangles.sort(function(a, b) {
           if (a.lefttop.y < b.lefttop.y) {
             return -1;
