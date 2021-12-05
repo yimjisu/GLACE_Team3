@@ -46,6 +46,18 @@ const ReservationCheck = ({
                 password: pw
             })
 
+            
+            for (let i=0; i<selectedSeat; i++) {
+                const seat = selectedSeat[i];
+                axios.post('/seat/'+seat, {
+                    title : selectedShowInfo.title,
+                    date: selectedShowInfo.date,
+                    time: selectedShowInfo.time.time,
+                    seat: seat,
+                    type: "Reserved"
+                })
+            }
+
         }
     }
 
