@@ -276,7 +276,7 @@ app.post('/reservation', async (req, res) => {
 
 })
 
-app.get('/user/reservation', async (req, res) => {
+app.post('/user/reservation', async (req, res) => {
     /*
     - input data format example
 
