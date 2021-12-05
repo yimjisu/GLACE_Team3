@@ -26,6 +26,7 @@ const Panel = ({
     const [selectedShowInfo, setSelectedShowInfo] = useState({});
     const [selectedSeat, setSelectedSeat] = useState([]);
     const [userInfo, setUserInfo] = useState({});
+    const [userReservationInfo, setUserReservationInfo] = useState([]);
 
     useEffect(() => {
         console.log(selectedShowInfo);
@@ -45,10 +46,10 @@ const Panel = ({
             state == State.ReservationDone && <ReservationDone state={state} setState={setState} selectedSeat={selectedSeat} selectedShowInfo={selectedShowInfo} userInfo = {userInfo}/>
         }
         {
-            state == State.UserInfo && <UserInfo state={state} setState={setState} showInfo={showInfo}/>
+            state == State.UserInfo && <UserInfo setState={setState} setUserReservationInfo={setUserReservationInfo}/>
         }
         {
-            state == State.ReservationInfo && <ReservationInfo state={state} setState={setState} showInfo={showInfo}/>
+            state == State.ReservationInfo && <ReservationInfo setState={setState} userReservationInfo={userReservationInfo}/>
         }
     </div>
     );
