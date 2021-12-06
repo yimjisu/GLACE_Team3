@@ -22,10 +22,13 @@ const ReservationDone = ({
         const month = date.substring(0, 2);
         const day = date.substring(3, 5);
         const year = date.substring(6);
-
         setYmd(year+'.'+month+'.'+day);
+    }, [selectedShowInfo]);
 
-    }, [selectedShowInfo])
+    const seat = selectedSeat;
+    useEffect(() => {
+        console.log(selectedSeat);
+    }, [selectedSeat]);
 
     return (
         <div>
@@ -46,7 +49,7 @@ const ReservationDone = ({
                                     <b>장소&nbsp;&nbsp;</b>{selectedShowInfo.place}<br />
                                     <b>날짜&nbsp;&nbsp;</b>{ymd}<br />
                                     <b>시간&nbsp;&nbsp;</b>{selectedShowInfo.time.time}<br />
-                                    <b>좌석&nbsp;&nbsp;</b>{selectedSeat.join(", ")}<br />
+                                    <b>좌석&nbsp;&nbsp;</b>{seat.join(", ")}<br />
                                     <b>휴대폰&nbsp;&nbsp;</b>{userInfo.phone}
                                 </div>
                             </form>

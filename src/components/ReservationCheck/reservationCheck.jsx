@@ -9,9 +9,12 @@ import { phoneCheck, pwCheck, pwSame } from '../../util/util'
 import axios from 'axios';
 
 const ReservationCheck = ({
-    state, setState, selectedSeat, selectedShowInfo, setUserInfo
+    state, setState, selectedSeat, setSelectedSeat, selectedShowInfo, setUserInfo
 }) => {
     const socket = useContext(SocketContext);
+    useEffect(() => {
+        setSelectedSeat(selectedSeat.sort());
+    }, [selectedSeat]);
     const onClickPrevBtn = () => {
         setState(state - 1);
     }
@@ -30,12 +33,7 @@ const ReservationCheck = ({
             const pw = document.getElementById('pw').value;
             const phone = document.getElementById('phone').value;
             var data = { phone: phone, password: pw };
-            setState(state + 1);
-            setUserInfo({
-                pw: pw,
-                phone: phone
-            })
-
+            
             axios.post('/reservation', {
                 title: selectedShowInfo.title,
                 date: selectedShowInfo.date,
@@ -48,16 +46,24 @@ const ReservationCheck = ({
             })
 
             
-            for (let i=0; i<selectedSeat; i++) {
+            for (let i=0; i<selectedSeat.length; i++) {
                 const seat = selectedSeat[i];
+                console.log(seat)
                 axios.post('/seat/'+seat, {
                     title : selectedShowInfo.title,
                     date: selectedShowInfo.date,
                     time: selectedShowInfo.time.time,
                     seat: seat,
                     type: "Reserved"
+                }).then(response=> {
                 })
             }
+            
+            setState(state + 1);
+            setUserInfo({
+                pw: pw,
+                phone: phone
+            })
 
         }
     }

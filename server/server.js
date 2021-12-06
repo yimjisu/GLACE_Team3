@@ -27,7 +27,7 @@ admin.initializeApp({
 async function checkTimeout(showTitle, showTime, seat) {
     const timeSnapshot = admin.firestore().collection(showTitle).doc(showTime);
     var tmpData = (await timeSnapshot.get()).data();
-    console.log(seat, tmpData[seat]);
+    console.log('checkTimeout', seat, tmpData[seat]);
     if(tmpData[seat] == 'Progress') {
         timeSnapshot.update({
             [seat]: admin.firestore.FieldValue.delete()
