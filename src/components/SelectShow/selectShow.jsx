@@ -59,9 +59,29 @@ const SelectShow = ({
     const [startDate, setStartDate] = useState(new Date(Date.now()));
     const [monthdayyear, setMonthdayyear] = useState(null);
 
+    const date_format = (date) => {
+        const year = parseInt(date.substring(0, 4));
+        const month = parseInt(date.substring(5, 7));
+        const day = parseInt(date.substring(8, ));
+        return new Date(year, month-1, day);
+    }
     useEffect(() => {
-        setMonthdayyear(startDate.getMonth()+1 + "-" + startDate.getDate() + "-" + startDate.getFullYear());
+        let month = startDate.getMonth()+1;
+        let day = startDate.getDate();
+        const year = startDate.getFullYear();
+        
+        if (month < 10) {
+            month = '0'+month.toString()
+        }
+        if (day < 10) {
+            day = '0'+day.toString();
+        }
+        setMonthdayyear(month + "-" + day + "-" + year);
     }, [startDate])
+
+    useEffect(() => {
+        console.log(monthdayyear);
+    }, [monthdayyear]);
 
     const [selectedIndex, setSelectedIndex] = useState(null);
     const onSelected = (index) => {
@@ -127,8 +147,8 @@ const SelectShow = ({
                                         setSelectedIndex(null)
                                         setStartDate(date)
                                     }}
-                                    minDate={new Date("11-24-2021")}
-                                    maxDate={new Date("12-31-2021")}
+                                    minDate={new Date(Date.now())}
+                                    maxDate={date_format(cards[showCard].endDate)}
                                     inline
                                 />
                         </div>

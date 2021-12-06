@@ -11,10 +11,6 @@ import { SocketContext, socket } from './service/socket';
 function App() {
   const [state, setState] = useState(0);
 
-  useEffect(() => {
-    console.log(state);
-  },[state]);
-
   return (
     <SocketContext.Provider value={socket}>
     <div className={styles.App}>

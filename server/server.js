@@ -36,6 +36,43 @@ async function checkTimeout(showTitle, showTime, seat) {
     }
 }
 
+async function addDateInfo(showTitle, startDate, endDate) {
+    
+    var start = new Date(startDate.substring(0, 4),
+    startDate.substring(5, 7), startDate.substring(8, ));
+    var end = new Date(endDate.substring(0, 4),
+    endDate.substring(5, 7), endDate.substring(8, ));
+
+    const snap = await firestore.collection(showTitle).get();
+    var titles = snap.docs.map(doc => doc.id);
+    const timeInfo = ['10:00', '14:00'];
+    for (let i=start.getDate(); i<end.getDate(); i++){
+        var date = new Date();
+        date.setDate(i);
+
+        let month = date.getMonth()+1;
+        let day = date.getDate();
+        const year = date.getFullYear();
+        
+        if (month < 10) {
+            month = '0'+month.toString()
+        }
+        if (day < 10) {
+            day = '0'+day.toString();
+        }
+
+        var new_date = month + "-" + day + "-" + year;
+        
+        for(let time of timeInfo){
+            var new_time = new_date + ' '+ time;
+            if (!titles.includes(new_time)){
+                firestore.collection(showTitle).doc(new_time).set({});
+            }
+        }
+    }
+    
+}
+
 app.use(bodyParser.json());
 
 app.get('/shows', async (req, res) => {
@@ -57,6 +94,8 @@ app.get('/shows', async (req, res) => {
         show_dic["totalSeatNumber"] = showData.totalSeatNumber
 
         show_info.push(show_dic)
+        
+        addDateInfo(titles[i], showData.startDate, showData.endDate);
     }
 
     // console.log(show_info)
@@ -105,7 +144,6 @@ app.get('/show/:name', async (req, res) => {
         }
     }
 
-    console.log(times_info)
     return res.status(200).json(times_info)
 })
 app.get('/seatInfo', async (req, res) => {
@@ -211,7 +249,7 @@ app.post('/seat/:seatID', async (req, res) => {
             return res.status(409).send("0")
         }
     } else if (updateType === 'Cancel') {
-        if(seats.indexOf(seat) != -1) {
+        if(seats.indexOf(seat) != -1 && timeData[seat] == 'Progress') {
             timeSnapshot.update({
                 [seat]: admin.firestore.FieldValue.delete()
             });
@@ -269,19 +307,6 @@ app.post('/reservation', async (req, res) => {
             console.error("Error writing document: ", error);
         });
 
-    firestore.collection(data.title).
-        add({
-            phone: data.phone,
-            password: encodeURIComponent(data.password),
-            seat: data.seat
-        })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
-
 })
 
 app.post('/user/reservation', async (req, res) => {
@@ -315,7 +340,6 @@ app.post('/user/reservation', async (req, res) => {
     */
     var phone = req.query.phone;
     var password = req.query.password;
-    console.log(phone, password);
 
     const reservRef = collection(firestore, "reservation_info");
     const q = query(reservRef, where("phone", "==", phone), where("password", "==", encodeURIComponent(password)));
@@ -334,7 +358,6 @@ app.post('/user/reservation', async (req, res) => {
 })
 
 io.on('connection', function(socket) {
-    console.log('user in');
     socket.on("seatChange", function(data) {
         const showTitle = data.title;
         const showTime = data.date+ " " + data.time.time;
