@@ -1,72 +1,73 @@
 .prevBtn {
-    margin-left: 10px;
-    margin-top: 10px;
-    float: left;
+  margin-left: 10px;
+  margin-top: 10px;
+  float: left;
 }
-  
+
 .nextBtn {
-margin-top: 10px;
-margin-right: 10px;
-float: right;
+  margin-top: 10px;
+  margin-right: 10px;
+  float: right;
 }
 
 .header {
-    font-size: 20px;
-    height: 30px;
-    color: royalblue;
+  font-size: 20px;
+  height: 30px;
+  color: royalblue;
 }
 
 .footer {
-    padding-top: 0px;
-    font-size: 16px;
-    height: 100px;
-    text-align: left;
-    color: #3e3e3e;
-    font-weight: normal;
+  padding-top: 0px;
+  font-size: 16px;
+  height: 100px;
+  text-align: left;
+  color: #3e3e3e;
+  font-weight: normal;
 }
 
 .card {
-    margin-left: 20px;
-    margin-top: 30px;
-    padding-right : 20px;
-    width: 420px;
-    border-right: 1px #3e3e3e dashed;
+  margin-left: 20px;
+  margin-top: 30px;
+  padding-right: 20px;
+  width: 420px;
+  border-right: 1px #3e3e3e dashed;
 }
 
 .login {
-    width: 750px;
-    margin-right: auto;
-    margin-left: auto;
+  width: 750px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .userInfo {
-    position: relative;
+  position: relative;
 }
 
 .text {
-    text-align: right;
+  text-align: right;
 }
 
 .title {
-    font-size: 30px;
-    position: relative;
-    bottom: 20%;
-    right: 30%;
+  font-size: 30px;
+  position: relative;
+  bottom: 20%;
+  right: 30%;
 }
+
 .cardImg {
-    padding: 10px;
+  padding: 10px;
 }
 
 .input {
-    border: #888888 2px solid;
+  border: #888888 2px solid;
 }
 
 .explain {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 .flex {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }

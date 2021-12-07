@@ -1,62 +1,62 @@
-.flexBox{
-    display: flex;
-    align-items: center;
+.flexBox {
+  display: flex;
+  align-items: center;
   justify-content: center;
   margin-top: 30px;
   margin-bottom: 30px;
 }
 .userInfo {
-    font-weight: normal;
-    font-size: 20px;
+  font-weight: normal;
+  font-size: 20px;
 }
 
 .text {
-    padding-top: 20px;
-    font-size: 20px;
-    text-align: center;
+  padding-top: 20px;
+  font-size: 20px;
+  text-align: center;
 }
 
 .img {
-    margin-right: 30px;
-    margin-left: 10px;
-    align-self: center;
+  margin-right: 30px;
+  margin-left: 10px;
+  align-self: center;
 }
 
 .rightTriangle {
-    position: absolute;
-    right: 20px;
-    top: 40%;
-    width: 0px;
-    height: 0px;
-    border-top: 35px solid white;
-    border-bottom: 35px solid white;
-    border-left: 50px solid #758BFF;
-    border-right: 50px solid none;
-    cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 40%;
+  width: 0px;
+  height: 0px;
+  border-top: 35px solid white;
+  border-bottom: 35px solid white;
+  border-left: 50px solid #758bff;
+  border-right: 50px solid none;
+  cursor: pointer;
 }
 
-.rightTriangle:hover{
-    border-left: 50px solid #647eff;
+.rightTriangle:hover {
+  border-left: 50px solid #647eff;
 }
 
 .leftTriangle {
-    position:absolute;
-    left: 20px;
-    top: 40%;
-    width: 0px;
-    height: 0px;
-    border-top: 35px solid white;
-    border-bottom: 35px solid white;
-    border-left: 50px solid none;
-    border-right: 50px solid #758BFF;
-    cursor: pointer;
+  position: absolute;
+  left: 20px;
+  top: 40%;
+  width: 0px;
+  height: 0px;
+  border-top: 35px solid white;
+  border-bottom: 35px solid white;
+  border-left: 50px solid none;
+  border-right: 50px solid #758bff;
+  cursor: pointer;
 }
 
-.leftTriangle:hover{
-    border-right: 50px solid #647eff;
+.leftTriangle:hover {
+  border-right: 50px solid #647eff;
 }
 
 .body {
-    display: block;
-    position: relative;
+  display: block;
+  position: relative;
 }

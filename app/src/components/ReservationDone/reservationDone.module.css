@@ -1,28 +1,28 @@
 .text {
-    padding-top: 50px;
-    padding-left: 100px;
-    font-size: 30px;
-    text-align: left;
+  padding-top: 50px;
+  padding-left: 100px;
+  font-size: 30px;
+  text-align: left;
 }
 
 .card {
-    margin-top: 30px;
-    margin-left: 100px;
-    width: 500px;
+  margin-top: 30px;
+  margin-left: 100px;
+  width: 500px;
 }
 
 .userInfo {
-    position: relative;
-    top: 30%;
-    text-align: left;
-    font-weight: normal;
-    font-size: 25px;
+  position: relative;
+  top: 30%;
+  text-align: left;
+  font-weight: normal;
+  font-size: 25px;
 }
 
 .btn {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .block {
-    display: block;
+  display: block;
 }
