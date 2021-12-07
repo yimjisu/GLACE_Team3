@@ -1,4 +1,4 @@
-import { firestore, db } from "../src/service/firebase.js";
+import { firestore, db } from "./service/firebase.js";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { getDatabase, ref, child, get } from "firebase/database";
 import { createRequire } from 'module';
@@ -17,7 +17,7 @@ const io = require('socket.io')(server, {
 
 // admin firebase
 const admin = require('firebase-admin');
-var serviceAccount = require("../glace-team3-firebase-adminsdk-7n3hx-86e0c8186f.json");
+var serviceAccount = require("./service/glace-team3-firebase-adminsdk-7n3hx-86e0c8186f.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
