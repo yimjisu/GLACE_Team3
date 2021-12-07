@@ -1,6 +1,6 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
-import 'firebase/compat/database';
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+import "firebase/compat/database";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -14,7 +14,7 @@ const firebaseConfig = {
   storageBucket: "glace-team3.appspot.com",
   messagingSenderId: "560128669638",
   appId: "1:560128669638:web:d98915021e10d90a7a64c7",
-  measurementId: "G-6X25RZWWJM"
+  measurementId: "G-6X25RZWWJM",
 };
 
 // Initialize Firebase

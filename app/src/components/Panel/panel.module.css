@@ -1,15 +1,14 @@
 .panel {
-    font-size: 18px;
-    font-weight: 800; 
-    
-    width: 90%;
-    min-height: 780px;
-    min-width: 982px;
-    margin-left: 5%;
-    background-color: white;
-    border-radius: 0px 0px 20px 20px;
-    z-index: -10;
-    margin-bottom: 30px;
-    box-shadow: 0px 5px 5px gray;
-  }
-  
+  font-size: 18px;
+  font-weight: 800;
+
+  width: 90%;
+  min-height: 780px;
+  min-width: 982px;
+  margin-left: 5%;
+  background-color: white;
+  border-radius: 0px 0px 20px 20px;
+  z-index: -10;
+  margin-bottom: 30px;
+  box-shadow: 0px 5px 5px gray;
+}

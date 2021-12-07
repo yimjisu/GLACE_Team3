@@ -1,32 +1,31 @@
-.header{
-    display: block;
-    height: 40px;
+.header {
+  display: block;
+  height: 40px;
 }
 
-.logo{
-    display: flex;
-    justify-content: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-style: italic;
-    font-size: x-large;
-    font-weight: bolder;
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-style: italic;
+  font-size: x-large;
+  font-weight: bolder;
 }
 
-.logo2{
-    flex-basis: 75%;
-    margin-left: 6%;
-
+.logo2 {
+  flex-basis: 75%;
+  margin-left: 6%;
 }
 
 .btn {
-    font-size: 16px;
-    background-color: rgba(117, 139, 255, 0);
-    border: none;
+  font-size: 16px;
+  background-color: rgba(117, 139, 255, 0);
+  border: none;
 }
-    
+
 .line {
-    font-size: 22px;
-    font-weight: 900;
-    font-family:'Times New Roman', Times, serif;
+  font-size: 22px;
+  font-weight: 900;
+  font-family: "Times New Roman", Times, serif;
 }
