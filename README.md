@@ -1,4 +1,3 @@
 # GLACE_Team3
 
-# Start with
-# npm run dev
+Start with npm run dev
