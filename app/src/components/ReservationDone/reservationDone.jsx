@@ -47,7 +47,7 @@ const ReservationDone = ({
               <form className={styles.userInfo}>
                 <div>
                   <b>공연&nbsp;&nbsp;</b>
-                  {selectedShowInfo.name}
+                  {selectedShowInfo.title}
                   <br />
                   <b>장소&nbsp;&nbsp;</b>
                   {selectedShowInfo.place}
