@@ -298,7 +298,6 @@ app.post("/reservation", async (req, res) => {
     */
 
   var data = req.body;
-  console.log(encodeURIComponent(data.password));
   firestore
     .collection("reservation_info")
     .add({
@@ -308,7 +307,6 @@ app.post("/reservation", async (req, res) => {
       time: data.time,
       phone: data.phone,
       img: data.img,
-      //password: encodeURIComponent(data.password),
       password: data.password,
       seat: data.seat,
     })
@@ -349,18 +347,14 @@ app.post("/user/reservation", async (req, res) => {
         ...
     ]
     */
-  //var phone = req.query.phone;
-  //var password = req.query.password;
 
   var phone = req.body.phone;
   var password = req.body.password;
 
   const reservRef = collection(firestore, "reservation_info");
-  console.log(password);
   const q = query(
     reservRef,
     where("phone", "==", phone),
-    //where("password", "==", encodeURIComponent(password))
     where("password", "==", password)
   );
 
