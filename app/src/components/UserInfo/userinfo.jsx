@@ -12,7 +12,7 @@ const UserInfo = ({ setState, setUserReservationInfo }) => {
     axios
       .post("/user/reservation", {
         phone: phone,
-        password: pw
+        password: pw,
       })
       .then((response) => {
         const data = response.data;

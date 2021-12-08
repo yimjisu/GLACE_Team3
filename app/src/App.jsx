@@ -1,5 +1,4 @@
-import logo from "./logo.svg";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./App.module.css";
 
 import Header from "./components/Header/header";
@@ -14,7 +13,7 @@ function App() {
   return (
     <SocketContext.Provider value={socket}>
       <div className={styles.App}>
-        <Header state={state} setState={setState} />
+        <Header setState={setState} />
         <Menu state={state} />
         <Panel state={state} setState={setState} />
       </div>

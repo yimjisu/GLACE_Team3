@@ -31,7 +31,6 @@ const ReservationCheck = ({
     } else {
       const pw = document.getElementById("pw").value;
       const phone = document.getElementById("phone").value;
-
       axios.post("/reservation", {
         title: selectedShowInfo.title,
         date: selectedShowInfo.date,

@@ -129,7 +129,6 @@ app.get("/show/:name", async (req, res) => {
 
   for (var i = 0; i < times.length; i++) {
     if (times[i] === "공연정보" || typeof times[i] != "string") {
-      // times.splice(i, 1);
       continue;
     } else {
       var timeSnapshot = await firestore
@@ -183,8 +182,6 @@ app.get("/seatInfo", async (req, res) => {
     .get();
 
   var timeData = timeSnapshot.data();
-  // var reservationStates = Object.values(timeData);
-  // var seats = Object.keys(timeData);
 
   var reserved = Object.keys(timeData).reduce(function (reserved, key) {
     if (timeData[key] === "Reserved") reserved.push(key);
@@ -195,17 +192,6 @@ app.get("/seatInfo", async (req, res) => {
     if (timeData[key] === "Progress") progress.push(key);
     return progress;
   }, []);
-
-  // var reserved = [];
-  // var progress = [];
-  // for (var i = 0; i < seats.length; i++) {
-  //     if (reservationStates[i] === "Reserved") {
-  //         reserved.push(seats[i]);
-  //     }
-  //     else {
-  //         progress.push(seats[i]);
-  //     }
-  // }
 
   seat_info["jsonFile"] = jsonFile;
   seat_info["reserved"] = reserved;
@@ -234,13 +220,10 @@ app.post("/seat/:seatID", async (req, res) => {
 
   var showTitle = data["title"];
   var showTime = data["date"] + " " + data["time"];
-  // var seat = data["seat"];
   var seat = req.params.seatID;
   var updateType = data["type"];
 
   const timeSnapshot = admin.firestore().collection(showTitle).doc(showTime);
-  // var timeSnapshotGet = timeSnapshot.get();
-  // var timeData = timeSnapshotGet.data();
   var timeData = (await timeSnapshot.get()).data();
 
   var seats = Object.keys(timeData);

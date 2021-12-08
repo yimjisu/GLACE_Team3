@@ -88,3 +88,7 @@
 .tablebody:hover {
   cursor: pointer;
 }
+
+.react-datepicker {
+  font-family: "Lato", sans-serif, "Noto Sans KR", sans-serif;
+}

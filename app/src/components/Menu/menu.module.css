@@ -64,7 +64,6 @@
   -webkit-transform: skew(45deg);
   -moz-transform: skew(45deg);
   transform: skew(45deg);
-  /* box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.2);   */
 }
 .progress:after {
   height: 50%;
@@ -75,7 +74,6 @@
   -webkit-transform: skew(-45deg);
   -moz-transform: skew(-45deg);
   transform: skew(-45deg);
-  /* box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.2);    */
 }
 
 .progress:first-child:before {
@@ -100,45 +98,15 @@
   transform: skew(-45deg);
 }
 
-.progress:last-child:before {
-  height: 50%;
-  width: 110%;
-  top: 0;
-  left: -0%;
-  background-color: var(--normal-color);
-  -webkit-transform: skew(45deg);
-  -moz-transform: skew(45deg);
-  transform: skew(45deg);
-}
-
-.progress:last-child:after {
-  height: 50%;
-  width: 110%;
-  top: 50%;
-  left: 0%;
-  background-color: var(--normal-color);
-  -webkit-transform: skew(-45deg);
-  -moz-transform: skew(-45deg);
-  transform: skew(-45deg);
-}
-
 .current:before,
 .current:first-child:before,
 .current:last-child:before {
   background-color: var(--current-color);
-  /* -webkit-transform: translateY(-20%) skew(45deg) ;
-    -moz-transform: translateY(-20%) skew(45deg) ;
-    transform: translateY(-20%) skew(45deg) ;
-    z-index: ; */
 }
 .current:after,
 .current:first-child:after,
 .current:last-child:after {
   background-color: var(--current-color);
-  /* -webkit-transform: translateY(-20%) skew(-45deg);
-    -moz-transform: translateY(-20%) skew(-45deg);
-    transform: translateY(-20%) skew(-45deg);
-    z-index: ; */
 }
 
 .previous:before,
