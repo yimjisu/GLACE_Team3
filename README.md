@@ -25,12 +25,12 @@ npm install
 npm run dev
 ```
 ## 기능 설명
-프론트엔드와 백엔드로 나누어 기능 설명
-#### [프론트엔드](https://github.com/yimjisu/GLACE_Team3/blob/main/app/README.md)
+Front-end와 Back-end로 나누어 기능 설명
+#### [Front-end](https://github.com/yimjisu/GLACE_Team3/blob/main/app/README.md)
 
 
-#### [백엔드](https://github.com/yimjisu/GLACE_Team3/blob/main/server/README.md)
+#### [Back-end](https://github.com/yimjisu/GLACE_Team3/blob/main/server/README.md)
 
 
-## 기여 방법
+## Contributing
 [Issues page](https://github.com/yimjisu/GLACE_Team3/issues)를 통해 이슈 요청
