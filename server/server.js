@@ -281,7 +281,6 @@ app.post("/reservation", async (req, res) => {
     */
 
   var data = req.body;
-  console.log(encodeURIComponent(data.password));
   firestore
     .collection("reservation_info")
     .add({
@@ -336,7 +335,6 @@ app.post("/user/reservation", async (req, res) => {
   var password = req.body.password;
 
   const reservRef = collection(firestore, "reservation_info");
-  console.log(password);
   const q = query(
     reservRef,
     where("phone", "==", phone),
