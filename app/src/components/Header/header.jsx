@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
 import styles from "./header.module.css";
 import { State } from "../Panel/panel";
 
-const Header = ({ state, setState }) => {
+const Header = ({ setState }) => {
   const onClickLogo = () => {
     setState(State.SelectShow);
   };

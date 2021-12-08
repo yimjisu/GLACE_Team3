@@ -100,28 +100,6 @@
   transform: skew(-45deg);
 }
 
-.progress:last-child:before {
-  height: 50%;
-  width: 110%;
-  top: 0;
-  left: -0%;
-  background-color: var(--normal-color);
-  -webkit-transform: skew(45deg);
-  -moz-transform: skew(45deg);
-  transform: skew(45deg);
-}
-
-.progress:last-child:after {
-  height: 50%;
-  width: 110%;
-  top: 50%;
-  left: 0%;
-  background-color: var(--normal-color);
-  -webkit-transform: skew(-45deg);
-  -moz-transform: skew(-45deg);
-  transform: skew(-45deg);
-}
-
 .current:before,
 .current:first-child:before,
 .current:last-child:before {
