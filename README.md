@@ -27,4 +27,4 @@ npm run dev
 
 # 기여 방법
 아래 링크를 통해 이슈 요청
-* [issue pages](https://github.com/yimjisu/GLACE_Team3/issues)
+[Issue pages](https://github.com/yimjisu/GLACE_Team3/issues)
