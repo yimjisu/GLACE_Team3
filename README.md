@@ -27,7 +27,7 @@ npm run dev
 ## 기능 설명
 1. 
 
-아래 링크를 통해 Front-end와 Back-end 각각 참고 가능
+아래 링크에 Front-end와 Back-end 설명 
 #### [Front-end](https://github.com/yimjisu/GLACE_Team3/blob/main/app/README.md)
 #### [Back-end](https://github.com/yimjisu/GLACE_Team3/blob/main/server/README.md)
 
