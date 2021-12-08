@@ -1,23 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
 import styles from "./selectShow.module.css";
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import Button from "react-bootstrap/Button";
 import "react-datepicker/dist/react-datepicker.css";
 import Table from "react-bootstrap/Table";
-import cards from "../data/showInfo";
+
 import { SocketContext } from "../../service/socket";
 import axios from "axios";
 
 const SelectShow = ({ state, setState, setShowInfo, setSelectedShowInfo }) => {
   const socket = useContext(SocketContext);
 
-  const headerStyle = {}; //{ backgroundColor : "#FFFFFF"};
-  const footerStyle = {}; //{ backgroundColor : "#FFFFFF" };//#3e3e3e"};
+  const headerStyle = {};
+  const footerStyle = {};
 
   const [showCard, setShowCard] = useState(-1);
   const onClickNext = (index) => {
