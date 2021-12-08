@@ -15,7 +15,7 @@
       * Socket을 사용해 실시간으로 상태가 선점한 좌석이 발생했을 때, 다른 모든 사용자의 화면에 선점 상태로 표시되게 함
       * 선점 시간은 5분. 즉, 5분 내로 예약 완료가 안될 시 좌석은 비선점 상태가 되어 다른 사람이 선점할 수 있음
 
-# 설치 및 실행
+## 설치 및 실행
 * 설치
 ```
 npm install
@@ -24,7 +24,13 @@ npm install
 ```
 npm run dev
 ```
+## 기능 설명
+프론트엔드와 백엔드로 나누어 기능 설명
+#### 프론트엔드
+[app.README](https://github.com/yimjisu/GLACE_Team3/blob/main/app/README.md)
 
-# 기여 방법
-[Issue pages](https://github.com/yimjisu/GLACE_Team3/issues)를 통해 이슈 요청
+#### 백엔드
+[server.README](https://github.com/yimjisu/GLACE_Team3/blob/main/server/README.md)
 
+## 기여 방법
+[Issues page](https://github.com/yimjisu/GLACE_Team3/issues)를 통해 이슈 요청
