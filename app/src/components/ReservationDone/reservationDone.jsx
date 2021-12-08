@@ -30,43 +30,38 @@ const ReservationDone = ({
   return (
     <div>
       <div className={styles.block}>
-        <div>
-          <Row>
-            <Col>
-              <div className={styles.text}>예약이 완료되었습니다.</div>
-              <Card className={styles.card}>
-                <Card.Img
-                  variant="top"
-                  height="600px"
-                  src={selectedShowInfo.img}
-                />
-              </Card>
-            </Col>
-
-            <Col>
-              <form className={styles.userInfo}>
-                <div>
-                  <b>공연&nbsp;&nbsp;</b>
-                  {selectedShowInfo.title}
-                  <br />
-                  <b>장소&nbsp;&nbsp;</b>
-                  {selectedShowInfo.place}
-                  <br />
-                  <b>날짜&nbsp;&nbsp;</b>
-                  {ymd}
-                  <br />
-                  <b>시간&nbsp;&nbsp;</b>
-                  {selectedShowInfo.time.time}
-                  <br />
-                  <b>좌석&nbsp;&nbsp;</b>
-                  {seat.join(", ")}
-                  <br />
-                  <b>휴대폰&nbsp;&nbsp;</b>
-                  {userInfo.phone}
-                </div>
-              </form>
-            </Col>
-          </Row>
+        <div className={styles.info}>
+          <div className={styles.textCard}>
+            <div className={styles.text}>예약이 완료되었습니다.</div>
+            <Card className={styles.card}>
+              <Card.Img
+                variant="top"
+                width="300px"
+                src={selectedShowInfo.img}
+              />
+            </Card>
+          </div>
+          <form className={styles.userInfo}>
+            <div>
+              <b>공연&nbsp;&nbsp;</b>
+              {selectedShowInfo.title}
+              <br />
+              <b>장소&nbsp;&nbsp;</b>
+              {selectedShowInfo.place}
+              <br />
+              <b>날짜&nbsp;&nbsp;</b>
+              {ymd}
+              <br />
+              <b>시간&nbsp;&nbsp;</b>
+              {selectedShowInfo.time.time}
+              <br />
+              <b>좌석&nbsp;&nbsp;</b>
+              {seat.join(", ")}
+              <br />
+              <b>휴대폰&nbsp;&nbsp;</b>
+              {userInfo.phone}
+            </div>
+          </form>
         </div>
 
         <Button onClick={onClickBtn}>처음으로</Button>
