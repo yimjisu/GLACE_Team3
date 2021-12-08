@@ -27,7 +27,7 @@ npm run dev
 ## 기능 설명
 1. 
 
-아래 링크에 Front-end(React)와 Back-end(Firebase) 설명 추가
+아래 링크에 Front-end(React)와 Back-end(Node.js, Firebase) 설명 추가
 #### [Front-end](https://github.com/yimjisu/GLACE_Team3/blob/main/app/README.md)
 #### [Back-end](https://github.com/yimjisu/GLACE_Team3/blob/main/server/README.md)
 
