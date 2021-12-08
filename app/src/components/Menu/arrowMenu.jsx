@@ -1,8 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
 import styles from "./menu.module.css";
 
 const ArrowMenu = ({ name, state, index }) => {
-  console.log(index, state);
   return (
     <>
       {index < state ? (

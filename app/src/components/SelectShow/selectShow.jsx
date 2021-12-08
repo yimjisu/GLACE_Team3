@@ -15,10 +15,6 @@ import axios from "axios";
 
 const SelectShow = ({ state, setState, setShowInfo, setSelectedShowInfo }) => {
   const socket = useContext(SocketContext);
-
-  const headerStyle = {}; //{ backgroundColor : "#FFFFFF"};
-  const footerStyle = {}; //{ backgroundColor : "#FFFFFF" };//#3e3e3e"};
-
   const [showCard, setShowCard] = useState(-1);
   const onClickNext = (index) => {
     setShowCard(index);
@@ -99,7 +95,7 @@ const SelectShow = ({ state, setState, setShowInfo, setSelectedShowInfo }) => {
                 style={{ cursor: "pointer" }}
               >
                 <Card.Img variant="top" height="400px" src={value.img} />
-                <Card.Footer style={footerStyle} className={styles.show}>
+                <Card.Footer className={styles.show}>
                   <b>{value.title}</b>
                   <div className={styles.info}>
                     장소: {value.place}
@@ -116,7 +112,7 @@ const SelectShow = ({ state, setState, setShowInfo, setSelectedShowInfo }) => {
           <div className={styles.row}>
             <div className={styles.column}>
               <Card className={styles.card}>
-                <Card.Header style={headerStyle}>
+                <Card.Header>
                   <div className={styles.header}>{cards[showCard].title}</div>
                 </Card.Header>
                 <Card.Img
@@ -125,7 +121,7 @@ const SelectShow = ({ state, setState, setShowInfo, setSelectedShowInfo }) => {
                   height="500px"
                   src={cards[showCard].img}
                 />
-                <Card.Footer style={footerStyle}>
+                <Card.Footer>
                   <div className={styles.footer}>
                     장소 : {cards[showCard].place}
                     <br />
