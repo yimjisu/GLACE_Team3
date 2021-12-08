@@ -26,11 +26,11 @@ npm run dev
 ```
 ## 기능 설명
 프론트엔드와 백엔드로 나누어 기능 설명
-#### 프론트엔드
-[app.README](https://github.com/yimjisu/GLACE_Team3/blob/main/app/README.md)
+#### [프론트엔드](https://github.com/yimjisu/GLACE_Team3/blob/main/app/README.md)
 
-#### 백엔드
-[server.README](https://github.com/yimjisu/GLACE_Team3/blob/main/server/README.md)
+
+#### [백엔드](https://github.com/yimjisu/GLACE_Team3/blob/main/server/README.md)
+
 
 ## 기여 방법
 [Issues page](https://github.com/yimjisu/GLACE_Team3/issues)를 통해 이슈 요청
